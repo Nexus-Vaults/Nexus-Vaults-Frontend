@@ -1,9 +1,22 @@
-import { useConnect } from "wagmi";
+import { useAccount, useConnect, useDisconnect } from "wagmi";
 
 export function Profile() {
   const { connect, connectors, error, isLoading, pendingConnector } =
     useConnect();
 
+  const { address, connector, isConnected } = useAccount();
+  const { disconnect } = useDisconnect();
+
+  if (isConnected) {
+    return (
+      <div>
+        <div>
+          {address} is connected to {connector?.name}
+        </div>
+        <button onClick={() => disconnect()}>Disconnect</button>
+      </div>
+    );
+  }
   return (
     <div>
       {connectors.map((connector) => (
