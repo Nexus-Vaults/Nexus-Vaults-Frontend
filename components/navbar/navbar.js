@@ -9,7 +9,9 @@ const Navbar = () => {
             <Link href="/" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
               Homepage
             </Link>
-            <Link href="/" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+          </div>
+          <div className="flex items-center ml-auto">
+            <Link href="/" className="bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50 rounded-md text-base font-medium text-white px-4 py-2">
               Launch App
             </Link>
           </div>
