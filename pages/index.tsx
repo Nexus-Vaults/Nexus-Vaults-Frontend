@@ -4,6 +4,7 @@ import utilStyles from "../styles/utils.module.css";
 import { getSortedPostsData } from "../lib/posts";
 import Link from "next/link";
 import Date from "../components/date";
+import Navbar from "../components/navbar/navbar.js"
 import { GetStaticProps } from "next";
 import { Profile } from "./profile";
 
@@ -18,6 +19,7 @@ export default function Home({
 }) {
   return (
     <Layout home>
+      <Navbar></Navbar>
       <Head>
         <title>{siteTitle}</title>
       </Head>
