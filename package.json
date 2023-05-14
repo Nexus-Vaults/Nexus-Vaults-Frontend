@@ -13,6 +13,7 @@
     "react-dom": "18.2.0",
     "remark": "^14.0.2",
     "remark-html": "^15.0.1",
+    "use-debounce": "^9.0.4",
     "viem": "^0.3.22",
     "wagmi": "^1.0.2"
   },

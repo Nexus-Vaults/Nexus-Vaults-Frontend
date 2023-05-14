@@ -3,12 +3,13 @@ import { AppProps } from "next/app";
 import { WagmiConfig, createConfig, configureChains, mainnet } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 import { MetaMaskConnector } from "@wagmi/core/connectors/metaMask";
+import { goerli, polygon } from "viem/chains";
 
 /**
  * Configures the chains and providers to be used by the application. Add a new chain to the list to enable it [mainnet, ... ].
  */
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [mainnet],
+  [mainnet, polygon, goerli],
   [publicProvider()]
 );
 
