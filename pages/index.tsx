@@ -13,6 +13,7 @@ export default function Home() {
         <Head>
           <title>{siteTitle}</title>
         </Head>
+        <h1 className="text-3xl font-bold underline">Hello world!</h1>
         <div>
           <button onClick={() => router.push("/app")}>Launch app</button>
         </div>
