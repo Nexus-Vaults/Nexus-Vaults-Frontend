@@ -9,18 +9,12 @@ import {
 
 export function SendTransaction() {
   const [to, setTo] = React.useState("");
-  const [debouncedTo] = useDebounce(to, 500);
 
-  const [amount, setAmount] = React.useState("");
-  const [debouncedAmount] = useDebounce(amount, 500);
-
-  type NumberTemplate = `${number}`;
+  const [amount, setAmount] = React.useState<number>(0);
 
   const { config } = usePrepareSendTransaction({
-    to: debouncedTo,
-    value: debouncedAmount
-      ? parseEther(debouncedAmount as NumberTemplate)
-      : undefined,
+    to: to,
+    value: amount ? parseEther(amount as any) : undefined,
   });
 
   const { data, sendTransaction } = useSendTransaction(config);
@@ -44,7 +38,7 @@ export function SendTransaction() {
       />
       <input
         aria-label="Amount (ether)"
-        onChange={(e) => setAmount(e.target.value)}
+        onChange={(e) => setAmount(e.target.value as any)}
         value={amount}
         placeholder="0.05"
       />

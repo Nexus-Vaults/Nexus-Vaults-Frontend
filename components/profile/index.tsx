@@ -6,6 +6,7 @@ export function Profile() {
 
   const { address, connector, isConnected } = useAccount();
   const { chain, chains } = useNetwork();
+
   const { disconnect } = useDisconnect();
 
   if (isConnected) {
