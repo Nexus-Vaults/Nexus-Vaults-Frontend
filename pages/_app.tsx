@@ -2,7 +2,10 @@ import "../styles/global.css";
 import { AppProps } from "next/app";
 import { WagmiConfig, createConfig, configureChains, mainnet } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
-import { MetaMaskConnector } from "@wagmi/core/connectors/metaMask";
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { goerli, polygon } from "viem/chains";
 
 /**
@@ -23,13 +26,30 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
 const config = createConfig({
   autoConnect: true,
   connectors: [
-    new MetaMaskConnector({
+    new MetaMaskConnector({ chains }),
+    new CoinbaseWalletConnector({
       chains,
+      options: {
+        appName: 'wagmi',
+      },
+    }),
+    new WalletConnectConnector({
+      chains,
+      options: {
+        projectId: '...',
+      },
+    }),
+    new InjectedConnector({
+      chains,
+      options: {
+        name: 'Injected',
+        shimDisconnect: true,
+      },
     }),
   ],
   publicClient,
   webSocketPublicClient,
-});
+})
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
