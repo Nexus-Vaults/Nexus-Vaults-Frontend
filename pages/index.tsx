@@ -7,14 +7,16 @@ export default function Home() {
   const router = useRouter();
 
   return (
-    <Layout>
+    <>
       <Navbar></Navbar>
-      <Head>
-        <title>{siteTitle}</title>
-      </Head>
-      <div>
-        <button onClick={() => router.push("/launch-app")}>Launch app</button>
-      </div>
-    </Layout>
+      <Layout>
+        <Head>
+          <title>{siteTitle}</title>
+        </Head>
+        <div>
+          <button onClick={() => router.push("/app")}>Launch app</button>
+        </div>
+      </Layout>
+    </>
   );
 }
