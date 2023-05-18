@@ -24,7 +24,7 @@ export function Profile() {
     );
   }
   return (
-    <div>
+    <div className="flex flex-col ml-auto">
       {connectors.map((connector) => (
         <button
           disabled={!connector.ready}
