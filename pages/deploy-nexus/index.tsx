@@ -1,22 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
+import NexusName from "../../components/nexusDeployment/NexusName";
+import TargetChain from "../../components/nexusDeployment/TargetChain";
+import FeaturesSelection from "../../components/nexusDeployment/FeaturesSelection";
 
 type Props = {};
 
 const index = (props: Props) => {
+  const [currentStep, setCurrentStep] = useState(0);
+
+  const onboardingSteps = [
+    <NexusName></NexusName>,
+    <TargetChain></TargetChain>,
+    <FeaturesSelection></FeaturesSelection>,
+  ];
+
+  function handleNext() {
+    if (currentStep < onboardingSteps.length - 1) {
+      setCurrentStep(currentStep + 1);
+    }
+    console.log(currentStep);
+  }
+
+  function handleBack() {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
+    console.log(currentStep);
+  }
+
   return (
-    <div className="flex flex-col flex-wrap justify-start content-center bg-background pt-52  gap-2 h-screen ">
-      <div className="flex w-[50%]  border-solid border-2 rounded-md border-white">
-        <div className="flex flex-col p-5">
-          <h2 className="font-normal font-normal text-4xl leading-12 text-center text-white">
-            Welcome to Nexus Vaults
-          </h2>
-          <p className="text-center text-white">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Pellentesque ut augue libero.Lorem ipsum dolor sit amet, consectetur
-            adipiscing elit. Pellentesque ut augue libero.Lorem ipsum dolor sit
-            amet, consectetur adipiscing elit. Pellentesque ut augue libero.
-          </p>
-        </div>
+    <div className="flex flex-col flex-wrap justify-start content-center bg-background pt-40  gap-2 h-screen ">
+      {onboardingSteps[currentStep]}
+      <div className="flex flex-row justify-center gap-4">
+        <button
+          className="border-solid border-2 border-white rounded-md p-1 text-white hover:bg-white hover:text-background"
+          onClick={handleBack}
+        >
+          Back
+        </button>
+        <button
+          className="border-solid border-2 border-white rounded-md p-1 text-white hover:bg-white hover:text-background"
+          onClick={handleNext}
+        >
+          Next
+        </button>
       </div>
     </div>
   );
