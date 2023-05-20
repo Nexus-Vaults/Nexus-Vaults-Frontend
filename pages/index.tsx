@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Layout, { siteTitle } from "../components/layout";
-import Navbar from "../components/navbar/navbar.js";
-import Learnmore from "../components/learnmore-section/learnmore-section.js";
+import Navbar from "../components/app/navbar/navbar.jsx";
+import Learnmore from "../components/app/learnmore-section/learnmore-section.js";
 import { useRouter } from "next/router";
 
 export default function Home() {
@@ -20,8 +20,6 @@ export default function Home() {
           type="module"
           src="https://unpkg.com/@splinetool/viewer@0.9.339/build/spline-viewer.js"
         ></script>
-        <spline-viewer url="https://prod.spline.design/3OtzoXdPXE0rX8Cf/scene.splinecode"></spline-viewer>
-        {/* end ignore */}
 
         <div className="flex items-center justify-center">
           <button

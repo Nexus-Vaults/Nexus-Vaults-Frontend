@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../../components/navbar/navbar.js";
+import Navbar from "../../components/app/navbar/navbar.jsx";
 import { useRouter } from "next/router";
 
 type Props = {};

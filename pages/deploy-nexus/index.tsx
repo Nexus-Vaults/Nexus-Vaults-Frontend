@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import NexusName from "../../components/nexusDeployment/NexusName";
-import TargetChain from "../../components/nexusDeployment/TargetChain";
-import FeaturesSelection from "../../components/nexusDeployment/FeaturesSelection";
+import NexusName from "../../components/app/nexusDeployment/NexusName";
+import TargetChain from "../../components/app/nexusDeployment/TargetChain";
+import FeaturesSelection from "../../components/app/nexusDeployment/FeaturesSelection";
 
 type Props = {};
 
