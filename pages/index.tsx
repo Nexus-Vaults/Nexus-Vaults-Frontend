@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Layout, { siteTitle } from "../components/layout";
 import Navbar from "../components/navbar/navbar.js";
-import Midbar from "../components/midbar/midbar.js";
 import Learnmore from "../components/learnmore-section/learnmore-section.js";
 import { useRouter } from "next/router";
 
@@ -11,7 +10,7 @@ export default function Home() {
   return (
     <div className="bg-gray-800">
       <Navbar></Navbar>
-      <Layout>
+      <Layout home>
         <Head>
           <title>{siteTitle}</title>
         </Head>
@@ -43,8 +42,6 @@ export default function Home() {
           </button>
         </div>
       </Layout>
-
-      <Midbar></Midbar>
       <Learnmore></Learnmore>
     </div>
   );
