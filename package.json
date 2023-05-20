@@ -1,4 +1,9 @@
 {
+  "browser": {
+    "fs": false,
+    "net": false,
+    "tls": false
+  },
   "private": true,
   "scripts": {
     "dev": "next dev",

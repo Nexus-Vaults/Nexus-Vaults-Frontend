@@ -1,56 +1,64 @@
 import "../styles/global.css";
 import { AppProps } from "next/app";
-import { WagmiConfig, createConfig, configureChains, mainnet } from "wagmi";
+import "@rainbow-me/rainbowkit/styles.css";
+import {
+  connectorsForWallets,
+  RainbowKitProvider,
+} from "@rainbow-me/rainbowkit";
+import { configureChains, createConfig, WagmiConfig } from "wagmi";
+import { polygon, fantom, polygonMumbai, moonbeam } from "wagmi/chains";
+import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
-import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
-import { InjectedConnector } from "wagmi/connectors/injected";
-import { MetaMaskConnector } from "wagmi/connectors/metaMask";
-import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
-import { goerli, polygon } from "viem/chains";
+import { Chain } from "@wagmi/chains";
+import {
+  injectedWallet,
+  ledgerWallet,
+  metaMaskWallet,
+  phantomWallet,
+  rainbowWallet,
+  safeWallet,
+  walletConnectWallet,
+} from "@rainbow-me/rainbowkit/wallets";
 
-// /**
-//  * Configures the chains and providers to be used by the application. Add a new chain to the list to enable it [mainnet, ... ].
-//  */
-// const { chains, publicClient, webSocketPublicClient } = configureChains(
-//   [mainnet, polygon, goerli],
-//   [publicProvider()]
-// );
+const projectId = process.env.PROJECT_ID;
+const alchemyId = process.env.ALCHEMY_ID;
 
-// /**
-//  * Manages wallet connection state and configuration.
-//  * @param autoConnect Enables reconnecting to last used connector on mount.
-//  * @param connectors Connectors to be used by the application. Add a new connector to the list to enable it.
-//  * @param publicClient  Like the ethers providers - should be used to access block-chain info (transactions, block numbers, balance, etc…).
-//  * @param webSocketPublicClient WebSocketProvider: connects to a JSON-RPC API via a WebSocket.
-//  */
-// const config = createConfig({
-//   autoConnect: true,
-//   connectors: [
-//     new MetaMaskConnector({ chains }),
-//     new CoinbaseWalletConnector({
-//       chains,
-//       options: {
-//         appName: 'wagmi',
-//       },
-//     }),
-//     new WalletConnectConnector({
-//       chains,
-//       options: {
-//         projectId: '...',
-//       },
-//     }),
-//     new InjectedConnector({
-//       chains,
-//       options: {
-//         name: 'Injected',
-//         shimDisconnect: true,
-//       },
-//     }),
-//   ],
-//   publicClient,
-//   webSocketPublicClient,
-// })
+const defaultCains: Chain[] = process.env.TESTNET
+  ? [polygonMumbai]
+  : [polygon, fantom, moonbeam];
+const { chains, publicClient } = configureChains(defaultCains, [
+  // @ts-ignore
+  alchemyProvider({ apiKey: alchemyId }),
+  publicProvider(),
+]);
+
+const connectors = connectorsForWallets([
+  {
+    groupName: "Recommended",
+    wallets: [
+      injectedWallet({ chains }),
+      rainbowWallet({ projectId, chains }),
+      walletConnectWallet({ projectId, chains }),
+      metaMaskWallet({ projectId, chains }),
+      ledgerWallet({ projectId, chains }),
+      phantomWallet({ chains }),
+      safeWallet({ chains }),
+    ],
+  },
+]);
+
+const wagmiConfig = createConfig({
+  autoConnect: true,
+  connectors,
+  publicClient,
+});
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  return (
+    <WagmiConfig config={wagmiConfig}>
+      <RainbowKitProvider chains={chains}>
+        <Component {...pageProps} />;
+      </RainbowKitProvider>
+    </WagmiConfig>
+  );
 }
