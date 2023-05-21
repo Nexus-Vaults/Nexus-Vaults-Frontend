@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
-import Navbar from "../../components/app/navbar/navbar";
+import Navbar from "../../components/app/navbar/navbar.tsx";
 import Sidebar from "../../components/app/sidebar";
 
 type Props = {};
