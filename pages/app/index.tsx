@@ -9,10 +9,10 @@ const Index = (props: Props) => {
   const router = useRouter();
 
   return (
-    <div className="flex flex-col h-screen bg-white">
-      <Navbar></Navbar>
-      <div className="flex-1 flex flex-row">
-        <Sidebar></Sidebar>
+    <div className="flex flex-row bg-white h-screen">
+      <Sidebar></Sidebar>
+      <div className="flex-1 flex flex-col">
+        <Navbar></Navbar>
 
         <div className="flex-1 flex flex-row  p-2 gap-2 ">
           <div className=" flex flex-col flex-1 ">

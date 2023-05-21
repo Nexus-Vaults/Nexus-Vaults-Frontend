@@ -51,7 +51,7 @@ const index = (props: Props) => {
   }
 
   return (
-    <div className="flex flex-col flex-wrap justify-start content-center bg-background pt-40  gap-2 h-screen ">
+    <div className="flex flex-col flex-wrap justify-start content-center bg-background pt-40  gap-2  ">
       {onboardingSteps[currentStep]}
       <div className="flex flex-row justify-center gap-4">
         <button

@@ -8,7 +8,6 @@ export default function Home() {
 
   return (
     <div className="bg-gray-800 bg-img">
-      <Navbar></Navbar>
       <Layout home>
         <Head>
           <title>{siteTitle}</title>
