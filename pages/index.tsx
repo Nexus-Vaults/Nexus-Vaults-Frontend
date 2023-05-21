@@ -3,25 +3,20 @@ import Layout, { siteTitle } from "../components/layout";
 import Navbar from "../components/app/navbar/navbar.jsx";
 import Learnmore from "../components/app/learnmore-section/learnmore-section.js";
 import { useRouter } from "next/router";
+import Image from 'next/image'
 
 export default function Home() {
   const router = useRouter();
 
   return (
-    <div className="bg-gray-800">
+    <div className="bg-gray-800 bg-img">
       <Navbar></Navbar>
       <Layout home>
         <Head>
           <title>{siteTitle}</title>
         </Head>
 
-        {/* ignore for now */}
-        <script
-          type="module"
-          src="https://unpkg.com/@splinetool/viewer@0.9.339/build/spline-viewer.js"
-        ></script>
-
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center py-80">
           <button
             className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800"
             onClick={() => router.push("/app")}
