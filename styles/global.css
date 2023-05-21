@@ -26,11 +26,3 @@ img {
   max-width: 100%;
   display: block;
 }
-
-@layer components {
-  .card {
-    background-color: theme('colors.white');
-    border-radius: theme('borderRadius.lg');
-    padding: theme('spacing.6');
-  }
-}

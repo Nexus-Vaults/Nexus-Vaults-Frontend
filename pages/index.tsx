@@ -1,9 +1,7 @@
 import Head from "next/head";
 import Layout, { siteTitle } from "../components/layout";
-import Navbar from "../components/app/navbar/navbar.jsx";
 import Learnmore from "../components/app/learnmore-section/learnmore-section.js";
 import { useRouter } from "next/router";
-import Image from 'next/image'
 
 export default function Home() {
   const router = useRouter();
