@@ -1,16 +1,22 @@
 import React from "react";
 
-type Props = {};
+type Props = {
+  isOpened: boolean;
+};
 
-const Sidebar = (props: Props) => {
+const Sidebar = ({ isOpened }: Props) => {
   return (
-    <div className=" flex flex-col   rounded-md  w-[20%] border-outline ">
-      <div className=" bg-blue100 rounded-md border-solid border-2 border-white">
+    <div
+      className={`bg-blue100 overflow-hidden  ${
+        isOpened ? "w-[20vw]" : "w-[0vw]"
+      }`}
+    >
+      <div className="  ">
         <h1 className="text-center text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ">
           Logo
         </h1>
       </div>
-      <div className=" bg-blue100 rounded-md flex-1 flex flex-col justify-between">
+      <div className=" flex-1 flex flex-col justify-between">
         <div className="flex-1">
           <h1 className="text-center text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ">
             My Nexuses

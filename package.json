@@ -11,6 +11,11 @@
     "start": "next start"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.0",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.13.1",
     "@rainbow-me/rainbowkit": "^1.0.0",
     "gray-matter": "^4.0.3",
     "next": "^13.0.2",

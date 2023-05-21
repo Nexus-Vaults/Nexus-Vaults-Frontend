@@ -1,5 +1,7 @@
 import "../styles/global.css";
 import { AppProps } from "next/app";
+import type { ReactElement, ReactNode } from "react";
+import type { NextPage } from "next";
 import "@rainbow-me/rainbowkit/styles.css";
 import {
   connectorsForWallets,
@@ -19,6 +21,14 @@ import {
   safeWallet,
   walletConnectWallet,
 } from "@rainbow-me/rainbowkit/wallets";
+
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
 
 const projectId = process.env.PROJECT_ID;
 const alchemyId = process.env.ALCHEMY_ID;
@@ -53,11 +63,13 @@ const wagmiConfig = createConfig({
   publicClient,
 });
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? ((page) => page);
+
   return (
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider chains={chains}>
-        <Component {...pageProps} />
+        {getLayout(<Component {...pageProps} />)}
       </RainbowKitProvider>
     </WagmiConfig>
   );

@@ -1,12 +1,11 @@
 import React, { ReactElement } from "react";
-import WelcomePage from "../../components/app/WelcomePage";
-import Layout from "../../components/layout";
-import { NextPageWithLayout } from "../_app";
+import Layout from "../../../components/layout";
+import { NextPageWithLayout } from "../../_app";
 
 type Props = {};
 
 const Index: NextPageWithLayout = (props: Props) => {
-  return <WelcomePage></WelcomePage>;
+  return <div> Access Page</div>;
 };
 
 Index.getLayout = function getLayout(page: ReactElement) {

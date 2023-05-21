@@ -1,12 +1,14 @@
-import React, { useState } from "react";
-import NexusName from "../../components/app/nexusDeployment/NexusName";
-import TargetChain from "../../components/app/nexusDeployment/TargetChain";
-import FeaturesSelection from "../../components/app/nexusDeployment/FeaturesSelection";
-import DeployNexus from "../../components/app/nexusDeployment/deploy/DeployNexus";
+import React, { ReactElement, useState } from "react";
+import NexusName from "../../../components/app/nexusDeployment/NexusName";
+import TargetChain from "../../../components/app/nexusDeployment/TargetChain";
+import FeaturesSelection from "../../../components/app/nexusDeployment/FeaturesSelection";
+import DeployNexus from "../../../components/app/nexusDeployment/deploy/DeployNexus";
+import Layout from "../../../components/layout";
+import { NextPageWithLayout } from "../../_app";
 
 type Props = {};
 
-const index = (props: Props) => {
+const Index: NextPageWithLayout = (props: Props) => {
   const [currentStep, setCurrentStep] = useState(0);
 
   const [nexusName, setNexusName] = useState("");
@@ -51,7 +53,7 @@ const index = (props: Props) => {
   }
 
   return (
-    <div className="flex flex-col flex-wrap justify-start content-center bg-background pt-40  gap-2  ">
+    <div className="flex flex-col flex-wrap justify-start content-center bg-background  gap-2  ">
       {onboardingSteps[currentStep]}
       <div className="flex flex-row justify-center gap-4">
         <button
@@ -71,4 +73,8 @@ const index = (props: Props) => {
   );
 };
 
-export default index;
+Index.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
+};
+
+export default Index;
