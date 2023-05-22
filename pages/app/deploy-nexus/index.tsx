@@ -5,6 +5,8 @@ import FeaturesSelection from "../../../components/app/nexusDeployment/FeaturesS
 import DeployNexus from "../../../components/app/nexusDeployment/deploy/DeployNexus";
 import Layout from "../../../components/layout";
 import { NextPageWithLayout } from "../../_app";
+import {useAccount, useContractWrite, usePrepareContractWrite} from "wagmi";
+import NexusFactory from "abiTypes/contracts/nexus/NexusFactory.sol/NexusFactory";
 
 type Props = {};
 
@@ -51,6 +53,17 @@ const Index: NextPageWithLayout = (props: Props) => {
     }
     console.log(currentStep);
   }
+
+  const { address} = useAccount()
+
+  const {config} = usePrepareContractWrite({
+    address: process.env.CONTRACTADD,
+    abi: NexusFactory,
+    functionName: "create",
+    args: [nexusName, address!]
+  })
+
+  const {write,error} = useContractWrite(config)
 
   return (
     <div className="flex flex-col flex-wrap justify-start content-center bg-background  gap-2  ">
