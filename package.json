@@ -6,9 +6,9 @@
   },
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "dev": "node Convert.js && next dev",
+    "build": "node Convert.js && next build",
+    "start": "node Convert.js && next start"
   },
   "dependencies": {
     "@emotion/react": "^11.11.0",
