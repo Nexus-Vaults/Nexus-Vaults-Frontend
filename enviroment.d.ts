@@ -5,5 +5,6 @@ declare namespace NodeJS {
     readonly ALCHEMY_ID: string;
     readonly APP_NAME: string;
     readonly CONTRACTADD: `0x${string}`;
+    readonly CATALOGADD: `0x${string}`;
   }
 }
