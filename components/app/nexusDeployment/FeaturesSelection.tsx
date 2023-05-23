@@ -3,9 +3,15 @@ import FeaturesDashboard from "./features/FeaturesDashboard";
 
 type Props = {
   handleFeatures: (features: string[]) => void;
+  handleBasicFeatures: (features: string[]) => void;
+  handleCosts: (costs: number) => void;
 };
 
-const FeaturesSelection = ({ handleFeatures }: Props) => {
+const FeaturesSelection = ({
+  handleFeatures,
+  handleBasicFeatures,
+  handleCosts,
+}: Props) => {
   return (
     <div className="flex flex-col w-[80%] p-5 gap-10">
       <div className="flex flex-col p-5">
@@ -19,7 +25,11 @@ const FeaturesSelection = ({ handleFeatures }: Props) => {
           consectetur adipiscing elit. Pellentesque ut augue libero.
         </p>
       </div>
-      <FeaturesDashboard handleFeatures={handleFeatures}></FeaturesDashboard>
+      <FeaturesDashboard
+        handleFeatures={handleFeatures}
+        handleBasicFeatures={handleBasicFeatures}
+        handleCosts={handleCosts}
+      ></FeaturesDashboard>
     </div>
   );
 };

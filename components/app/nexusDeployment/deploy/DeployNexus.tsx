@@ -4,9 +4,17 @@ type Props = {
   nexusName: string;
   targetChain: string;
   features: string[];
+  basicFeatures: string[];
+  costs: number;
 };
 
-const DeployNexus = ({ nexusName, targetChain, features }: Props) => {
+const DeployNexus = ({
+  nexusName,
+  targetChain,
+  features,
+  basicFeatures,
+  costs,
+}: Props) => {
   return (
     <div className="flex flex-col w-[30%]">
       <div className="flex flex-col p-5">
@@ -26,18 +34,29 @@ const DeployNexus = ({ nexusName, targetChain, features }: Props) => {
           <p>{nexusName}</p>
         </div>
         <div className="flex flex-row">
-          <p>Feature Address:</p>
-          <p>...</p>
-        </div>
-        <div className="flex flex-row">
           <p>Target Chain:</p>
           <p>{targetChain}</p>
         </div>
+        <div>
+          <p>Basic Features:</p>
+          <ul>
+            {basicFeatures.map((feature) => (
+              <li>{feature}</li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <p>Features:</p>
+          <ul>
+            {features.map((feature) => (
+              <li>{feature}</li>
+            ))}
+          </ul>
+        </div>
+
         <div className="flex flex-row">
-          <p>Available Chains:</p>
-          {features.map((feature) => (
-            <p>{feature}</p>
-          ))}
+          <p>Costs:</p>
+          <p>{costs}</p>
         </div>
       </div>
     </div>

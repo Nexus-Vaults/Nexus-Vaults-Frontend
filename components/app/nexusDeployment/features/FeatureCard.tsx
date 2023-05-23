@@ -20,15 +20,15 @@ const FeatureCard = ({
   onRemove,
 }: CardProps) => {
   return (
-    <div className="border p-4 rounded hover:bg-black">
+    <div
+      className={`border p-4 rounded hover:bg-gray-100 cursor-pointer ${
+        added ? "bg-gray-100" : ""
+      }`}
+      onClick={added ? () => onRemove(id) : () => onAdd(id)}
+    >
       <h2 className="text-xl font-bold">{name}</h2>
       <p>{description}</p>
       <p>Cost: ${cost}</p>
-      {added ? (
-        <button onClick={() => onRemove(id)}>Remove</button>
-      ) : (
-        <button onClick={() => onAdd(id)}>Add</button>
-      )}
     </div>
   );
 };

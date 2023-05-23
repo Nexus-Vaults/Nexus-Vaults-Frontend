@@ -14,6 +14,8 @@ const Index: NextPageWithLayout = (props: Props) => {
   const [nexusName, setNexusName] = useState("");
   const [targetChain, setTargetChain] = useState("");
   const [features, setFeatures] = useState<string[]>([]);
+  const [basicFeatures, setBasicFeatures] = useState<string[]>([]);
+  const [costs, setCosts] = useState(0);
 
   const handleNexusName = (name: string) => {
     setNexusName(name);
@@ -26,15 +28,28 @@ const Index: NextPageWithLayout = (props: Props) => {
   const handleFeatures = (features: string[]) => {
     setFeatures(features);
   };
+  const handleBasicFeatures = (features: string[]) => {
+    setBasicFeatures(features);
+  };
+
+  const handleCosts = (costs: number) => {
+    setCosts(costs);
+  };
 
   const onboardingSteps = [
-    <NexusName handleName={handleNexusName}></NexusName>,
     <TargetChain handleTargetChain={handleTargetChain}></TargetChain>,
-    <FeaturesSelection handleFeatures={handleFeatures}></FeaturesSelection>,
+    <NexusName handleName={handleNexusName}></NexusName>,
+    <FeaturesSelection
+      handleFeatures={handleFeatures}
+      handleBasicFeatures={handleBasicFeatures}
+      handleCosts={handleCosts}
+    ></FeaturesSelection>,
     <DeployNexus
       nexusName={nexusName}
       targetChain={targetChain}
       features={features}
+      basicFeatures={basicFeatures}
+      costs={costs}
     ></DeployNexus>,
   ];
 
