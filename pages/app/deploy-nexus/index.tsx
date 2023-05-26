@@ -8,7 +8,7 @@ import { NextPageWithLayout } from "../../_app";
 
 type Props = {};
 
-const Index: NextPageWithLayout = (props: Props) => {
+const Index = (props: Props) => {
   const [currentStep, setCurrentStep] = useState(0);
 
   const [nexusName, setNexusName] = useState("");
@@ -86,10 +86,6 @@ const Index: NextPageWithLayout = (props: Props) => {
       </div>
     </div>
   );
-};
-
-Index.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
 };
 
 export default Index;
