@@ -2,15 +2,15 @@ import React, { ReactElement } from 'react';
 import Layout from '../../../components/layout';
 import { NextPageWithLayout } from '../../_app';
 
-import { apiClient, Chain } from "../../../API";
-import { useContractWrite, usePrepareContractWrite } from "wagmi";
-import { schema as VaultV1Facet } from "abiTypes/contracts/vault/v1/facet/VaultV1Facet.sol/VaultV1Facet";
+import { apiClient, Chain } from '../../../API';
+import { useContractWrite, usePrepareContractWrite } from 'wagmi';
+import { schema as VaultV1Facet } from 'abiTypes/contracts/vault/v1/facet/VaultV1Facet.sol/VaultV1Facet';
 
 type Props = {};
 
 const Index: NextPageWithLayout = (props: Props) => {
   //#toDo: Get the proper Nexus from previous component or from the explorer
-  const nexus = { name: "", address: "0x000", chain: Chain.lol } as const;
+  const nexus = { name: '', address: '0x000', chain: Chain.lol } as const;
   const vaults = apiClient.getVaults(nexus);
 
   const chainId = Chain.lol;
@@ -23,7 +23,7 @@ const Index: NextPageWithLayout = (props: Props) => {
   const { config: vaultV1FacetConfig } = usePrepareContractWrite({
     address: process.env.CONTRACTADD,
     abi: VaultV1Facet,
-    functionName: "createVaultV1",
+    functionName: 'createVaultV1',
     args: [chainId, vaultId, gatewayAddress],
   });
 
@@ -33,7 +33,7 @@ const Index: NextPageWithLayout = (props: Props) => {
   const { config: setPrimaryVaultGatewayV1Config } = usePrepareContractWrite({
     address: process.env.CONTRACTADD,
     abi: VaultV1Facet,
-    functionName: "setPrimaryVaultGatewayV1",
+    functionName: 'setPrimaryVaultGatewayV1',
     args: [chainId, vaultId, gatewayAddress],
   });
 
