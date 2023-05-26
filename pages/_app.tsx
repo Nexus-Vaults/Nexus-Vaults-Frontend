@@ -1,17 +1,17 @@
-import "../styles/global.css";
-import { AppProps } from "next/app";
-import type { ReactElement, ReactNode } from "react";
-import type { NextPage } from "next";
-import "@rainbow-me/rainbowkit/styles.css";
+import '../styles/global.css';
+import { AppProps } from 'next/app';
+import type { ReactElement, ReactNode } from 'react';
+import type { NextPage } from 'next';
+import '@rainbow-me/rainbowkit/styles.css';
 import {
   connectorsForWallets,
   RainbowKitProvider,
-} from "@rainbow-me/rainbowkit";
-import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { polygon, fantom, polygonMumbai, moonbeam } from "wagmi/chains";
-import { alchemyProvider } from "wagmi/providers/alchemy";
-import { publicProvider } from "wagmi/providers/public";
-import { Chain } from "@wagmi/chains";
+} from '@rainbow-me/rainbowkit';
+import { configureChains, createConfig, WagmiConfig } from 'wagmi';
+import { polygon, fantom, polygonMumbai, moonbeam } from 'wagmi/chains';
+import { alchemyProvider } from 'wagmi/providers/alchemy';
+import { publicProvider } from 'wagmi/providers/public';
+import { Chain } from '@wagmi/chains';
 import {
   injectedWallet,
   ledgerWallet,
@@ -20,7 +20,7 @@ import {
   rainbowWallet,
   safeWallet,
   walletConnectWallet,
-} from "@rainbow-me/rainbowkit/wallets";
+} from '@rainbow-me/rainbowkit/wallets';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -44,7 +44,7 @@ const { chains, publicClient } = configureChains(defaultCains, [
 
 const connectors = connectorsForWallets([
   {
-    groupName: "Recommended",
+    groupName: 'Recommended',
     wallets: [
       injectedWallet({ chains }),
       rainbowWallet({ projectId, chains }),

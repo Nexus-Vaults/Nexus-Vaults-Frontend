@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import FeatureCard from "./FeatureCard";
+import React, { useEffect, useState } from 'react';
+import FeatureCard from './FeatureCard';
 
 type Props = {
   handleFeatures: (features: string[]) => void;
@@ -15,29 +15,29 @@ const FeaturesDashboard = ({
   const [cards, setCards] = useState([
     {
       id: 1,
-      name: "Card 1",
-      description: "Description of Card 1",
+      name: 'Card 1',
+      description: 'Description of Card 1',
       cost: 10,
       added: false,
     },
     {
       id: 2,
-      name: "Card 2",
-      description: "Description of Card 2",
+      name: 'Card 2',
+      description: 'Description of Card 2',
       cost: 10,
       added: false,
     },
     {
       id: 3,
-      name: "Card 3",
-      description: "Description of Card 2",
+      name: 'Card 3',
+      description: 'Description of Card 2',
       cost: 10,
       added: false,
     },
     {
       id: 4,
-      name: "Card 4",
-      description: "Description of Card 2",
+      name: 'Card 4',
+      description: 'Description of Card 2',
       cost: 10,
       added: false,
     },
@@ -47,15 +47,15 @@ const FeaturesDashboard = ({
   const [basicFeatures, setBasicFeatures] = useState([
     {
       id: 5,
-      name: "Basic Feature 1",
-      description: "Description of Card 1",
+      name: 'Basic Feature 1',
+      description: 'Description of Card 1',
       cost: 10,
       added: true,
     },
     {
       id: 6,
-      name: "Basic Feature 2",
-      description: "Description of Card 2",
+      name: 'Basic Feature 2',
+      description: 'Description of Card 2',
       cost: 10,
       added: true,
     },

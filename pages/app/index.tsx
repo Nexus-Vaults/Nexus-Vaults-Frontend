@@ -1,7 +1,7 @@
-import React, { ReactElement } from "react";
-import WelcomePage from "../../components/app/WelcomePage";
-import Layout from "../../components/layout";
-import { NextPageWithLayout } from "../_app";
+import React, { ReactElement } from 'react';
+import WelcomePage from '../../components/app/WelcomePage';
+import Layout from '../../components/layout';
+import { NextPageWithLayout } from '../_app';
 
 type Props = {};
 

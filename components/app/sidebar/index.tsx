@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 type Props = {
   isOpened: boolean;
@@ -8,7 +8,7 @@ const Sidebar = ({ isOpened }: Props) => {
   return (
     <div
       className={`bg-blue100 overflow-hidden  ${
-        isOpened ? "w-[20vw]" : "w-[0vw]"
+        isOpened ? 'w-[20vw]' : 'w-[0vw]'
       }`}
     >
       <div className="  ">

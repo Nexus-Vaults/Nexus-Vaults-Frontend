@@ -1,5 +1,5 @@
-import { useRouter } from "next/router";
-import React from "react";
+import { useRouter } from 'next/router';
+import React from 'react';
 
 type Props = {};
 
@@ -22,13 +22,13 @@ const WelcomePage = (props: Props) => {
       <div className="flex flex-row    gap-x-12 justify-center">
         <div
           className="flex flex-col bg-red p-4  rounded-[100px]  justify-center align-center   hover:text-background hover:bg-gray-700"
-          onClick={() => router.push("/app/deploy-nexus")}
+          onClick={() => router.push('/app/deploy-nexus')}
         >
           <h1 className="text-center  text-gray-100 ">Deploy Nexus</h1>
         </div>
         <div
           className="flex flex-col bg-red p-4  rounded-[100px]  justify-center align-center hover:text-background  hover:bg-gray-700"
-          onClick={() => router.push("/app/access-nexus")}
+          onClick={() => router.push('/app/access-nexus')}
         >
           <h1 className="text-center text-gray-100">Access Nexus</h1>
         </div>

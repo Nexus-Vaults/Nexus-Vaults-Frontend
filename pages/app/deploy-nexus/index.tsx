@@ -1,22 +1,22 @@
-import React, { ReactElement, useState } from "react";
-import NexusName from "../../../components/app/nexusDeployment/NexusName";
-import TargetChain from "../../../components/app/nexusDeployment/TargetChain";
-import FeaturesSelection from "../../../components/app/nexusDeployment/FeaturesSelection";
-import DeployNexus from "../../../components/app/nexusDeployment/deploy/DeployNexus";
-import Layout from "../../../components/layout";
-import { NextPageWithLayout } from "../../_app";
-import { useAccount, useContractWrite, usePrepareContractWrite } from "wagmi";
-import { schema as NexusFactory } from "abiTypes/contracts/nexus/NexusFactory.sol/NexusFactory";
-import { schema as Nexus } from "abiTypes/contracts/nexus/Nexus.sol/Nexus";
-import { apiClient } from "../../../API";
+import React, { ReactElement, useState } from 'react';
+import NexusName from '../../../components/app/nexusDeployment/NexusName';
+import TargetChain from '../../../components/app/nexusDeployment/TargetChain';
+import FeaturesSelection from '../../../components/app/nexusDeployment/FeaturesSelection';
+import DeployNexus from '../../../components/app/nexusDeployment/deploy/DeployNexus';
+import Layout from '../../../components/layout';
+import { NextPageWithLayout } from '../../_app';
+import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi';
+import { schema as NexusFactory } from 'abiTypes/contracts/nexus/NexusFactory.sol/NexusFactory';
+import { schema as Nexus } from 'abiTypes/contracts/nexus/Nexus.sol/Nexus';
+import { apiClient } from '../../../API';
 
 type Props = {};
 
 const Index = (props: Props) => {
   const [currentStep, setCurrentStep] = useState(0);
 
-  const [nexusName, setNexusName] = useState("");
-  const [targetChain, setTargetChain] = useState("");
+  const [nexusName, setNexusName] = useState('');
+  const [targetChain, setTargetChain] = useState('');
   const [features, setFeatures] = useState<string[]>([]);
   const [basicFeatures, setBasicFeatures] = useState<string[]>([]);
   const [costs, setCosts] = useState(0);
@@ -76,7 +76,7 @@ const Index = (props: Props) => {
   const { config: nexusConfig } = usePrepareContractWrite({
     address: process.env.CONTRACTADD,
     abi: NexusFactory,
-    functionName: "create",
+    functionName: 'create',
     args: [nexusName, address!],
   });
 
@@ -101,7 +101,7 @@ const Index = (props: Props) => {
   const { config: featureConfigOne } = usePrepareContractWrite({
     address: process.env.CONTRACTADD,
     abi: Nexus,
-    functionName: "installFacetFromCatalog",
+    functionName: 'installFacetFromCatalog',
     args: [
       apiClient.getCatalogAddress(),
       getfeatureAddress(features)[0],
@@ -112,7 +112,7 @@ const Index = (props: Props) => {
   const { config: featureConfigMany } = usePrepareContractWrite({
     address: process.env.CONTRACTADD,
     abi: Nexus,
-    functionName: "batchInstallFacetFromCatalog",
+    functionName: 'batchInstallFacetFromCatalog',
     args: [
       apiClient.getCatalogAddress(),
       getfeatureAddress(features),

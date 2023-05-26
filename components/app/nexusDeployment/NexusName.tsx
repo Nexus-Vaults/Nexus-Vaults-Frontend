@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 type Props = {
   handleName: (name: string) => void;
@@ -35,5 +35,5 @@ const NexusName = ({ handleName }: Props) => {
 
 export default NexusName;
 function useState(arg0: string): [any, any] {
-  throw new Error("Function not implemented.");
+  throw new Error('Function not implemented.');
 }

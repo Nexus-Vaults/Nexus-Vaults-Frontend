@@ -1,5 +1,5 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 
 function convertJsonToTypes(folderPath, outputFolderPath) {
   const files = fs.readdirSync(folderPath);
@@ -11,7 +11,7 @@ function convertJsonToTypes(folderPath, outputFolderPath) {
 
   files.forEach((file) => {
     const filePath = path.join(folderPath, file);
-    const outputFileName = file.replace(".json", ".ts");
+    const outputFileName = file.replace('.json', '.ts');
     const outputPath = path.join(outputFolderPath, outputFileName);
 
     // Check if the file is a directory
@@ -20,7 +20,7 @@ function convertJsonToTypes(folderPath, outputFolderPath) {
       convertJsonToTypes(filePath, outputPath);
     } else {
       // Read the JSON file
-      const jsonContent = fs.readFileSync(filePath, "utf8");
+      const jsonContent = fs.readFileSync(filePath, 'utf8');
 
       try {
         // Parse the JSON content
@@ -33,7 +33,7 @@ function convertJsonToTypes(folderPath, outputFolderPath) {
           )} = null!;`;
 
           // Write the types to the output file
-          fs.writeFileSync(outputPath, abiTypes, { flag: "w" });
+          fs.writeFileSync(outputPath, abiTypes, { flag: 'w' });
 
           console.log(`Generated TypeScript types for ${file}`);
         } else {
@@ -48,6 +48,6 @@ function convertJsonToTypes(folderPath, outputFolderPath) {
 
 // Usage example:
 
-const inputRoot = "contracts/artifacts";
-const outputRoot = "abiTypes";
+const inputRoot = 'contracts/artifacts';
+const outputRoot = 'abiTypes';
 convertJsonToTypes(inputRoot, outputRoot);

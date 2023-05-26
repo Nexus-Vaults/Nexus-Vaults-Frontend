@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import Sidebar from "./app/sidebar";
-import Navbar from "./app/navbar/navbar";
+import React, { useState } from 'react';
+import Sidebar from './app/sidebar';
+import Navbar from './app/navbar/navbar';
 
 type Props = {
   children: React.ReactNode;
@@ -20,7 +20,7 @@ export default function Layout({ children }: Props) {
       <div className="flex-1 flex ">
         <Sidebar isOpened={isOpened}></Sidebar>
 
-        <div className={`  ${isOpened ? "w-[80vw]" : "w-[100vw]"}`}>
+        <div className={`  ${isOpened ? 'w-[80vw]' : 'w-[100vw]'}`}>
           {children}
         </div>
       </div>

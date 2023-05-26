@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import FeaturesDashboard from "./features/FeaturesDashboard";
+import React, { useState } from 'react';
+import FeaturesDashboard from './features/FeaturesDashboard';
 
 type Props = {
   handleFeatures: (features: string[]) => void;

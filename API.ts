@@ -40,15 +40,15 @@ class ApiClientMock extends ApiClient {
   getVaults(nexus: Nexus): [Vault] {
     return [
       {
-        balances: [{ token: "", total: 0, liquid: 0 }],
-        address: "0x000",
+        balances: [{ token: '', total: 0, liquid: 0 }],
+        address: '0x000',
         chain: Chain.lol,
       },
     ];
   }
 
   getContracts(): ChainDeployment {
-    return { gatewayAddress: "0x000" };
+    return { gatewayAddress: '0x000' };
   }
 }
 

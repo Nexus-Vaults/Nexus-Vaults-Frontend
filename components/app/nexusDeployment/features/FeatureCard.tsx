@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 type CardProps = {
   id: number;
@@ -22,7 +22,7 @@ const FeatureCard = ({
   return (
     <div
       className={`border p-4 rounded hover:bg-gray-100 cursor-pointer ${
-        added ? "bg-gray-100" : ""
+        added ? 'bg-gray-100' : ''
       }`}
       onClick={added ? () => onRemove(id) : () => onAdd(id)}
     >
