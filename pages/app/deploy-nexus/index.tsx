@@ -6,8 +6,8 @@ import DeployNexus from "../../../components/app/nexusDeployment/deploy/DeployNe
 import Layout from "../../../components/layout";
 import { NextPageWithLayout } from "../../_app";
 import { useAccount, useContractWrite, usePrepareContractWrite } from "wagmi";
-import NexusFactory from "abiTypes/contracts/nexus/NexusFactory.sol/NexusFactory";
-import Nexus from "abiTypes/contracts/nexus/Nexus.sol/Nexus";
+import { schema as NexusFactory } from "abiTypes/contracts/nexus/NexusFactory.sol/NexusFactory";
+import { schema as Nexus } from "abiTypes/contracts/nexus/Nexus.sol/Nexus";
 import { apiClient } from "../../../API";
 
 type Props = {};
