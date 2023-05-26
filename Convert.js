@@ -28,7 +28,7 @@ function convertJsonToTypes(folderPath, outputFolderPath) {
 
         if (jsonData.abi !== undefined) {
           // Generate the TypeScript types from the ABI object
-          const abiTypes = `declare const schema: ${JSON.stringify(
+          const abiTypes = `export const schema: ${JSON.stringify(
             jsonData.abi
           )} = null!;`;
 
