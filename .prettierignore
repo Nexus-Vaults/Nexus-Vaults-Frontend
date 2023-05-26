@@ -8,6 +8,12 @@
 # testing
 /coverage
 
+# generated files
+/abiTypes
+
+# Submodules
+/contracts
+
 # next.js
 /.next/
 /out/
