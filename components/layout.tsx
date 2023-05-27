@@ -20,7 +20,7 @@ export default function Layout({ children }: Props) {
       <div className="flex-1 flex ">
         <Sidebar isOpened={isOpened}></Sidebar>
 
-        <div className={`  ${isOpened ? 'w-[80vw]' : 'w-[100vw]'}`}>
+        <div className={`  ${isOpened ? 'w-[85vw]' : 'w-[100vw]'}`}>
           {children}
         </div>
       </div>

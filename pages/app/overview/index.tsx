@@ -5,6 +5,7 @@ import { NextPageWithLayout } from '../../_app';
 import { apiClient, Chain } from '../../../API';
 import { useContractWrite, usePrepareContractWrite } from 'wagmi';
 import { schema as VaultV1Facet } from 'abiTypes/contracts/vault/v1/facet/VaultV1Facet.sol/VaultV1Facet';
+import Overview from '../../../components/app/overview';
 
 type Props = {};
 
@@ -42,7 +43,11 @@ const Index: NextPageWithLayout = (props: Props) => {
     error: errorSetPrimaryVaultGatewayV1,
   } = useContractWrite(vaultV1FacetConfig);
 
-  return <div> Overview</div>;
+  return (
+    <div className="w-full h-full py-4 px-10">
+      <Overview></Overview>
+    </div>
+  );
 };
 
 Index.getLayout = function getLayout(page: ReactElement) {
