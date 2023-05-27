@@ -1,38 +1,36 @@
 import React from 'react';
 
-type Props = {};
+type Props = {
+  costs: number;
+  featuresCount: number;
+};
 
-const ApprovePayment = (props: Props) => {
+const ApprovePayment = ({ costs, featuresCount }: Props) => {
   return (
-    <div className="flex flex-col w-[30%]">
-      <div className="flex flex-col p-5">
+    <div className="flex flex-col flex-1 gap-2 ">
+      <div className=" flex-1  flex flex-col p-5">
         <h2 className="font-normal font-normal text-4xl leading-12 text-center">
           Approve Payment
         </h2>
         <p className="text-center ">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-          ut augue libero.Lorem ipsum dolor sit amet, consectetur adipiscing
-          elit. Pellentesque ut augue libero.Lorem ipsum dolor sit amet,
-          consectetur adipiscing elit. Pellentesque ut augue libero.
+          Approve the payment if you have chosen any additional costs.
         </p>
       </div>
-      <div className="flex flex-col border-solid border-2 border-black">
-        <div className="flex flex-row">
-          <p>Name:</p>
-          <p>Nexus Name</p>
+      <div className="flex flex-col flex-1 justify-center gap-2">
+        <div className="flex flex-row  border-solid border-2 border-black rounded-md py-1 px-3 ">
+          <p>Features Count:</p>
+          <p>{featuresCount}</p>
         </div>
-        <div className="flex flex-row">
-          <p>Feature Address:</p>
-          <p>...</p>
+        <div className="flex flex-row  border-solid border-2 border-black rounded-md py-1 px-3">
+          <p>Total Cost:</p>
+          <p>{costs}</p>
         </div>
-        <div className="flex flex-row">
-          <p>Target Chain:</p>
-          <p>Polygon</p>
-        </div>
-        <div className="flex flex-row">
-          <p>Available Chains:</p>
-          <p>Etherum , Polygon ...</p>
-        </div>
+      </div>
+
+      <div className="flex flex-row justify-center  ">
+        <button className="text-white bg-[#0e76fd] h-[40px] shadow-lg rounded-xl   font-bold py-1 px-3 inline-block ">
+          Approve Payment
+        </button>
       </div>
     </div>
   );
