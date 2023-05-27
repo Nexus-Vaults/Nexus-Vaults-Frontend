@@ -22,7 +22,7 @@ const Overview = (props: Props) => {
   ];
 
   return (
-    <div className="h-full flex flex-col justify-center items-center gap-2">
+    <div className="w-full h-full flex flex-col justify-center items-center gap-2">
       <div className="w-full h-full flex-1 border-2 border-gray-400 rounded-lg">
         <div className="flex-1 h-[30%]  gap-4  flex flex-row justify-around p-4">
           <div className="flex-1 border-2 border-gray-300 rounded-lg">
@@ -37,7 +37,7 @@ const Overview = (props: Props) => {
         </div>
         <div className="flex-1">Graph</div>
       </div>
-      <div className="">
+      <div className="w-full flex-1">
         <Table data={tableData} />
       </div>
     </div>

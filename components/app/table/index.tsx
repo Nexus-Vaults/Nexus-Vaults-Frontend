@@ -11,7 +11,7 @@ interface TableProps {
 const Table: React.FC<TableProps> = ({ data }) => {
   return (
     <div
-      className="border-sold border-2 border-gray-400 rounded-lg h-[30vh] overflow-y-auto py-2 px-6"
+      className="w-full border-sold border-2 border-gray-400 rounded-lg h-[30vh] overflow-y-auto py-2 px-6"
       style={{ scrollbarWidth: 'thin' }}
     >
       <style>

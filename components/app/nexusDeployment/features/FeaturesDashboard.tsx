@@ -134,7 +134,7 @@ const FeaturesDashboard = ({
     handleFeatures(addedCardIds);
     handleBasicFeatures(addedFeaturesCardIds);
     handleCosts(calculateTotalCost());
-  }, [cards, basicFeatures, addedCardIds, addedFeaturesCardIds]);
+  }, [cards, basicFeatures]);
 
   return (
     <div className="flex flex-col gap-10">

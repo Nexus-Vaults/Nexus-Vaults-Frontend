@@ -28,7 +28,7 @@ const WelcomePage = (props: Props) => {
         </div>
         <div
           className="flex flex-col bg-red p-4  rounded-[100px]  justify-center align-center hover:text-background  hover:bg-gray-700"
-          onClick={() => router.push('/app/access-nexus')}
+          onClick={() => router.push('/app/overview')}
         >
           <h1 className="text-center text-gray-100">Access Nexus</h1>
         </div>
