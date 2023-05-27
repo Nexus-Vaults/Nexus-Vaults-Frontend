@@ -42,7 +42,7 @@ const Index: NextPageWithLayout = (props: Props) => {
     error: errorSetPrimaryVaultGatewayV1,
   } = useContractWrite(vaultV1FacetConfig);
 
-  return <div> Access Page</div>;
+  return <div> Overview</div>;
 };
 
 Index.getLayout = function getLayout(page: ReactElement) {
