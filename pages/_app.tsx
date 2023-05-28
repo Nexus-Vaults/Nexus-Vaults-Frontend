@@ -14,6 +14,7 @@ import {
   polygonMumbai,
   moonbeam,
   localhost,
+  hardhat,
 } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
@@ -40,7 +41,7 @@ const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
 const alchemyId = process.env.NEXT_PUBLIC_ALCHEMY_ID;
 
 const defaultCains: Chain[] = process.env.NEXT_PUBLIC_TESTNET
-  ? [polygonMumbai, localhost]
+  ? [polygonMumbai, hardhat]
   : [polygon, fantom, moonbeam];
 const { chains, publicClient } = configureChains(defaultCains, [
   // @ts-ignore

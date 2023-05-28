@@ -1,7 +1,7 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import React, { useEffect } from 'react';
 import { Chain as ChainType } from 'api';
-import { useNetwork, useSwitchNetwork } from 'wagmi';
+import { useConnect, useNetwork, useSwitchNetwork } from 'wagmi';
 import { CHAIN_DEFINITIONS } from 'api';
 
 type Props = {
@@ -22,7 +22,7 @@ const ConnectWallet = ({ targetChain, handleConection }: Props) => {
   return (
     <div className="flex flex-col flex-1 gap-2">
       <div className=" flex-1 flex flex-col p-5">
-        <h2 className="font-normal font-normal text-4xl leading-12 text-center">
+        <h2 className="font-normal text-4xl leading-12 text-center">
           Deploy Nexus
         </h2>
         <p className="text-center ">

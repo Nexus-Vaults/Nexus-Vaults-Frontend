@@ -11,7 +11,7 @@ type Props = {};
 const Index: React.FC<Props> = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [nexusName, setNexusName] = useState('');
-  const [targetChain, setTargetChain] = useState<Chain>('Ethereum');
+  const [targetChain, setTargetChain] = useState<Chain>('Localhost');
   const [features, setFeatures] = useState<string[]>([]);
   const [basicFeatures, setBasicFeatures] = useState<string[]>([]);
   const [costs, setCosts] = useState(0);

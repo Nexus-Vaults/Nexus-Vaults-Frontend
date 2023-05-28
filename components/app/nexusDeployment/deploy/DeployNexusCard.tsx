@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi';
-import { schema as NexusFactory } from 'abiTypes/contracts/nexus/NexusFactory.sol/NexusFactory';
-import { schema as Nexus } from 'abiTypes/contracts/nexus/Nexus.sol/Nexus';
+import { NexusFactory } from 'abiTypes/contracts/nexus/NexusFactory.sol/NexusFactory';
+import { Nexus } from 'abiTypes/contracts/nexus/Nexus.sol/Nexus';
 import { apiClient } from 'api';
 
 type Props = {
@@ -38,12 +38,8 @@ const DeployNexusCard = ({
   const { write: writeNexus } = useContractWrite(configNexus);
 
   function deployNexus() {
+    console.log("Deploying nexus...");
     writeNexus?.();
-    console.log('deploying...');
-    console.log(configNexus);
-    console.log(errorNexus);
-    console.log(process.env.NEXT_PUBLIC_CONTRACT_ADD);
-    console.log(nexusName);
   }
 
   function getFeatureAddress(features: string[]) {
@@ -93,7 +89,7 @@ const DeployNexusCard = ({
   return (
     <div className="flex flex-col flex-1 gap-2">
       <div className="flex-1 flex flex-col p-5">
-        <h2 className="font-normal font-normal text-4xl leading-12 text-center">
+        <h2 className="font-normal text-4xl leading-12 text-center">
           Deploy Nexus
         </h2>
         <p className="text-center ">Now you are ready to deploy the nexus.</p>
