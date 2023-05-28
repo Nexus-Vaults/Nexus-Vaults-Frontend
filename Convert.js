@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
+var typesGenerated = 0;
+
 function convertJsonToTypes(folderPath, outputFolderPath) {
   const files = fs.readdirSync(folderPath);
 
@@ -10,6 +12,10 @@ function convertJsonToTypes(folderPath, outputFolderPath) {
   }
 
   files.forEach((file) => {
+    if (file.endsWith('.dbg.json')) {
+      return;
+    }
+
     const filePath = path.join(folderPath, file);
     const outputFileName = file.replace('.json', '.ts');
     const outputPath = path.join(outputFolderPath, outputFileName);
@@ -28,14 +34,13 @@ function convertJsonToTypes(folderPath, outputFolderPath) {
 
         if (jsonData.abi !== undefined) {
           // Generate the TypeScript types from the ABI object
-          const abiTypes = `export const schema: ${JSON.stringify(
-            jsonData.abi
-          )} = null!;`;
+          const abiTypes = `export const ${
+            file.split('.')[0]
+          } = ${JSON.stringify(jsonData.abi)} as const;`;
 
           // Write the types to the output file
           fs.writeFileSync(outputPath, abiTypes, { flag: 'w' });
-
-          console.log(`Generated TypeScript types for ${file}`);
+          typesGenerated++;
         } else {
           console.log(`No ABI object found in ${file}`);
         }
@@ -51,3 +56,4 @@ function convertJsonToTypes(folderPath, outputFolderPath) {
 const inputRoot = 'contracts/artifacts';
 const outputRoot = 'abiTypes';
 convertJsonToTypes(inputRoot, outputRoot);
+console.log(`${typesGenerated} types generated`);
