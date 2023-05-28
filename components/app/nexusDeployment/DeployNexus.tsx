@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DeployNexusCard from './deploy/DeployNexusCard';
 import ConnectWallet from './deploy/ConnectWallet';
 import ApprovePayment from './deploy/ApprovePayment';
+import { Chain as Chain } from 'api';
 
 type Props = {
   nexusName: string;
-  targetChain: string;
+  targetChain: Chain;
   features: string[];
   basicFeatures: string[];
   costs: number;
+  handleName: (name: string) => void;
 };
 
 const DeployNexus = ({
@@ -17,12 +19,28 @@ const DeployNexus = ({
   features,
   basicFeatures,
   costs,
+  handleName,
 }: Props) => {
   const featuresCount = features.length + basicFeatures.length;
 
+  const [isApproved, setApproved] = useState(false);
+  const [isConnected, setConnected] = useState(false);
+
+  const handleApproval = (b: boolean) => {
+    setApproved(b);
+  };
+
+  const handleConnection = (b: boolean) => {
+    console.log('connection:' + b);
+    setConnected(b);
+  };
+
   return (
     <div className="flex flex-row ">
-      <ConnectWallet targetChain={targetChain}></ConnectWallet>
+      <ConnectWallet
+        targetChain={targetChain}
+        handleConection={handleConnection}
+      ></ConnectWallet>
       <div className="p-8  flex-wrap flex flex-col justify-center content-center h-full">
         <div className="w-fit h-fit">
           <svg
@@ -42,6 +60,8 @@ const DeployNexus = ({
       <ApprovePayment
         costs={costs}
         featuresCount={featuresCount}
+        handleApproval={handleApproval}
+        connected={isConnected}
       ></ApprovePayment>
       <div className="p-8 flex-wrap  flex flex-col justify-center content-center h-full">
         <div className="w-fit h-fit">
@@ -61,7 +81,11 @@ const DeployNexus = ({
       </div>
       <DeployNexusCard
         nexusName={nexusName}
+        features={features}
         featuresCount={featuresCount}
+        approved={isApproved}
+        connected={isConnected}
+        handleName={handleName}
       ></DeployNexusCard>
     </div>
   );
