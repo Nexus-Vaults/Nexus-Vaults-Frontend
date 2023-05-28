@@ -1,29 +1,27 @@
-import React, { ReactElement, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NexusName from '../../../components/app/nexusDeployment/NexusName';
 import TargetChain from '../../../components/app/nexusDeployment/TargetChain';
 import FeaturesSelection from '../../../components/app/nexusDeployment/FeaturesSelection';
-import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi';
-import { schema as NexusFactory } from 'abiTypes/contracts/nexus/NexusFactory.sol/NexusFactory';
-import { schema as Nexus } from 'abiTypes/contracts/nexus/Nexus.sol/Nexus';
-import { apiClient } from '../../../API';
 import DeployNexus from '../../../components/app/nexusDeployment/DeployNexus';
+import { useRouter } from 'next/router';
+import { Chain } from 'api';
 
 type Props = {};
 
-const Index = (props: Props) => {
+const Index: React.FC<Props> = () => {
   const [currentStep, setCurrentStep] = useState(0);
-
   const [nexusName, setNexusName] = useState('');
-  const [targetChain, setTargetChain] = useState('');
+  const [targetChain, setTargetChain] = useState<Chain>('Ethereum');
   const [features, setFeatures] = useState<string[]>([]);
   const [basicFeatures, setBasicFeatures] = useState<string[]>([]);
   const [costs, setCosts] = useState(0);
+  const router = useRouter();
 
   const handleNexusName = (name: string) => {
     setNexusName(name);
   };
 
-  const handleTargetChain = (chain: string) => {
+  const handleTargetChain = (chain: Chain) => {
     setTargetChain(chain);
   };
 
@@ -39,86 +37,40 @@ const Index = (props: Props) => {
   };
 
   const onboardingSteps = [
-    <TargetChain handleTargetChain={handleTargetChain}></TargetChain>,
-    <NexusName handleName={handleNexusName}></NexusName>,
+    <TargetChain handleTargetChain={handleTargetChain} />,
+    <NexusName handleName={handleNexusName} />,
     <FeaturesSelection
       handleFeatures={handleFeatures}
       handleBasicFeatures={handleBasicFeatures}
       handleCosts={handleCosts}
-    ></FeaturesSelection>,
+    />,
     <DeployNexus
       nexusName={nexusName}
       targetChain={targetChain}
       features={features}
       basicFeatures={basicFeatures}
       costs={costs}
-    ></DeployNexus>,
+      handleName={handleNexusName}
+    />,
   ];
 
-  function handleNext() {
+  const handleNext = () => {
     if (currentStep < onboardingSteps.length - 1) {
-      setCurrentStep(currentStep + 1);
+      setCurrentStep((prevStep) => prevStep + 1);
     }
-  }
+  };
 
-  function handleBack() {
-    if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
+  const handleBack = () => {
+    if (currentStep === 0) {
+      router.push('/app');
+    } else {
+      setCurrentStep((prevStep) => prevStep - 1);
     }
-  }
+  };
 
-  const { address } = useAccount();
-
-  const { config: nexusConfig } = usePrepareContractWrite({
-    address: process.env.CONTRACTADD,
-    abi: NexusFactory,
-    functionName: 'create',
-    args: [nexusName, address!],
-  });
-
-  const { write: writeNexus, error: errorNexus } =
-    useContractWrite(nexusConfig);
-
-  // @ts-ignore
-  function getfeatureAddress(features) {
-    return [`0x$0000`] as const;
-  }
-
-  // @ts-ignore
-  function getfeaturePayment(features) {
-    return [
-      {
-        token: `0x000` as const,
-        amount: BigInt(0),
-      },
-    ] as const;
-  }
-
-  const { config: featureConfigOne } = usePrepareContractWrite({
-    address: process.env.CONTRACTADD,
-    abi: Nexus,
-    functionName: 'installFacetFromCatalog',
-    args: [
-      apiClient.getCatalogAddress(),
-      getfeatureAddress(features)[0],
-      getfeaturePayment(features)[0],
-    ],
-  });
-
-  const { config: featureConfigMany } = usePrepareContractWrite({
-    address: process.env.CONTRACTADD,
-    abi: Nexus,
-    functionName: 'batchInstallFacetFromCatalog',
-    args: [
-      apiClient.getCatalogAddress(),
-      getfeatureAddress(features),
-      getfeaturePayment(features),
-    ],
-  });
-
-  const { write: writeFeature, error: errorFeature } = useContractWrite(
-    features.length === 1 ? featureConfigOne : featureConfigMany
-  );
+  useEffect(() => {
+    console.log(currentStep);
+  }, [currentStep]);
 
   return (
     <div className="flex flex-col flex-wrap justify-center content-center bg-background  gap-2 h-screen">
