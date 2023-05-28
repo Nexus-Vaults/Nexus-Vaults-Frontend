@@ -1,11 +1,24 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Chain as ChainType } from 'api';
+import { useNetwork, useSwitchNetwork } from 'wagmi';
+import { CHAIN_DEFINITIONS } from 'api';
 
 type Props = {
-  targetChain: string;
+  targetChain: ChainType;
+  handleConection: (b: boolean) => void;
 };
 
-const ConnectWallet = ({ targetChain }: Props) => {
+const ConnectWallet = ({ targetChain, handleConection }: Props) => {
+  const { chain } = useNetwork();
+  const { error, switchNetwork } = useSwitchNetwork();
+
+  useEffect(() => {
+    if (chain?.name.toLowerCase() == targetChain.toLowerCase()) {
+      handleConection(true);
+    } else handleConection(false);
+  }, [chain]);
+
   return (
     <div className="flex flex-col flex-1 gap-2">
       <div className=" flex-1 flex flex-col p-5">
@@ -25,6 +38,20 @@ const ConnectWallet = ({ targetChain }: Props) => {
       </div>
       <div className=" flex flex-row justify-center">
         <ConnectButton />
+      </div>
+      <div className=" flex flex-row justify-center">
+        {chain && <div>Connected to {chain.name}</div>}
+
+        {chain?.name.toLowerCase() != targetChain.toLowerCase() && (
+          <button
+            className="text-white bg-[#0e76fd] h-[40px] shadow-lg rounded-xl   font-bold py-1 px-3 inline-block "
+            onClick={() => switchNetwork?.(CHAIN_DEFINITIONS[targetChain].id)}
+          >
+            Connect to {targetChain}
+          </button>
+        )}
+
+        <div>{error && error.message}</div>
       </div>
     </div>
   );
