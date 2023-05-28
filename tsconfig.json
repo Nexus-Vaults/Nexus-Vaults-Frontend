@@ -16,7 +16,7 @@
     "incremental": true,
     "paths": {
       "abiTypes/*": ["./abiTypes/*"],
-      "api": ["./API"],
+      "api": ["./API"]
     }
   },
   "exclude": ["node_modules"],
