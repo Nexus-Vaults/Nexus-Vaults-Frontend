@@ -24,7 +24,7 @@ const NexusName = ({ handleName }: Props) => {
       </div>
       <div className="flex flex-row justify-center p-2">
         <input
-          className="text-mono font-semibold text-center w-[60%] py-1 px-2 border-b  border-solid  hover:border-[#0e76fd] focus:border-[#0e76fd] hover:border-2 hover:rounded-lg focus:rounded-lg focus:border-2 focus:outline-none "
+          className="text-mono font-semibold text-center w-[60%] py-1 px-2 border-b  border-solid  hover:border-[#0e76fd] focus:border-[#0e76fd] hover:border-[3px]hover:rounded-lg focus:rounded-lg focus:border-[3px] focus:outline-none "
           placeholder="Select your Nexus Name"
           onChange={handleInputChange}
         ></input>
