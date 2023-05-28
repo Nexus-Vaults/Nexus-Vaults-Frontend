@@ -22,18 +22,17 @@ const TargetChain = ({ handleTargetChain }: Props) => {
   };
 
   return (
-    <div className="flex flex-col w-[50%]  p-5 gap-10">
+    <div className="flex flex-col   p-5 gap-y-10">
       <div className="flex flex-col p-5 gap-2">
-        <h2 className="font-normal font-normal text-4xl leading-12 text-center ">
+        <h2 className="text-primary font-semibold font-mono text-4xl leading-12 text-center ">
           Choose your target chain
         </h2>
-        <p className="text-center ">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-          ut augue libero.Lorem ipsum dolor sit amet, consectetur adipiscing
-          elit. Pellentesque ut augue libero.Lorem ipsum dolor sit amet,
-          consectetur adipiscing elit. Pellentesque ut augue libero.
+        <div className="flex flex-row justify-center">
+          <div className="w-[100%] h-[1px] bg-gray-300"></div>
+        </div>
+        <p className="text-center font-serif">
+          This chain is going to reflect where your nexus base is going to be.
         </p>
-        <p>Selected target chain: {selectedItem}</p>
       </div>
       <div className="flex flex-wrap justify-center gap-6 p-2">
         <div

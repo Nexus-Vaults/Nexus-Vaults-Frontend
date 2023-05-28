@@ -13,16 +13,17 @@ const FeaturesSelection = ({
   handleCosts,
 }: Props) => {
   return (
-    <div className="flex flex-col w-[80%] p-5 gap-10">
-      <div className="flex flex-col p-5">
-        <h2 className="font-normal font-normal text-4xl leading-12 text-center ">
+    <div className="flex flex-col  p-5 gap-10">
+      <div className="flex flex-col p-5 gap-2">
+        <h2 className="font-mono font-semibold  text-4xl leading-12 text-center ">
           Choose additional features
         </h2>
+        <div className="flex flex-row justify-center">
+          <div className="w-[100%] h-[1px] bg-gray-300"></div>
+        </div>
         <p className="text-center ">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-          ut augue libero.Lorem ipsum dolor sit amet, consectetur adipiscing
-          elit. Pellentesque ut augue libero.Lorem ipsum dolor sit amet,
-          consectetur adipiscing elit. Pellentesque ut augue libero.
+          Choose the featatures that your nexus wants to have. It will come with
+          free basic features.All the additional features needs to be payed.
         </p>
       </div>
       <FeaturesDashboard
