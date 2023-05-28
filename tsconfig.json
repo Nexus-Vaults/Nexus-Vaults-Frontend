@@ -15,7 +15,8 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "abiTypes/*": ["./abiTypes/*"]
+      "abiTypes/*": ["./abiTypes/*"],
+      "api": ["./API"],
     }
   },
   "exclude": ["node_modules"],
