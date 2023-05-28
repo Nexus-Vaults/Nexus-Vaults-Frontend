@@ -1,10 +1,10 @@
 declare namespace NodeJS {
   export interface ProcessEnv {
-    readonly TESTNET: boolean;
-    readonly PROJECT_ID: string;
-    readonly ALCHEMY_ID: string;
-    readonly APP_NAME: string;
-    readonly CONTRACTADD: `0x${string}`;
-    readonly CATALOGADD: `0x${string}`;
+    readonly NEXT_PUBLIC_TESTNET: boolean;
+    readonly NEXT_PUBLIC_PROJECT_ID: string;
+    readonly NEXT_PUBLIC_ALCHEMY_ID: string;
+    readonly NEXT_PUBLIC_APP_NAME: string;
+    readonly NEXT_PUBLIC_CONTRACT_ADD: `0x${string}`;
+    readonly NEXT_PUBLIC_CATALOG_ADD: `0x${string}`;
   }
 }
