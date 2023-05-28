@@ -1,11 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 type Props = {
   costs: number;
   featuresCount: number;
+  connected: boolean;
+  handleApproval: (b: boolean) => void;
 };
 
-const ApprovePayment = ({ costs, featuresCount }: Props) => {
+const ApprovePayment = ({
+  costs,
+  featuresCount,
+  handleApproval,
+  connected,
+}: Props) => {
+  const [isClicked, setIsClicked] = useState(false);
+
+  useEffect(() => {
+    handleApproval(isClicked);
+  });
+
+  function approve() {
+    setIsClicked(!isClicked);
+  }
+
   return (
     <div className="flex flex-col flex-1 gap-2 ">
       <div className=" flex-1  flex flex-col p-5">
@@ -28,7 +45,23 @@ const ApprovePayment = ({ costs, featuresCount }: Props) => {
       </div>
 
       <div className="flex flex-row justify-center  ">
-        <button className="text-white bg-[#0e76fd] h-[40px] shadow-lg rounded-xl   font-bold py-1 px-3 inline-block ">
+        <button
+          className="text-white bg-[#0e76fd] h-[40px] shadow-lg rounded-xl   font-bold py-1 px-3 inline-block "
+          onClick={() => approve()}
+          disabled={!connected}
+          //todo: proper styling for this, move to global
+          style={
+            isClicked
+              ? {
+                  backgroundColor: 'green',
+                  color: 'white',
+                }
+              : {
+                  backgroundColor: 'blue',
+                  color: 'white',
+                }
+          }
+        >
           Approve Payment
         </button>
       </div>
