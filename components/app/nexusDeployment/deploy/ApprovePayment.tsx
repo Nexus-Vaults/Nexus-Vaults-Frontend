@@ -51,13 +51,18 @@ const ApprovePayment = ({
           disabled={!connected}
           //todo: proper styling for this, move to global
           style={
-            isClicked
-              ? {
-                  backgroundColor: 'green',
-                  color: 'white',
-                }
+            connected
+              ? isClicked
+                ? {
+                    backgroundColor: 'green',
+                    color: 'white',
+                  }
+                : {
+                    backgroundColor: 'blue',
+                    color: 'white',
+                  }
               : {
-                  backgroundColor: 'blue',
+                  backgroundColor: 'grey',
                   color: 'white',
                 }
           }
