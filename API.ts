@@ -1,4 +1,10 @@
-import { polygon, moonbeam, hardhat, polygonMumbai, moonbaseAlpha } from 'wagmi/chains';
+import {
+  polygon,
+  moonbeam,
+  hardhat,
+  polygonMumbai,
+  moonbaseAlpha,
+} from 'wagmi/chains';
 export abstract class ApiClient {
   abstract getCatalogAddress(): `0x${string}`;
   abstract getVaults(nexus: Nexus): [Vault];
@@ -10,7 +16,7 @@ export type Chain = keyof typeof CHAIN_DEFINITIONS;
 export const CHAIN_DEFINITIONS = {
   Hardhat: { id: 31337, name: 'HardHat', chain: hardhat },
   Moonbeam: { id: 1287, name: 'Moonbase Alpha', chain: moonbaseAlpha },
-  Polygon: { id: 80001, name: 'Polygon Mumbai', chain: polygonMumbai }
+  Polygon: { id: 80001, name: 'Polygon Mumbai', chain: polygonMumbai },
 } as const;
 interface TokenBalance {
   token: string;
@@ -37,7 +43,7 @@ interface ChainDeployment {
 class ApiClientMock extends ApiClient {
   getCatalogAddress(): `0x${string}` {
     // @ts-ignore
-    return undefined;
+    return process.env.NEXT_PUBLIC_CATALOG_ADD;
   }
 
   getVaults(nexus: Nexus): [Vault] {
