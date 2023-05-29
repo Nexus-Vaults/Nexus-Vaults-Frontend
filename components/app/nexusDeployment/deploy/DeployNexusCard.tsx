@@ -40,6 +40,7 @@ const DeployNexusCard = ({
     abi: NexusFactory,
     functionName: 'create',
     args: [nexusName, address!],
+    enabled: address != null,
   });
 
   const { write: writeNexus, data: dataNexus } = useContractWrite(configNexus);
@@ -95,6 +96,7 @@ const DeployNexusCard = ({
       getFeatureAddress(features)[0],
       getFeaturePayment(features)[0],
     ],
+    enabled: false,
   });
 
   const { config: featureConfigMany } = usePrepareContractWrite({
@@ -106,16 +108,12 @@ const DeployNexusCard = ({
       getFeatureAddress(features),
       getFeaturePayment(features),
     ],
+    enabled: false,
   });
 
   const { write: writeFeature, error: errorFeature } = useContractWrite(
     features.length === 1 ? featureConfigOne : featureConfigMany
   );
-
-  function deployFeature() {
-    writeFeature?.();
-    console.log('deploying feature...');
-  }
 
   return (
     <div className="flex flex-col flex-1 gap-2">
