@@ -62,7 +62,7 @@ const DeployNexusCard = ({
         nonce: fetchtransaction.nonce,
       });
 
-      await router.push('/app/overview' + result);
+      await router.push('/app/overview/' + result);
     };
     f().then(null);
   }, [transaction]);
