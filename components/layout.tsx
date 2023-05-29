@@ -22,7 +22,7 @@ export default function Layout({ children }: Props) {
 
         <div
           className={`flex justify-center bg-whitesmoke  ${
-            isOpened ? 'w-[85vw]' : 'w-[100vw]'
+            isOpened ? 'w-[90vw]' : 'w-[100vw]'
           }`}
         >
           {children}

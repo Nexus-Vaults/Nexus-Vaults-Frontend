@@ -11,7 +11,7 @@ interface TableProps {
 const Table: React.FC<TableProps> = ({ data }) => {
   return (
     <div
-      className="w-full border-sold bg-white shadow-lg border-2 border-gray-400 rounded-lg h-[30vh] overflow-y-auto py-2 px-6"
+      className="w-full border-sold bg-white shadow-lg border-2 border-gray-400 rounded-lg h-[30vh] overflow-y-auto  px-6"
       style={{ scrollbarWidth: 'thin' }}
     >
       <style>
@@ -29,8 +29,8 @@ const Table: React.FC<TableProps> = ({ data }) => {
     }
     `}
       </style>
-      <table className="w-full min-w-full text-left text-sm font-light">
-        <thead className="border-b font-medium dark:border-neutral-500">
+      <table className="w-full min-w-full text-left text-sm font-light sticky top-0">
+        <thead className="sticky top-0 bg-white  border-b font-medium dark:border-neutral-500">
           <tr>
             <th scope="col" className="px-6 py-4">
               Asset Name
