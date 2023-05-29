@@ -1,14 +1,21 @@
-import React from 'react';
-import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi';
+import React, { useEffect } from 'react';
+import {
+  useAccount,
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from 'wagmi';
 import { NexusFactory } from 'abiTypes/contracts/nexus/NexusFactory.sol/NexusFactory';
 import { Nexus } from 'abiTypes/contracts/nexus/Nexus.sol/Nexus';
 import { apiClient } from 'api';
+import { router } from 'next/client';
+import { usePublicClient } from 'wagmi';
+import { fetchTransaction } from '@wagmi/core';
 
 type Props = {
   nexusName: string;
   approved: boolean;
   features: string[];
-  featuresCount: number;
   connected: boolean;
   handleName: (name: string) => void;
 };
@@ -17,7 +24,6 @@ type Props = {
 const DeployNexusCard = ({
   nexusName,
   features,
-  featuresCount,
   approved,
   connected,
   handleName,
@@ -27,21 +33,46 @@ const DeployNexusCard = ({
   };
 
   const { address } = useAccount();
+  const publicClient = usePublicClient();
 
-  const { config: configNexus, error: errorNexus } = usePrepareContractWrite({
-    address: process.env.NEXT_PUBLIC_CONTRACT_ADD,
+  const { config: configNexus } = usePrepareContractWrite({
+    address: process.env.NEXT_PUBLIC_NEXUS_FACTORY_ADD,
     abi: NexusFactory,
     functionName: 'create',
     args: [nexusName, address!],
   });
 
-  const { write: writeNexus } = useContractWrite(configNexus);
+  const { write: writeNexus, data: dataNexus } = useContractWrite(configNexus);
+  const transaction = useWaitForTransaction({ hash: dataNexus?.hash });
+
+  useEffect(() => {
+    if (transaction.data?.status != 'success') {
+      return;
+    }
+    const f = async () => {
+      const fetchtransaction = await fetchTransaction({
+        hash: dataNexus?.hash!,
+      });
+
+      const { result } = await publicClient.simulateContract({
+        address: process.env.NEXT_PUBLIC_NEXUS_FACTORY_ADD,
+        abi: NexusFactory,
+        functionName: 'create',
+        args: [nexusName, address!],
+        nonce: fetchtransaction.nonce,
+      });
+
+      await router.push('/app/overview' + result);
+    };
+    f().then(null);
+  }, [transaction]);
 
   function deployNexus() {
-    console.log("Deploying nexus...");
+    console.log('Deploying nexus...');
     writeNexus?.();
   }
 
+  //todo: needs to be moved
   function getFeatureAddress(features: string[]) {
     return [`0x$0000`] as const;
   }
@@ -56,7 +87,7 @@ const DeployNexusCard = ({
   }
 
   const { config: featureConfigOne } = usePrepareContractWrite({
-    address: process.env.NEXT_PUBLIC_CONTRACT_ADD,
+    address: process.env.NEXT_PUBLIC_NEXUS_FACTORY_ADD,
     abi: Nexus,
     functionName: 'installFacetFromCatalog',
     args: [
@@ -67,7 +98,7 @@ const DeployNexusCard = ({
   });
 
   const { config: featureConfigMany } = usePrepareContractWrite({
-    address: process.env.NEXT_PUBLIC_CONTRACT_ADD,
+    address: process.env.NEXT_PUBLIC_NEXUS_FACTORY_ADD,
     abi: Nexus,
     functionName: 'batchInstallFacetFromCatalog',
     args: [
