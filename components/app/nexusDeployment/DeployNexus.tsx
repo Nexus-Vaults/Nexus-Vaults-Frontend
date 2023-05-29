@@ -82,7 +82,6 @@ const DeployNexus = ({
       <DeployNexusCard
         nexusName={nexusName}
         features={features}
-        featuresCount={featuresCount}
         approved={isApproved}
         connected={isConnected}
         handleName={handleName}
