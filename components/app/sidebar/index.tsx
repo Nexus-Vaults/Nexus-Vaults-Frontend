@@ -10,11 +10,11 @@ const Sidebar = ({ isOpened }: Props) => {
 
   return (
     <div
-      className={`bg-blue100 overflow-hidden  ${
+      className={`bg-blue100 overflow-hidden shadow-lg  ${
         isOpened ? 'w-[15vw]' : 'w-[0vw]'
       }`}
     >
-      <div className="flex flex-col gap-2  mb-10">
+      <div className="flex flex-col gap-2  mb-10 ">
         <div className="text-center text-gray-300">Logo of chain</div>
         <div>
           <div className="text-center text-gray-300">Name</div>

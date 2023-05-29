@@ -121,8 +121,8 @@ const Index = (props: Props) => {
   );
 
   return (
-    <div className="flex flex-col flex-wrap justify-center content-center bg-gray-200  gap-2 h-screen">
-      <div className="flex-flex-col w-fit  bg-white border-solid border-2 border-gray-400 rounded-lg p-2">
+    <div className="flex flex-col flex-wrap justify-center content-center bg-whitesmoke  gap-2 h-screen">
+      <div className="flex-flex-col w-fit  bg-white shadow-2xl border-solid border-2 border-gray-400 rounded-lg p-2">
         <div className="flex flex-row space-x-2 justify-center">
           {onboardingSteps.map((step, index) => (
             <div

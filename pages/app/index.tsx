@@ -7,7 +7,7 @@ type Props = {};
 
 const Index = (props: Props) => {
   return (
-    <div className="flex flex-row justify-center  w-screen h-screen bg-gray-200">
+    <div className="flex flex-row justify-center  w-screen h-screen bg-whitesmoke">
       <WelcomePage></WelcomePage>
     </div>
   );
