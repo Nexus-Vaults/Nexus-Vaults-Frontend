@@ -73,21 +73,32 @@ const Index: React.FC<Props> = () => {
   }, [currentStep]);
 
   return (
-    <div className="flex flex-col flex-wrap justify-center content-center bg-background  gap-2 h-screen">
-      <div className="flex-flex-col w-[80%] ">
+    <div className="flex flex-col flex-wrap justify-center content-center bg-whitesmoke  gap-2 h-screen">
+      <div className="flex-flex-col w-fit  bg-white shadow-2xl border-solid border-2 border-gray-400 rounded-lg p-2">
+        <div className="flex flex-row space-x-2 justify-center">
+          {onboardingSteps.map((step, index) => (
+            <div
+              key={index}
+              className={`h-2 w-2 rounded-full  ${
+                index === currentStep ? 'bg-[#0e76fd]' : 'bg-gray-400'
+              }`}
+            ></div>
+          ))}
+        </div>
+
         <div className="flex flex-row justify-center gap-4">
           {onboardingSteps[currentStep]}
         </div>
         <div className="flex flex-row justify-center gap-4 p-8">
           <button
-            className="border-solid border-2  rounded-md p-1 hover:text-background"
+            className="text-white bg-[#0e76fd] h-[40px] shadow-lg rounded-xl   font-bold py-1 px-3 inline-block hover:scale-105 transition-all duration-300"
             onClick={handleBack}
           >
             Back
           </button>
           {currentStep !== onboardingSteps.length - 1 && (
             <button
-              className="border-solid border-2  rounded-md p-1  hover:text-background"
+              className="text-white bg-[#0e76fd] h-[40px] shadow-lg rounded-xl   font-bold py-1 px-3 inline-block hover:scale-105 transition-all duration-300"
               onClick={handleNext}
             >
               Next

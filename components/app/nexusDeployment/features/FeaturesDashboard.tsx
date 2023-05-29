@@ -49,14 +49,14 @@ const FeaturesDashboard = ({
       id: 5,
       name: 'Basic Feature 1',
       description: 'Description of Card 1',
-      cost: 10,
+      cost: 0,
       added: true,
     },
     {
       id: 6,
       name: 'Basic Feature 2',
       description: 'Description of Card 2',
-      cost: 10,
+      cost: 0,
       added: true,
     },
 
@@ -138,28 +138,9 @@ const FeaturesDashboard = ({
 
   return (
     <div className="flex flex-col gap-10">
-      <div className="flex flex-col">
-        <div className="flex flex-row gap-2">
-          Basic Features:
-          {addedFeaturesCardIds.map((id) => (
-            <p key={id}>{id}</p>
-          ))}
-        </div>
-        <div className="flex flex-row gap-2">
-          ID:
-          {addedCardIds.map((id) => (
-            <p key={id}> {id}</p>
-          ))}
-        </div>
-        <div className="flex flex-row gap-2">
-          Costs:
-          <p>{calculateTotalCost()}</p>
-        </div>
-      </div>
-
       <div className="flex flex-row gap-5 justify-center">
         <div className="flex flex-col ">
-          <div className="flex justify-center">
+          <div className=" flex justify-center font-mono font-semibold">
             <h3>Basic Features</h3>
           </div>
           <div className="flex flex-col flex-wrap justify-center gap-5">
@@ -178,7 +159,7 @@ const FeaturesDashboard = ({
           </div>
         </div>
         <div className="flex flex-col w-[40%]">
-          <div className="flex justify-center">
+          <div className="flex justify-center font-mono font-semibold">
             <h3>Additional Features</h3>
           </div>
           <div className="flex flex-wrap justify-center gap-5 ">
@@ -196,6 +177,10 @@ const FeaturesDashboard = ({
             ))}
           </div>
         </div>
+      </div>
+      <div className="font-mono font-semibold flex flex-col gap-2 justify-center items-center border-gray-400">
+        Costs:
+        <p>{calculateTotalCost()}</p>
       </div>
     </div>
   );

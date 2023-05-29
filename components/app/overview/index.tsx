@@ -1,5 +1,7 @@
 import React from 'react';
 import Table from '../table';
+import CardsOverview from './cards-overview';
+import Graph from './graph/graph';
 
 type Props = {};
 
@@ -22,22 +24,15 @@ const Overview = (props: Props) => {
   ];
 
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center gap-2">
-      <div className="w-full h-full flex-1 border-2 border-gray-400 rounded-lg">
-        <div className="flex-1 h-[30%]  gap-4  flex flex-row justify-around p-4">
-          <div className="flex-1 border-2 border-gray-300 rounded-lg">
-            Owner
-          </div>
-          <div className="flex-1 border-2 border-gray-300 rounded-lg">
-            Value
-          </div>
-          <div className="flex-1 border-2 border-gray-300 rounded-lg">
-            Amount
-          </div>
-        </div>
-        <div className="flex-1">Graph</div>
+    <div className="w-full h-full flex flex-col justify-center items-center gap-4">
+      <CardsOverview></CardsOverview>
+      <div className="w-full h-full flex-1 border-2 border-gray-400 bg-white shadow-lg rounded-lg">
+        <h1 className="text-center text-gray-500 text-lg font-medium  font-sans">
+          Timeline Chart
+        </h1>
+        <Graph></Graph>
       </div>
-      <div className="w-full flex-1">
+      <div className="w-full flex-1 ">
         <Table data={tableData} />
       </div>
     </div>

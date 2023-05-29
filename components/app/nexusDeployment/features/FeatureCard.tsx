@@ -21,8 +21,8 @@ const FeatureCard = ({
 }: CardProps) => {
   return (
     <div
-      className={`border p-4 rounded hover:bg-gray-100 cursor-pointer ${
-        added ? 'bg-gray-100' : ''
+      className={`font-mono border p-4 rounded-lg hover:bg-[#0e76fd] hover:text-white cursor-pointer ${
+        added ? 'bg-[#0e76fd] text-white' : ''
       }`}
       onClick={added ? () => onRemove(id) : () => onAdd(id)}
     >

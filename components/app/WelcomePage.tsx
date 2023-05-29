@@ -7,8 +7,8 @@ const WelcomePage = (props: Props) => {
   const router = useRouter();
 
   return (
-    <div className=" flex flex-col flex-1 ">
-      <div className="flex flex-col justify-start align-center p-20">
+    <div className=" flex flex-col mt-10 w-[40%] justify-center content-center h-fit border-2 rounded-lg border-gray-400 p-6 gap-4 bg-white">
+      <div className="flex flex-col justify-start align-center gap-4 p-4">
         <h2 className="font-normal font-normal text-4xl leading-12 text-center ">
           Welcome to Nexus Vaults
         </h2>
@@ -19,15 +19,15 @@ const WelcomePage = (props: Props) => {
           consectetur adipiscing elit. Pellentesque ut augue libero.
         </p>
       </div>
-      <div className="flex flex-row    gap-x-12 justify-center">
+      <div className="flex flex-row  gap-x-12 justify-center">
         <div
-          className="flex flex-col bg-red p-4  rounded-[100px]  justify-center align-center   hover:text-background hover:bg-gray-700"
+          className="cursor-pointer flex flex-col justify-center items-center text-white bg-[#0e76fd] shadow-lg rounded-xl font-bold py-1 px-3 inline-block hover:scale-105 transition-all duration-300"
           onClick={() => router.push('/app/deploy-nexus')}
         >
           <h1 className="text-center  text-gray-100 ">Deploy Nexus</h1>
         </div>
         <div
-          className="flex flex-col bg-red p-4  rounded-[100px]  justify-center align-center hover:text-background  hover:bg-gray-700"
+          className="cursor-pointer flex flex-col justify-center items-center text-white bg-[#0e76fd] shadow-lg rounded-xl font-bold py-1 px-3 inline-block hover:scale-105 transition-all duration-300"
           onClick={() => router.push('/app/overview')}
         >
           <h1 className="text-center text-gray-100">Access Nexus</h1>
