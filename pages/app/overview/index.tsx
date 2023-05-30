@@ -44,7 +44,7 @@ const Index: NextPageWithLayout = (props: Props) => {
   } = useContractWrite(vaultV1FacetConfig);
 
   return (
-    <div className="w-fit h-full py-4 px-10">
+    <div className="w-[80%] h-full py-4 px-10">
       <Overview></Overview>
     </div>
   );
