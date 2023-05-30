@@ -53,7 +53,6 @@ const Graph = (props: Props) => {
   return (
     <div className="w-full h-full">
       <ReactECharts ref={chartRef} option={options} className="w-full h-full" />
-      ;
     </div>
   );
 };
