@@ -28,6 +28,11 @@ const VaultRows = ({ logo, version, vaultId, totalAsset }: Props) => {
     { id: 3, name: 'ETH', amount: 100, amountUSD: 5000 },
   ];
 
+  const handleVaultOverviewClick = (event: any) => {
+    event.stopPropagation();
+    router.push('/app/vaults/vault-overview');
+  };
+
   const router = useRouter();
 
   return (
@@ -50,7 +55,10 @@ const VaultRows = ({ logo, version, vaultId, totalAsset }: Props) => {
 
         <div className="relative flex flex-row items-center justify-center">
           <span className="font-mono font-bold mr-8">${totalAsset}</span>
-          <div className="absolute left-14 flex flex-row items-center  hover:scale-125">
+          <div
+            className="absolute left-14 flex flex-row items-center  hover:scale-125"
+            onClick={handleVaultOverviewClick}
+          >
             <ViewCozyIcon />
           </div>
         </div>
