@@ -12,33 +12,33 @@ const WelcomePage = (props: Props) => {
   const onClose = () => setIsModalOpen(false);
 
   return (
-    <div className=" flex flex-col mt-10 w-[40%] justify-center content-center h-fit border-2 rounded-lg border-gray-400 p-6 gap-4 bg-white">
-      <div className="flex flex-col justify-start align-center gap-4 p-4">
-        <h2 className="font-normal font-normal text-4xl leading-12 text-center ">
-          Welcome to Nexus Vaults
-        </h2>
-        <p className="text-center ">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-          ut augue libero.Lorem ipsum dolor sit amet, consectetur adipiscing
-          elit. Pellentesque ut augue libero.Lorem ipsum dolor sit amet,
-          consectetur adipiscing elit. Pellentesque ut augue libero.
-        </p>
-      </div>
-      <div className="flex flex-row  gap-x-12 justify-center">
+    <div className="bg-gradient-to-br from-black to-indigo-900 min-h-screen flex flex-col items-center justify-center p-8">
+      <h1 className="text-white text-4xl mb-8 font-mono">
+        Welcome to Nexus Vaults
+      </h1>
+      <p className="text-white text-lg text-center mb-8 font-mono">
+        Deploy a new Nexus if you don´t have one or access an excisting Nexus
+      </p>
+      <div className="flex justify-center">
         <div
-          className="cursor-pointer flex flex-col justify-center items-center text-white bg-[#0e76fd] shadow-lg rounded-xl font-bold py-1 px-3 inline-block hover:scale-105 transition-all duration-300"
+          className="cursor-pointer bg-white rounded-md font-medium text-xl px-6 py-3 mr-4 transition-colors duration-300 hover:bg-gray-200 hover:scale-105 transition-all duration-300 font-mono"
           onClick={() => router.push('/app/deploy-nexus')}
         >
-          <h1 className="text-center  text-gray-100 ">Deploy Nexus</h1>
+          <h1 className="text-center  text-indigo-900 font-semibold ">
+            Deploy Nexus
+          </h1>
         </div>
         <div
-          className="cursor-pointer flex flex-col justify-center items-center text-white bg-[#0e76fd] shadow-lg rounded-xl font-bold py-1 px-3 inline-block hover:scale-105 transition-all duration-300"
+          className="cursor-pointer bg-white  rounded-md font-medium text-xl px-6 py-3 transition-colors duration-300 hover:bg-gray-200 hover:bg-gray-200 hover:scale-105 transition-all duration-300 font-mono"
           onClick={() => setIsModalOpen(true)}
         >
-          <h1 className="text-center text-gray-100">Access Nexus</h1>
+          <h1 className="text-center text-indigo-900 font-semibold ">
+            Access Nexus
+          </h1>
         </div>
+
+        {isModalOpen && <AccessNexusModal onClose={onClose} />}
       </div>
-      {isModalOpen && <AccessNexusModal onClose={onClose} />}
     </div>
   );
 };

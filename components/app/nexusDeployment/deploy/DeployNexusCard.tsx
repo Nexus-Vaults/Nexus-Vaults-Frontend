@@ -54,7 +54,6 @@ const DeployNexusCard = ({
   const { write: writeNexus, data: dataNexus } = useContractWrite(configNexus);
   const transaction = useWaitForTransaction({ hash: dataNexus?.hash });
 
-
   useEffect(() => {
     if (transaction.data?.status != 'success') {
       return;
@@ -127,7 +126,7 @@ const DeployNexusCard = ({
   return (
     <div className="flex flex-col flex-1 gap-2">
       <div className="flex-1 flex flex-col p-5">
-        <h2 className="font-normal text-4xl leading-12 text-center">
+        <h2 className="text-indigo-900 font-normal text-4xl leading-12 text-center">
           Deploy Nexus
         </h2>
         <p className="text-center ">Now you are ready to deploy the nexus.</p>

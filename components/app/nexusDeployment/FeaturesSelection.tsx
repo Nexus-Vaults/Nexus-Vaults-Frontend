@@ -33,7 +33,7 @@ const FeaturesSelection = ({
   return (
     <div className="flex flex-col  p-5 gap-10">
       <div className="flex flex-col p-5 gap-2">
-        <h2 className="font-mono font-semibold  text-4xl leading-12 text-center ">
+        <h2 className="text-indigo-900 font-mono font-semibold  text-4xl leading-12 text-center ">
           Choose additional features
         </h2>
         <div className="flex flex-row justify-center">

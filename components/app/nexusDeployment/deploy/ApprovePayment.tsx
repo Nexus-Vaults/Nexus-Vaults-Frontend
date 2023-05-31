@@ -27,7 +27,7 @@ const ApprovePayment = ({
   return (
     <div className="flex flex-col flex-1 gap-2 ">
       <div className=" flex-1  flex flex-col p-5">
-        <h2 className="font-normal font-normal text-4xl leading-12 text-center">
+        <h2 className="text-indigo-900 font-normal text-4xl leading-12 text-center">
           Approve Payment
         </h2>
         <p className="text-center ">

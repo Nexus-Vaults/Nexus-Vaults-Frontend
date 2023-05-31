@@ -25,7 +25,7 @@ const TargetChain = ({ handleTargetChain }: Props) => {
   return (
     <div className="flex flex-col   p-5 gap-y-10">
       <div className="flex flex-col p-5 gap-2">
-        <h2 className="text-primary font-semibold font-mono text-4xl leading-12 text-center ">
+        <h2 className="text-indigo-900 font-semibold font-mono text-4xl leading-12 text-center ">
           Choose your target chain
         </h2>
         <div className="flex flex-row justify-center">
