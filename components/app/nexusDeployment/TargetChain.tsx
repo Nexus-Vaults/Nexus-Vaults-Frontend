@@ -3,6 +3,8 @@ import Image from 'next/image';
 import { ChainDeployment } from 'api';
 import { ChainDeployments } from '../../../pages/app/ContractsAddressesContext';
 
+import fantom from '../../../public/images/chain/1.png';
+
 type Props = {
   handleTargetChain: (chainDeployment: ChainDeployment | undefined) => void;
 };
@@ -33,9 +35,9 @@ const TargetChain = ({ handleTargetChain }: Props) => {
           This chain is going to reflect where your nexus base is going to be.
         </p>
       </div>
-      {contractsAddresses.map((x) => {
+      {contractsAddresses.map((x, key) => {
         return (
-          <div className="flex flex-wrap justify-center gap-6 p-2">
+          <div className="flex flex-wrap justify-center gap-6 p-2" key={key}>
             <div
               className={`border p-2 rounded ${
                 selectedItem?.contractChainId === x.contractChainId
@@ -44,12 +46,7 @@ const TargetChain = ({ handleTargetChain }: Props) => {
               }`}
               onClick={() => handleItemClick(x)}
             >
-              <Image
-                src={`/public/images/${x.chainName}.png`}
-                width={32}
-                height={32}
-                alt=""
-              />
+              <Image src={fantom} width={32} height={32} alt="" />
             </div>
           </div>
         );
