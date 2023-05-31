@@ -22,6 +22,12 @@ const FeaturesDashboard = ({
   const other = features
     .filter((x) => !x.isBasic)
     .map((x, index) => ({ ...x, added: false, id: index + 1 }));
+
+  useEffect(() => {
+    setOtherFeatures(other);
+    setBasicFeatures(basic);
+  }, [features]);
+
   const [otherFeatures, setOtherFeatures] = useState(other);
   const [basicFeatures, setBasicFeatures] = useState(basic);
 

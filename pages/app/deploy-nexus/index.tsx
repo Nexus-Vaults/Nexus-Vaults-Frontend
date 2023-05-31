@@ -33,9 +33,7 @@ const Index: React.FC<Props> = () => {
   };
 
   const router = useRouter();
-
-  const contractsAddresses = apiClient.getContractsAddresses();
-
+  
   const handleNexusName = (name: string) => {
     setNexusName(name);
   };
