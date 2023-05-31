@@ -9,7 +9,7 @@ module.exports = {
     letterSpacing: {
       primary: '0.4em',
       secondary: '0.15em',
-      wide: '0.04em'
+      wide: '0.04em',
     },
     extend: {
       colors: {
@@ -26,7 +26,7 @@ module.exports = {
         purple: '#5d35b1',
         purple50: '#855DD9',
         purple100: '#7149C5',
-        rose: "#E399DC",
+        rose: '#E399DC',
       },
     },
   },

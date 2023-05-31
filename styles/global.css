@@ -19,7 +19,6 @@ body {
 
 .bg-img {
   background: url('../public/images/fancy.png') no-repeat center center fixed;
-  background-size: cover;
 }
 
 .bg-primary-gradient {
@@ -39,40 +38,26 @@ body {
 
 h2.bg-header {
   font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 800;
   font-size: 96px;
   line-height: 112px;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  letter-spacing: 0.04em;
-
   background: linear-gradient(90deg, #398ecc 14.37%, #f39191 88.5%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  /* This property isn't standard, to be used with webkit ^ 
-  text-fill-color: transparent; */
 }
 
 .infobox-gradient {
   font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 800;
   font-size: 96px;
   line-height: 112px;
 }
 
 .infobox hr.underline {
-  height: 1px;
   background: linear-gradient(90deg, #398ecc 50%, #5b21b6 99.99%);
 }
 
 .infobox p {
   font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 400;
   font-size: 24px;
   line-height: 28px;
 }
