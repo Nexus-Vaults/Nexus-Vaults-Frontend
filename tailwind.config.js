@@ -9,6 +9,7 @@ module.exports = {
     letterSpacing: {
       primary: '0.4em',
       secondary: '0.15em',
+      wide: '0.04em'
     },
     extend: {
       colors: {
