@@ -43,7 +43,7 @@ export default function Home() {
           height="464"
           alt="Extendable. Flexible. Modular. Secure."
         />
-        <div className="flex flex-col items-center grow px-40 py-8 infobox rounded-3xl w-2/3 bg-nexusRose">
+        <div className="flex flex-col items-center grow px-40 py-8 infobox rounded-3xl w-2/3 bg-rose">
           <h3 className="infobox-gradient">How it works</h3>
           <hr className="underline w-2/3"></hr>
           <p className="">

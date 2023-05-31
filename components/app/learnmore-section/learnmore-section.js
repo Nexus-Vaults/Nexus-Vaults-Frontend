@@ -4,16 +4,16 @@ const Learnmore = () => {
   return (
     <>
       <div className="grid grid-cols-3 justify-center justify-items-center gap-8 p-4">
-        <div className="blob grid-col-1 bg-nexusRose w-1/3 rounded-md text-center">
+        <div className="blob grid-col-1 bg-rose w-1/3 rounded-md text-center">
           Blob 1
         </div>
-        <div className="blob grid-col-1 bg-nexusRose w-1/3 rounded-md text-center">
+        <div className="blob grid-col-1 bg-rose w-1/3 rounded-md text-center">
           <p>
             <span>1</span>
             point of access for your crypto treasury
           </p>
         </div>
-        <div className="blob grid-col-1 bg-nexusRose w-1/3 rounded-md text-center">
+        <div className="blob grid-col-1 bg-rose w-1/3 rounded-md text-center">
           Blob 3
         </div>
       </div>
