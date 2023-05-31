@@ -16,8 +16,6 @@ const AccessNexusModal = ({ onClose }: Props) => {
 
   const router = useRouter();
 
-  apiClient.getContractsAddresses();
-
   const handleBackgroundClick = (event: any) => {
     onClose();
   };

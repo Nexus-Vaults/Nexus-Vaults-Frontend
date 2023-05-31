@@ -22,17 +22,17 @@ interface TokenBalance {
   liquid: number;
 }
 
-interface Vault {
+export interface Vault {
   balances: [TokenBalance];
   address: `0x${string}`;
 }
 
-interface VaultInfo {
+export interface VaultInfo {
   address: `0x${string}`;
   vaultId: number;
 }
 
-interface Nexus {
+export interface Nexus {
   nexusId: `0x${string}`;
   name: string;
   owner: `0x${string}`;
@@ -40,7 +40,7 @@ interface Nexus {
   subChains: SubChain[];
 }
 
-interface SubChain {
+export interface SubChain {
   contractChainId: number;
   VaultInfo: VaultInfo[];
   acceptedGatewayIds: number[];
@@ -91,7 +91,9 @@ class ApiClientMock extends ApiClient {
     chainId: number,
     address: `0x${string}`
   ): Promise<[Feature]> {
-    const response = await fetch(`/api/chains/${chainId}/catalogs/${address}/features`);
+    const response = await fetch(
+      `/api/chains/${chainId}/catalogs/${address}/features`
+    );
 
     if (!response.ok) {
       throw new Error('no response from api/chains/x/x/Features');

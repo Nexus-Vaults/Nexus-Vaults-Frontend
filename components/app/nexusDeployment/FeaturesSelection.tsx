@@ -21,14 +21,15 @@ const FeaturesSelection = ({
   useEffect(() => {
     if (targetChain == null) return;
     const func = async () => {
-      const features = await apiClient.getFeatures(
+      const availableFeatures = await apiClient.getFeatures(
         targetChain.contractChainId,
         targetChain.publicCatalogAddress
       );
-      setFeatures(features);
+      
+      setFeatures(availableFeatures);
     };
     func();
-  }, []);
+  }, [targetChain]);
 
   return (
     <div className="flex flex-col  p-5 gap-10">
