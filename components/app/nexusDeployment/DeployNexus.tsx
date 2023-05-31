@@ -32,7 +32,7 @@ const DeployNexus = ({
   };
 
   return (
-    <div className="flex flex-row w-[60%]">
+    <div className="flex flex-col xl:flex-row w-max">
       <ConnectWallet
         targetChain={targetChain}
         handleConection={handleConnection}
