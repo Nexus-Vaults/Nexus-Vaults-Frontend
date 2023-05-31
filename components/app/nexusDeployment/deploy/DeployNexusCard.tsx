@@ -11,6 +11,7 @@ import { usePublicClient } from 'wagmi';
 import { fetchTransaction } from '@wagmi/core';
 import { useRouter } from 'next/router';
 import { ChainDeployments } from '../../../../pages/app/ContractsAddressesContext';
+import { decodeEventLog } from 'viem';
 
 type Props = {
   nexusName: string;
@@ -58,25 +59,28 @@ const DeployNexusCard = ({
   const transaction = useWaitForTransaction({ hash: dataNexus?.hash });
 
   useEffect(() => {
-    if (transaction.data?.status != 'success') {
+    if (dataNexus?.hash == undefined || transaction.data?.status != 'success') {
       return;
     }
 
     const f = async () => {
-      const fetchtransaction = await fetchTransaction({
-        hash: dataNexus?.hash!,
+      const txReceipt = await publicClient.getTransactionReceipt({
+        hash: dataNexus?.hash!
       });
 
-      const { result } = await publicClient.simulateContract({
-        address: targetChain.nexusFactoryAddress,
+      const nexusDeployedLog = txReceipt.logs.filter(x => x.address.toUpperCase() == targetChain.nexusFactoryAddress.toUpperCase())[0];
+
+      const deployedLogArgs = decodeEventLog({
         abi: NexusFactory,
-        functionName: 'create',
-        args: [nexusName, address!, facetInstallation],
-        nonce: fetchtransaction.nonce,
+        eventName: "NexusDeployed",
+        topics: nexusDeployedLog.topics,
+        data: nexusDeployedLog.data
       });
 
-      router.push('/app/overview/' + result);
+      router.push('/app/overview/' + deployedLogArgs.args.nexus);
     };
+
+    f();
   }, [transaction]);
 
   function deployNexus() {
