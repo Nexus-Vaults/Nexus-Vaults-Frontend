@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router';
-import React, { useRef, useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { apiClient } from 'api';
+import { ChainDeployments } from '../../../pages/app/ContractsAddressesContext';
 
 type Props = {
   onClose: () => void;
@@ -10,7 +12,11 @@ const AccessNexusModal = ({ onClose }: Props) => {
   const [address, setAddress] = useState('');
   const [error, setError] = useState('');
 
+  const contractsAddresses = useContext(ChainDeployments);
+
   const router = useRouter();
+
+  apiClient.getContractsAddresses();
 
   const handleBackgroundClick = (event: any) => {
     onClose();
@@ -28,7 +34,7 @@ const AccessNexusModal = ({ onClose }: Props) => {
     setAddress(event.target.value);
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     if (chainId.trim() === '') {
@@ -41,7 +47,18 @@ const AccessNexusModal = ({ onClose }: Props) => {
       return;
     }
 
-    router.push(`/app/${chainId}/${address}`);
+    try {
+      const response = await fetch(`/app/${chainId}/${address}`);
+      if (response.ok) {
+        console.log('URL exists');
+        router.push(`/app/${chainId}/${address}`);
+      } else {
+        setError('URL does not exist');
+        return;
+      }
+    } catch (error) {
+      console.error('An error occurred while checking URL existence:', error);
+    }
 
     setChainId('');
     setAddress('');
@@ -71,6 +88,7 @@ const AccessNexusModal = ({ onClose }: Props) => {
               onChange={handleChainIdChange}
             />
           </div>
+
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
