@@ -6,6 +6,10 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    letterSpacing: {
+      primary: '0.4em',
+      secondary: '0.15em',
+    },
     extend: {
       colors: {
         primary: '#0e76fd',

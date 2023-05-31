@@ -31,23 +31,10 @@ body {
   );
 }
 
-/* img {
-  max-width: 100%;
-  display: block;
-} */
-
 .main-font {
   font-family: 'Rubik 80s Fade';
   font-size: 244px;
   color: #bcbcbd;
-}
-
-.main-font .primary-text {
-  letter-spacing: 0.4em;
-}
-
-.main-font .secondary-text {
-  letter-spacing: 0.15em;
 }
 
 h2.bg-header {
@@ -67,9 +54,6 @@ h2.bg-header {
   background-clip: text;
   /* This property isn't standard, to be used with webkit ^ 
   text-fill-color: transparent; */
-}
-
-.infobox {
 }
 
 .infobox-gradient {

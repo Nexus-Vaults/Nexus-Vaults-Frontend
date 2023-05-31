@@ -3,17 +3,17 @@ import Image from 'next/image';
 const Learnmore = () => {
   return (
     <>
-      <div className="grid grid-cols-3 justify-center justify-items-center gap-8 p-4">
-        <div className="blob grid-col-1 bg-rose w-1/3 rounded-md text-center">
+      <div className="grid grid-cols-3 justify-center justify-items-center gap-8 p-4  text-white">
+        <div className="grid-col-1 bg-rose w-1/3 rounded-md text-center pt-2">
           Blob 1
         </div>
-        <div className="blob grid-col-1 bg-rose w-1/3 rounded-md text-center">
-          <p>
-            <span>1</span>
+        <div className="grid grid-col-1 grid-rows-2 bg-rose w-1/3 rounded-md text-center pt-2">
+            <span className="grid-row-1">1</span>
+            <p className="">
             point of access for your crypto treasury
-          </p>
+            </p>
         </div>
-        <div className="blob grid-col-1 bg-rose w-1/3 rounded-md text-center">
+        <div className="grid-col-1 bg-rose w-1/3 rounded-md text-center pt-2">
           Blob 3
         </div>
       </div>

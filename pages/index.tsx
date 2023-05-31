@@ -11,8 +11,8 @@ export default function Home() {
       <div className="bg-img">
         <div className="flex flex-col items-center py-12">
           <div className="main-font">
-            <h1 className="primary-text text-center">NEXUS</h1>
-            <h1 className="secondary-text text-center">VAULTS</h1>
+            <h1 className="tracking-primary text-center">NEXUS</h1>
+            <h1 className="tracking-secondary text-center">VAULTS</h1>
           </div>
 
           <button
@@ -46,7 +46,7 @@ export default function Home() {
         <div className="flex flex-col items-center grow px-40 py-8 infobox rounded-3xl w-2/3 bg-rose">
           <h3 className="infobox-gradient">How it works</h3>
           <hr className="underline w-2/3"></hr>
-          <p className="">
+          <p className="py-4">
             With Nexus Vaults, you can leverage the power of Axelar Network to
             seamlessly transfer and manage your crypto assets across different
             chains using a new Web3 standard of cross chain messaging.
