@@ -1,6 +1,6 @@
 import '../styles/global.css';
 import { AppProps } from 'next/app';
-import type { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode, useEffect } from 'react';
 import type { NextPage } from 'next';
 import '@rainbow-me/rainbowkit/styles.css';
 import {
@@ -75,13 +75,21 @@ const wagmiConfig = createConfig({
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
-  const contractsAddresses = apiClient.getContractsAddresses();
+  const [ deployment, setDeployment ] = useState<ChainDeployment[]>([]);
+
+  useEffect(() => {
+    apiClient.getContractsAddresses()
+    .then(deployment => {
+      setDeployment(deployment);
+      console.log(deployment);
+    } );
+  }, [])
 
   return (
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider chains={chains}>
-        <ChainDeployments.Provider value={contractsAddresses}>
-          {getLayout(<Component {...pageProps} />)}
+        <ChainDeployments.Provider value={deployment}>
+          {(deployment.length > 0) ? getLayout(<Component {...pageProps} />) : 'Loading...'}
         </ChainDeployments.Provider>
       </RainbowKitProvider>
     </WagmiConfig>

@@ -73,7 +73,7 @@ class ApiClientMock extends ApiClient {
     vaultId: `0x${string}`
   ): Promise<Vault> {
     const response = await fetch(
-      `api/chains/${nexusContractChainId}/${nexusAddress}/Subchains/${vaultContractChainId}/Vaults/${vaultId}`
+      `/api/chains/${nexusContractChainId}/${nexusAddress}/Subchains/${vaultContractChainId}/Vaults/${vaultId}`
     );
 
     if (!response.ok) {
@@ -91,7 +91,7 @@ class ApiClientMock extends ApiClient {
     chainId: number,
     address: `0x${string}`
   ): Promise<[Feature]> {
-    const response = await fetch(`api/chains/${chainId}/${address}/Features`);
+    const response = await fetch(`/api/chains/${chainId}/${address}/Features`);
 
     if (!response.ok) {
       throw new Error('no response from api/chains/x/x/Features');
@@ -105,16 +105,16 @@ class ApiClientMock extends ApiClient {
   }
 
   async getContractsAddresses(): Promise<ChainDeployment[]> {
-    const response = await fetch('api/deployments');
+    const response = await fetch('/api/deployments');
 
     if (!response.ok) {
       throw new Error('no response from api/deployments');
     }
-    const jason = await response.json();
-    if (jason.deployments == undefined) {
+    const result = await response.json();
+    if (result.deployments == undefined) {
       throw new Error('Could not find deployments');
     }
-    return jason as ChainDeployment[];
+    return result.deployments as ChainDeployment[];
   }
 
   async getNexusOverview(
@@ -122,7 +122,7 @@ class ApiClientMock extends ApiClient {
     nexusAddress: `0x${string}`
   ): Promise<Nexus> {
     const response = await fetch(
-      `api/Chains/${contractChainId}/Nexuses/${nexusAddress}`
+      `/api/Chains/${contractChainId}/Nexuses/${nexusAddress}`
     );
 
     if (!response.ok) {

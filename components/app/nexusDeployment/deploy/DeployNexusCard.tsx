@@ -7,9 +7,9 @@ import {
 } from 'wagmi';
 import { NexusFactory } from 'abiTypes/contracts/nexus/NexusFactory.sol/NexusFactory';
 import { Feature } from 'api';
-import { router } from 'next/client';
 import { usePublicClient } from 'wagmi';
 import { fetchTransaction } from '@wagmi/core';
+import { useRouter } from 'next/router';
 
 type Props = {
   nexusName: string;
@@ -30,6 +30,8 @@ const DeployNexusCard = ({
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     handleName(event.target.value);
   };
+
+  const router = useRouter();
 
   const facetInstallation = features.map((x) => {
     return {
@@ -52,10 +54,12 @@ const DeployNexusCard = ({
   const { write: writeNexus, data: dataNexus } = useContractWrite(configNexus);
   const transaction = useWaitForTransaction({ hash: dataNexus?.hash });
 
+
   useEffect(() => {
     if (transaction.data?.status != 'success') {
       return;
     }
+
     const f = async () => {
       const fetchtransaction = await fetchTransaction({
         hash: dataNexus?.hash!,
@@ -69,9 +73,8 @@ const DeployNexusCard = ({
         nonce: fetchtransaction.nonce,
       });
 
-      await router.push('/app/overview/' + result);
+      router.push('/app/overview/' + result);
     };
-    f().then(null);
   }, [transaction]);
 
   function deployNexus() {
