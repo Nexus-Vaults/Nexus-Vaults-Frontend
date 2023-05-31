@@ -1,10 +1,15 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import AccessNexusModal from './modals/AccessNexusModal';
 
 type Props = {};
 
 const WelcomePage = (props: Props) => {
   const router = useRouter();
+
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+  const onClose = () => setIsModalOpen(false);
 
   return (
     <div className=" flex flex-col mt-10 w-[40%] justify-center content-center h-fit border-2 rounded-lg border-gray-400 p-6 gap-4 bg-white">
@@ -28,11 +33,12 @@ const WelcomePage = (props: Props) => {
         </div>
         <div
           className="cursor-pointer flex flex-col justify-center items-center text-white bg-[#0e76fd] shadow-lg rounded-xl font-bold py-1 px-3 inline-block hover:scale-105 transition-all duration-300"
-          onClick={() => router.push('/app/overview')}
+          onClick={() => setIsModalOpen(true)}
         >
           <h1 className="text-center text-gray-100">Access Nexus</h1>
         </div>
       </div>
+      {isModalOpen && <AccessNexusModal onClose={onClose} />}
     </div>
   );
 };

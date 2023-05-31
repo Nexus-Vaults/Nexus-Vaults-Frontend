@@ -16,6 +16,22 @@ const Index: React.FC<Props> = () => {
   const [basicFeatures, setBasicFeatures] = useState<Feature[]>([]);
   const [costs, setCosts] = useState(0);
 
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleValidation = () => {
+    if (currentStep === 0 && !targetChain) {
+      setErrorMessage('Chain is empty.Please select a chain.');
+      setError(true);
+    } else if (currentStep === 1 && !nexusName.trim()) {
+      setErrorMessage('Nexus name is empty.Please enter a name.');
+      setError(true);
+    } else {
+      setError(false);
+      handleNext();
+    }
+  };
+
   const router = useRouter();
 
   const contractsAddresses = apiClient.getContractsAddresses();
@@ -42,7 +58,7 @@ const Index: React.FC<Props> = () => {
 
   const onboardingSteps = [
     <TargetChain handleTargetChain={handleTargetChain} />,
-    <NexusName handleName={handleNexusName} />,
+    <NexusName handleName={handleNexusName} nexusName={nexusName} />,
     <FeaturesSelection
       targetChain={targetChain!}
       handleFeatures={handleFeatures}
@@ -69,6 +85,7 @@ const Index: React.FC<Props> = () => {
       router.push('/app');
     } else {
       setCurrentStep((prevStep) => prevStep - 1);
+      setError(false);
     }
   };
 
@@ -103,11 +120,16 @@ const Index: React.FC<Props> = () => {
           {currentStep !== onboardingSteps.length - 1 && (
             <button
               className="text-white bg-[#0e76fd] h-[40px] shadow-lg rounded-xl   font-bold py-1 px-3 inline-block hover:scale-105 transition-all duration-300"
-              onClick={handleNext}
+              onClick={handleValidation}
             >
               Next
             </button>
           )}
+        </div>
+        <div>
+          <p className="text-center text-red font-mono font-semibold">
+            {error && errorMessage}
+          </p>
         </div>
       </div>
     </div>
