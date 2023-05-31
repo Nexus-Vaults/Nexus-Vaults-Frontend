@@ -31,13 +31,13 @@ body {
   );
 }
 
-img {
+/* img {
   max-width: 100%;
   display: block;
-}
+} */
 
 .main-font {
-  font-family: 'Rubik 80s Fade', cursive;
+  font-family: 'Rubik 80s Fade';
   font-size: 244px;
   color: #bcbcbd;
 }
@@ -50,7 +50,7 @@ img {
   letter-spacing: 0.15em;
 }
 
-h2 .bg-header {
+h2.bg-header {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 800;
@@ -61,12 +61,7 @@ h2 .bg-header {
   text-align: center;
   letter-spacing: 0.04em;
 
-  background: linear-gradient(
-    90deg,
-    #398ecc 14.37%,
-    #f39191 88.5%,
-    #ce3737 88.5%
-  );
+  background: linear-gradient(90deg, #398ecc 14.37%, #f39191 88.5%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -74,7 +69,10 @@ h2 .bg-header {
   text-fill-color: transparent; */
 }
 
-.h3 .infobox-gradient {
+.infobox {
+}
+
+.infobox-gradient {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 800;
@@ -87,9 +85,10 @@ h2 .bg-header {
   color: whitesmoke;
 }
 
-/* .infobox .underline {
-
-} */
+.infobox hr.underline {
+  height: 1px;
+  background: linear-gradient(90deg, #398ecc 50%, #5b21b6 99.99%);
+}
 
 .infobox p {
   font-family: 'Roboto';

@@ -1,5 +1,7 @@
 import Learnmore from '../components/app/learnmore-section/learnmore-section.js';
+import Footer from '../components/app/footer/footer';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 export default function Home() {
   const router = useRouter();
@@ -9,8 +11,8 @@ export default function Home() {
       <div className="bg-img">
         <div className="flex flex-col items-center py-12">
           <div className="main-font">
-            <h1 className="primary-text">NEXUS</h1>
-            <span className="secondary-text">VAULTS</span>
+            <h1 className="primary-text text-center">NEXUS</h1>
+            <h1 className="secondary-text text-center">VAULTS</h1>
           </div>
 
           <button
@@ -31,9 +33,29 @@ export default function Home() {
           </button>
         </div>
       </div>
-      
+
+      <div className="flex flex-col items-center py-4">
+        <h2 className="bg-header">Empower your crypto treasury</h2>
+        <Image
+          className="py-8"
+          src="/../public/images/crosswordPNG.png"
+          width="281"
+          height="464"
+          alt="Extendable. Flexible. Modular. Secure."
+        />
+        <div className="flex flex-col items-center grow px-40 py-8 infobox rounded-3xl w-2/3 bg-nexusRose">
+          <h3 className="infobox-gradient">How it works</h3>
+          <hr className="underline w-2/3"></hr>
+          <p className="">
+            With Nexus Vaults, you can leverage the power of Axelar Network to
+            seamlessly transfer and manage your crypto assets across different
+            chains using a new Web3 standard of cross chain messaging.
+          </p>
+        </div>
+      </div>
+
       <Learnmore></Learnmore>
-      <></>
+      <Footer></Footer>
     </div>
   );
 }

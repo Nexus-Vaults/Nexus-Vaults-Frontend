@@ -3,33 +3,18 @@ import Image from 'next/image';
 const Learnmore = () => {
   return (
     <>
-      <div className="flex flex-col items-center py-4">
-        <h2 className="bg-header">Empower your crypto today</h2>
-        <Image
-          src="/../../styles/global.css"
-          width="550"
-          height="645"
-          alt="Extendable. Flexible. Modular."
-        />
-        <div className="flex items-center grow px-8 infobox">
-          <h3 className="infobox-gradient">How it works</h3>
-          {/* <hr className="underline"></hr> */}
-          <p className="">
-            Utilizing a network of smart contracts, Axelar Network and a team of buidlers -
-            Nexus Vaults provides secure and efficent payment managment system.
+      <div className="grid grid-cols-3 justify-center justify-items-center gap-8 p-4">
+        <div className="blob grid-col-1 bg-nexusRose w-1/3 rounded-md text-center">
+          Blob 1
+        </div>
+        <div className="blob grid-col-1 bg-nexusRose w-1/3 rounded-md text-center">
+          <p>
+            <span>1</span>
+            point of access for your crypto treasury
           </p>
         </div>
-      </div>
-
-      <div className="grid grid-cols-3 justify-center justify-items-center gap-8 p-4">
-        <div className="blob">
-
-        </div>
-        <div className="blob">
-            <p><span>1</span> point of access for your crypto treasury</p>
-        </div>
-        <div className="blob">
-
+        <div className="blob grid-col-1 bg-nexusRose w-1/3 rounded-md text-center">
+          Blob 3
         </div>
       </div>
       {/* <div className="grid justify-items-center grid-cols-2 grid-rows-2 gap-4 p-4">

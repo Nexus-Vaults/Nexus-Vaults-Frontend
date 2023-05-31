@@ -19,6 +19,7 @@ module.exports = {
         red: "#590004",
         nexusmain: "#B01ED6",
         nexussecondary: "#FBDD58",
+        nexusRose: "#E399DC",
       },
     },
   },
