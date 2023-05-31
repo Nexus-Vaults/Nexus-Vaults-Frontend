@@ -1,14 +1,20 @@
-import { hardhat, polygonMumbai, moonbaseAlpha } from 'wagmi/chains';
 export abstract class ApiClient {
   abstract getFeatures(
     chainId: number,
     catalogAddress: `0x${string}`
-  ): Feature[];
-  abstract getVaults(nexus: Nexus): [Vault];
-  abstract getContractsAddresses(): ChainDeployment[];
+  ): Promise<Feature[]>;
+  abstract getContractsAddresses(): Promise<ChainDeployment[]>;
+  abstract getNexusOverview(
+    contractChainId: number,
+    nexusAddress: `0x${string}`
+  ): Promise<Nexus>;
+  abstract getVaultOverview(
+    nexusContractChainId: number,
+    nexusAddress: `0x${string}`,
+    vaultContractChainId: number,
+    vaultId: `0x${string}`
+  ): Promise<Vault>;
 }
-
-export type Chain = number;
 
 interface TokenBalance {
   token: string;
@@ -19,13 +25,25 @@ interface TokenBalance {
 interface Vault {
   balances: [TokenBalance];
   address: `0x${string}`;
-  chain: Chain;
+}
+
+interface VaultInfo {
+  address: `0x${string}`;
+  vaultId: number;
 }
 
 interface Nexus {
+  nexusId: `0x${string}`;
   name: string;
-  address: `0x${string}`;
-  chain: Chain;
+  owner: `0x${string}`;
+  //todo: [Vault]????
+  subChains: SubChain[];
+}
+
+interface SubChain {
+  contractChainId: number;
+  VaultInfo: VaultInfo[];
+  acceptedGatewayIds: number[];
 }
 
 export interface ChainDeployment {
@@ -48,51 +66,74 @@ export interface Feature {
 }
 
 class ApiClientMock extends ApiClient {
-  getVaults(nexus: Nexus): [Vault] {
-    return [
-      {
-        balances: [{ token: '', total: 0, liquid: 0 }],
-        address: '0x000',
-        chain: nexus.chain,
-      },
-    ];
+  async getVaultOverview(
+    nexusContractChainId: number,
+    nexusAddress: `0x${string}`,
+    vaultContractChainId: number,
+    vaultId: `0x${string}`
+  ): Promise<Vault> {
+    const response = await fetch(
+      `api/chains/${nexusContractChainId}/${nexusAddress}/Subchains/${vaultContractChainId}/Vaults/${vaultId}`
+    );
+
+    if (!response.ok) {
+      throw new Error('no response from api/chains/x/x/Features');
+    }
+    const jason = await response.json();
+    // TODO change object
+    if (jason.deployments == undefined) {
+      throw new Error('Could not find chains');
+    }
+    return jason.deployments as Vault;
   }
 
-  getFeatures(chainId: number, address: `0x${string}`): Feature[] {
-    return [
-      {
-        name: 'Card 1',
-        address: '0x000',
-        description: 'Description of Card 1',
-        feeTokenAddress: '0x00',
-        feeTokenSymbol: 'usdt',
-        feeTokenAmount: 5,
-        isBasic: true,
-        catalogAddress: address,
-      },
-      {
-        name: 'Card 1',
-        address: '0x000',
-        description: 'Description of Card 1',
-        feeTokenAddress: '0x00',
-        feeTokenSymbol: 'usdt',
-        feeTokenAmount: 5,
-        isBasic: false,
-        catalogAddress: address,
-      },
-    ];
+  async getFeatures(
+    chainId: number,
+    address: `0x${string}`
+  ): Promise<[Feature]> {
+    const response = await fetch(`api/chains/${chainId}/${address}/Features`);
+
+    if (!response.ok) {
+      throw new Error('no response from api/chains/x/x/Features');
+    }
+    const jason = await response.json();
+    // TODO change object
+    if (jason.deployments == undefined) {
+      throw new Error('Could not find chains');
+    }
+    return jason as [Feature];
   }
 
-  getContractsAddresses(): ChainDeployment[] {
-    return [
-      {
-        chainName: 'bnb',
-        evmChainId: 4,
-        contractChainId: 3,
-        nexusFactoryAddress: '0x0000',
-        publicCatalogAddress: ['0x0000'],
-      },
-    ];
+  async getContractsAddresses(): Promise<ChainDeployment[]> {
+    const response = await fetch('api/deployments');
+
+    if (!response.ok) {
+      throw new Error('no response from api/deployments');
+    }
+    const jason = await response.json();
+    if (jason.deployments == undefined) {
+      throw new Error('Could not find deployments');
+    }
+    return jason as ChainDeployment[];
+  }
+
+  async getNexusOverview(
+    contractChainId: number,
+    nexusAddress: `0x${string}`
+  ): Promise<Nexus> {
+    const response = await fetch(
+      `api/Chains/${contractChainId}/Nexuses/${nexusAddress}`
+    );
+
+    if (!response.ok) {
+      throw new Error('no response from api/chains/x/x/Features');
+    }
+    const jason = await response.json();
+    // TODO change object
+    if (jason.deployments == undefined) {
+      throw new Error('Could not find chains');
+    }
+    return jason.deployments as Nexus;
   }
 }
 
