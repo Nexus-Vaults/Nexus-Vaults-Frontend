@@ -101,7 +101,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider chains={deployment.map(x => mapEVMChainIdToChain(x.evmChainId))}>
         <ChainDeployments.Provider value={deployment}>
-          getLayout(<Component {...pageProps} />)
+           {getLayout(<Component {...pageProps} />)}
         </ChainDeployments.Provider>
       </RainbowKitProvider>
     </WagmiConfig>
