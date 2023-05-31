@@ -110,11 +110,11 @@ class ApiClientMock extends ApiClient {
     if (!response.ok) {
       throw new Error('no response from api/deployments');
     }
-    const jason = await response.json();
-    if (jason.deployments == undefined) {
+    const result = await response.json();
+    if (result.deployments == undefined) {
       throw new Error('Could not find deployments');
     }
-    return jason as ChainDeployment[];
+    return result.deployments as ChainDeployment[];
   }
 
   async getNexusOverview(
