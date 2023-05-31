@@ -51,7 +51,7 @@ export interface ChainDeployment {
   evmChainId: number;
   contractChainId: number;
   nexusFactoryAddress: `0x${string}`;
-  publicCatalogAddress: [`0x${string}`];
+  publicCatalogAddress: `0x${string}`;
 }
 
 export interface Feature {
@@ -91,17 +91,17 @@ class ApiClientMock extends ApiClient {
     chainId: number,
     address: `0x${string}`
   ): Promise<[Feature]> {
-    const response = await fetch(`/api/chains/${chainId}/${address}/Features`);
+    const response = await fetch(`/api/chains/${chainId}/catalogs/${address}/features`);
 
     if (!response.ok) {
       throw new Error('no response from api/chains/x/x/Features');
     }
-    const jason = await response.json();
+    const json = await response.json();
     // TODO change object
-    if (jason.deployments == undefined) {
+    if (json.features == undefined) {
       throw new Error('Could not find chains');
     }
-    return jason as [Feature];
+    return json.features as [Feature];
   }
 
   async getContractsAddresses(): Promise<ChainDeployment[]> {
