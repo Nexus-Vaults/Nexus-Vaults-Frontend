@@ -4,7 +4,8 @@ type CardProps = {
   id: number;
   name: string;
   description: string;
-  cost: number;
+  feeTokenSymbol: string;
+  feeTokenAmount: number;
   added: boolean;
   onAdd: (id: number) => void;
   onRemove: (id: number) => void;
@@ -14,7 +15,8 @@ const FeatureCard = ({
   id,
   name,
   description,
-  cost,
+  feeTokenSymbol,
+  feeTokenAmount,
   added,
   onAdd,
   onRemove,
@@ -28,7 +30,7 @@ const FeatureCard = ({
     >
       <h2 className="text-xl font-bold">{name}</h2>
       <p>{description}</p>
-      <p>Cost: ${cost}</p>
+      <p>Cost: ${feeTokenAmount + feeTokenSymbol}</p>
     </div>
   );
 };
