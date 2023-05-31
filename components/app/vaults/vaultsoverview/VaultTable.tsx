@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+import SendModal from '../../modals/SendModal';
+import ReceiveModal from '../../modals/ReceiveModal';
+import MintModal from '../../modals/MintModal';
 
 type Props = {
   data: {
@@ -9,6 +12,35 @@ type Props = {
 };
 
 const VaultTable = ({ data }: Props) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false);
+  const [isMintModalOpen, setIsMintModalOpen] = useState(false);
+  const qrData = 'https://etherscan.io/';
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const openReceiveModal = () => {
+    setIsReceiveModalOpen(true);
+  };
+
+  const closeReceiveModal = () => {
+    setIsReceiveModalOpen(false);
+  };
+
+  const openMintModal = () => {
+    setIsMintModalOpen(true);
+  };
+
+  const closeMintModal = () => {
+    setIsMintModalOpen(false);
+  };
+
   return (
     <div
       className="w-full border-sold bg-white shadow-lg border-2 border-gray-400 rounded-lg h-[30vh] overflow-y-auto  px-6"
@@ -65,17 +97,26 @@ const VaultTable = ({ data }: Props) => {
                 {item.value}
               </td>
               <td className="whitespace-nowrap px-6 py-4 font-medium">
-                <button className="bg-purple hover:bg-purple text-white font-bold py-1 px-2 rounded-lg">
+                <button
+                  className="bg-purple hover:bg-purple text-white font-bold py-1 px-2 rounded-lg"
+                  onClick={openModal}
+                >
                   Send
                 </button>
               </td>
               <td className="whitespace-nowrap px-6 py-4 font-medium">
-                <button className="bg-purple hover:bg-purple text-white font-bold py-1 px-2 rounded-lg">
+                <button
+                  className="bg-purple hover:bg-purple text-white font-bold py-1 px-2 rounded-lg"
+                  onClick={openReceiveModal}
+                >
                   Receive
                 </button>
               </td>
               <td className="whitespace-nowrap px-6 py-4 font-medium">
-                <button className="bg-purple hover:bg-purple text-white font-bold py-1 px-2 rounded-lg">
+                <button
+                  className="bg-purple hover:bg-purple text-white font-bold py-1 px-2 rounded-lg"
+                  onClick={openMintModal}
+                >
                   Mint
                 </button>
               </td>
@@ -83,6 +124,11 @@ const VaultTable = ({ data }: Props) => {
           ))}
         </tbody>
       </table>
+      {isModalOpen && <SendModal onClose={closeModal} />}
+      {isReceiveModalOpen && (
+        <ReceiveModal onClose={closeReceiveModal} qrData={qrData} />
+      )}
+      {isMintModalOpen && <MintModal onClose={closeMintModal} />}
     </div>
   );
 };
