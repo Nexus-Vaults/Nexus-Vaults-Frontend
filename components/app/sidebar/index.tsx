@@ -50,7 +50,10 @@ const Sidebar = ({ isOpened }: Props) => {
           </h1>
         </div>
         <div className="flex-1">
-          <h1 className="text-center text-whitesmoke text-lg font-semibold cursor-pointer hover:bg-blue200 hover:text-white px-3 py-2 rounded-md text-sm font-medium ">
+          <h1
+            className="text-center text-whitesmoke text-lg font-semibold cursor-pointer hover:bg-blue200 hover:text-white px-3 py-2 rounded-md text-sm font-medium "
+            onClick={() => router.push('/app/extensions')}
+          >
             Extensions
           </h1>
         </div>
