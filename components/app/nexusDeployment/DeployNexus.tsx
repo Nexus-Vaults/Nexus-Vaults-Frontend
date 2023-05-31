@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import DeployNexusCard from './deploy/DeployNexusCard';
 import ConnectWallet from './deploy/ConnectWallet';
 import ApprovePayment from './deploy/ApprovePayment';
-import { Chain, Feature } from 'api';
+import { ChainDeployment, Feature } from 'api';
 
 type Props = {
   nexusName: string;
-  targetChain: Chain;
+  targetChain: ChainDeployment;
   features: Feature[];
   costs: number;
   handleName: (name: string) => void;

@@ -13,7 +13,6 @@ import {
   fantom,
   polygonMumbai,
   moonbeam,
-  localhost,
   hardhat,
 } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
@@ -28,6 +27,9 @@ import {
   safeWallet,
   walletConnectWallet,
 } from '@rainbow-me/rainbowkit/wallets';
+import { apiClient, ChainDeployment } from 'api';
+import React, { useContext, useState } from 'react';
+import { ChainDeployments } from './app/ContractsAddressesContext';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -73,10 +75,14 @@ const wagmiConfig = createConfig({
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
+  const contractsAddresses = apiClient.getContractsAddresses();
+
   return (
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider chains={chains}>
-        {getLayout(<Component {...pageProps} />)}
+        <ChainDeployments.Provider value={contractsAddresses}>
+          {getLayout(<Component {...pageProps} />)}
+        </ChainDeployments.Provider>
       </RainbowKitProvider>
     </WagmiConfig>
   );

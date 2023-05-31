@@ -1,25 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
-import EthLogo from '../../../public/images/eth.png';
-import AdaLogo from '../../../public/images/ada.png';
-import BnbLogo from '../../../public/images/bnb.png';
-import BtcLogo from '../../../public/images/btc.png';
-import UsdtLogo from '../../../public/images/usdt.png';
-import black from '../../../public/images/black.png';
-import { Chain } from 'api';
+import { ChainDeployment } from 'api';
+import { ChainDeployments } from '../../../pages/app/ContractsAddressesContext';
 
 type Props = {
-  handleTargetChain: (chain: Chain) => void;
+  handleTargetChain: (chainDeployment: ChainDeployment | undefined) => void;
 };
 
 const TargetChain = ({ handleTargetChain }: Props) => {
-  const [selectedItem, setSelectedItem] = useState<Chain>('Hardhat');
+  const [selectedItem, setSelectedItem] = useState<ChainDeployment>();
+
+  const contractsAddresses = useContext(ChainDeployments);
 
   useEffect(() => {
     handleTargetChain(selectedItem);
   }, [selectedItem]);
 
-  const handleItemClick = (item: Chain) => {
+  const handleItemClick = (item: ChainDeployment) => {
     setSelectedItem(item);
   };
 
@@ -36,30 +33,27 @@ const TargetChain = ({ handleTargetChain }: Props) => {
           This chain is going to reflect where your nexus base is going to be.
         </p>
       </div>
-      {process.env.NEXT_PUBLIC_TESTNET ? (
-        <div className="flex flex-wrap justify-center gap-6 p-2">
-          <div
-            className={`border p-2 rounded ${
-              selectedItem === 'Hardhat' ? 'bg-black' : 'hover:bg-black'
-            }`}
-            onClick={() => handleItemClick('Hardhat')}
-          >
-            <Image src={black} width={32} height={32} alt="" />
+      {contractsAddresses.map((x) => {
+        return (
+          <div className="flex flex-wrap justify-center gap-6 p-2">
+            <div
+              className={`border p-2 rounded ${
+                selectedItem?.contractChainId === x.contractChainId
+                  ? 'bg-black'
+                  : 'hover:bg-black'
+              }`}
+              onClick={() => handleItemClick(x)}
+            >
+              <Image
+                src={`/public/images/${x.chainName}.png`}
+                width={32}
+                height={32}
+                alt=""
+              />
+            </div>
           </div>
-        </div>
-      ) : (
-        <div className="flex flex-wrap justify-center gap-6 p-2">
-          <div
-            className={`border p-2 rounded ${
-              selectedItem === 'Hardhat' ? 'bg-black' : 'hover:bg-black'
-            }`}
-            onClick={() => handleItemClick('Hardhat')}
-          >
-            <Image src={EthLogo} width={32} height={32} alt="" />
-          </div>
-
-        </div>
-      )}
+        );
+      })}
     </div>
   );
 };

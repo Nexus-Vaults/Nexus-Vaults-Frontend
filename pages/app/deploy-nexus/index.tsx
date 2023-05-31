@@ -4,16 +4,14 @@ import TargetChain from '../../../components/app/nexusDeployment/TargetChain';
 import FeaturesSelection from '../../../components/app/nexusDeployment/FeaturesSelection';
 import DeployNexus from '../../../components/app/nexusDeployment/DeployNexus';
 import { useRouter } from 'next/router';
-import { Chain, apiClient, ChainDeployment, Feature } from 'api';
+import { apiClient, ChainDeployment, Feature } from 'api';
 
 type Props = {};
 
 const Index: React.FC<Props> = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [nexusName, setNexusName] = useState('');
-  const [targetChain, setTargetChain] = useState<Chain | null>();
-  const [chainDeployment, setChainDeployment] =
-    useState<ChainDeployment | null>();
+  const [targetChain, setTargetChain] = useState<ChainDeployment>();
   const [features, setFeatures] = useState<Feature[]>([]);
   const [basicFeatures, setBasicFeatures] = useState<Feature[]>([]);
   const [costs, setCosts] = useState(0);
@@ -22,21 +20,13 @@ const Index: React.FC<Props> = () => {
 
   const contractsAddresses = apiClient.getContractsAddresses();
 
-  useEffect(() => {
-    if (targetChain == null) return;
-    const chainDeploymentTMP = contractsAddresses.find(
-      (x) => x.chainName.toLowerCase() == targetChain.toLowerCase()
-    );
-    if (chainDeploymentTMP == null) return;
-    setChainDeployment(chainDeploymentTMP);
-  });
-
   const handleNexusName = (name: string) => {
     setNexusName(name);
   };
 
-  const handleTargetChain = (chain: Chain) => {
-    setTargetChain(chain);
+  const handleTargetChain = (chainDeployment: ChainDeployment | undefined) => {
+    if (chainDeployment == undefined) return;
+    setTargetChain(chainDeployment);
   };
 
   const handleFeatures = (features: Feature[]) => {
@@ -54,7 +44,6 @@ const Index: React.FC<Props> = () => {
     <TargetChain handleTargetChain={handleTargetChain} />,
     <NexusName handleName={handleNexusName} />,
     <FeaturesSelection
-      chainDeployment={chainDeployment}
       targetChain={targetChain!}
       handleFeatures={handleFeatures}
       handleBasicFeatures={handleBasicFeatures}

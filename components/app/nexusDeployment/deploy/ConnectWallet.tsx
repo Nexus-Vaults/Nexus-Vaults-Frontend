@@ -1,11 +1,10 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import React, { useEffect } from 'react';
-import { Chain as ChainType } from 'api';
-import { useConnect, useNetwork, useSwitchNetwork } from 'wagmi';
-import { CHAIN_DEFINITIONS } from 'api';
+import { ChainDeployment } from 'api';
+import { useNetwork, useSwitchNetwork } from 'wagmi';
 
 type Props = {
-  targetChain: ChainType;
+  targetChain: ChainDeployment;
   handleConection: (b: boolean) => void;
 };
 
@@ -14,7 +13,7 @@ const ConnectWallet = ({ targetChain, handleConection }: Props) => {
   const { error, switchNetwork } = useSwitchNetwork();
 
   useEffect(() => {
-    if (chain?.name.toLowerCase() == targetChain.toLowerCase()) {
+    if (chain?.name.toLowerCase() == targetChain.chainName.toLowerCase()) {
       handleConection(true);
     } else handleConection(false);
   }, [chain]);
@@ -33,24 +32,22 @@ const ConnectWallet = ({ targetChain, handleConection }: Props) => {
       <div className="flex-1 flex flex-col justify-center ">
         <div className="flex flex-row border-solid border-2 border-black rounded-md py-1 px-3 ">
           <p>Target Chain:</p>
-          <p>{targetChain}</p>
+          <p>{targetChain.chainName}</p>
         </div>
       </div>
       <div className=" flex flex-row justify-center">
         <ConnectButton />
       </div>
       <div className=" flex flex-row justify-center">
-        {chain && <div>Connected to {chain.name}</div>}
-
-        {chain?.name.toLowerCase() != targetChain.toLowerCase() && (
-          <button
-            className="text-white bg-[#0e76fd] h-[40px] shadow-lg rounded-xl   font-bold py-1 px-3 inline-block "
-            onClick={() => switchNetwork?.(CHAIN_DEFINITIONS[targetChain].id)}
-          >
-            Connect to {targetChain}
-          </button>
-        )}
-
+        {chain &&
+          chain.name.toLowerCase() != targetChain.chainName.toLowerCase() && (
+            <button
+              className="text-white bg-[#0e76fd] h-[40px] shadow-lg rounded-xl   font-bold py-1 px-3 inline-block "
+              onClick={() => switchNetwork?.(targetChain.evmChainId)}
+            >
+              Connect to {targetChain.chainName}
+            </button>
+          )}
         <div>{error && error.message}</div>
       </div>
     </div>

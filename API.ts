@@ -8,13 +8,8 @@ export abstract class ApiClient {
   abstract getContractsAddresses(): ChainDeployment[];
 }
 
-export type Chain = keyof typeof CHAIN_DEFINITIONS;
+export type Chain = number;
 
-export const CHAIN_DEFINITIONS = {
-  Hardhat: { id: 31337, name: 'HardHat', chain: hardhat },
-  Moonbeam: { id: 1287, name: 'Moonbase Alpha', chain: moonbaseAlpha },
-  Polygon: { id: 80001, name: 'Polygon Mumbai', chain: polygonMumbai },
-} as const;
 interface TokenBalance {
   token: string;
   total: number;
@@ -35,7 +30,8 @@ interface Nexus {
 
 export interface ChainDeployment {
   chainName: string;
-  chainId: number;
+  evmChainId: number;
+  contractChainId: number;
   nexusFactoryAddress: `0x${string}`;
   publicCatalogAddress: [`0x${string}`];
 }
@@ -90,8 +86,9 @@ class ApiClientMock extends ApiClient {
   getContractsAddresses(): ChainDeployment[] {
     return [
       {
-        chainName: 'lol',
-        chainId: 4,
+        chainName: 'bnb',
+        evmChainId: 4,
+        contractChainId: 3,
         nexusFactoryAddress: '0x0000',
         publicCatalogAddress: ['0x0000'],
       },

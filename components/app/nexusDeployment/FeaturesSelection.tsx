@@ -1,42 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import FeaturesDashboard from './features/FeaturesDashboard';
 import type { ChainDeployment, Feature } from 'api';
-import { Chain, CHAIN_DEFINITIONS, apiClient } from 'api';
+import { apiClient } from 'api';
 
 type Props = {
   handleFeatures: (features: Feature[]) => void;
   handleBasicFeatures: (features: Feature[]) => void;
   handleCosts: (costs: number) => void;
-  chainDeployment: ChainDeployment | null | undefined;
-  targetChain: Chain;
+  targetChain: ChainDeployment;
 };
 
 const FeaturesSelection = ({
   handleFeatures,
   handleBasicFeatures,
   handleCosts,
-  chainDeployment,
   targetChain,
 }: Props) => {
-  const targetChainId = CHAIN_DEFINITIONS[targetChain].id;
-
-  interface FeaturesPlus extends Feature {
-    catalogAddress: `0x${string}`;
-  }
-
-  const [features, setFeatures] = useState<FeaturesPlus[]>();
+  const [features, setFeatures] = useState<Feature[]>([]);
 
   useEffect(() => {
-    if (targetChainId == null) return;
-    if (chainDeployment == null) return;
+    if (targetChain == null) return;
 
-    const result: FeaturesPlus[] = [];
-    for (let i = 0; i < chainDeployment.publicCatalogAddress.length; i++) {
-      let catalogAddress = chainDeployment.publicCatalogAddress[i];
-      let features = apiClient.getFeatures(targetChainId, catalogAddress);
-      features.map((x) => ({ ...x, catalogAddress }));
-    }
-    setFeatures(result);
+    const result: Feature[] = [];
+
+    targetChain.publicCatalogAddress.map((x) => {
+      apiClient.getFeatures(targetChain.contractChainId, x).map((y) => {
+        result.push(y);
+      });
+
+      setFeatures(result);
+    });
   });
 
   return (
