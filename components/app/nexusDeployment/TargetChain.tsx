@@ -35,22 +35,27 @@ const TargetChain = ({ handleTargetChain }: Props) => {
           This chain is going to reflect where your nexus base is going to be.
         </p>
       </div>
-      {contractsAddresses.map((x, key) => {
-        return (
-          <div className="flex flex-wrap justify-center gap-6 p-2" key={key}>
+      <div className="flex flex-row justify-center gap-4">
+        {contractsAddresses.map((x, key) => {
+          return (
             <div
-              className={`border p-2 rounded ${
-                selectedItem?.contractChainId === x.contractChainId
-                  ? 'bg-black'
-                  : 'hover:bg-black'
-              }`}
-              onClick={() => handleItemClick(x)}
+              className="flex flex-row  flex-wrap justify-center gap-6 p-2"
+              key={key}
             >
-              <img src={`/images/chain/${x.evmChainId}.png`} width={64}></img>
+              <div
+                className={`border p-2 rounded-2xl ${
+                  selectedItem?.contractChainId === x.contractChainId
+                    ? 'bg-indigo-900'
+                    : 'hover:bg-indigo-900'
+                }`}
+                onClick={() => handleItemClick(x)}
+              >
+                <img src={`/images/chain/${x.evmChainId}.png`} width={64}></img>
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 };
