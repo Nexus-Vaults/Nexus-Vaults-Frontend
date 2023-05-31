@@ -95,7 +95,7 @@ const Index: React.FC<Props> = () => {
 
   return (
     <div className="flex flex-col flex-wrap justify-center content-center bg-gradient-to-br from-black to-indigo-900 min-h-screen  items-center  p-8 gap-2 h-screen">
-      <div className="flex-flex-col w-fit  bg-white shadow-2xl border-solid border-2 border-gray-400 rounded-lg p-2">
+      <div className="flex-flex-col w-2/3  bg-white shadow-2xl border-solid border-2 border-gray-400 rounded-lg p-2">
         <div className="flex flex-row space-x-2 justify-center">
           {onboardingSteps.map((step, index) => (
             <div
@@ -112,14 +112,14 @@ const Index: React.FC<Props> = () => {
         </div>
         <div className="flex flex-row justify-center gap-4 p-8">
           <button
-            className="text-white bg-indigo-900 h-[40px] shadow-lg rounded-xl   font-bold py-1 px-3 inline-block hover:scale-105 transition-all duration-300"
+            className="text-white bg-indigo-900 h-[40px] shadow-lg rounded-xl   font-bold py-1 px-3 inline-block hover:scale-105 transition-ease-in-out duration-300"
             onClick={handleBack}
           >
             Back
           </button>
           {currentStep !== onboardingSteps.length - 1 && (
             <button
-              className="text-white bg-indigo-900 h-[40px] shadow-lg rounded-xl   font-bold py-1 px-3 inline-block hover:scale-105 transition-all duration-300"
+              className="text-white bg-indigo-900 h-[40px] shadow-lg rounded-xl   font-bold py-1 px-3 inline-block hover:scale-105 transition-ease-in-out duration-300"
               onClick={handleValidation}
             >
               Next
