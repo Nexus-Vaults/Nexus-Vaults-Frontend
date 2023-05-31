@@ -77,6 +77,7 @@ const DeployNexus = ({
       </div>
       <DeployNexusCard
         nexusName={nexusName}
+        targetChain={targetChain}
         approved={isApproved}
         connected={isConnected}
         handleName={handleName}
