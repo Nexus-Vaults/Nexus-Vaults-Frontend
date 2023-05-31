@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 type Props = {
   onClose: () => void;
 };
 
-const MintModal = ({ onClose }: Props) => {
+const AccessNexusModal = ({ onClose }: Props) => {
+  const modalRef = useRef(null);
+
   const handleBackgroundClick = (event: any) => {
     onClose();
   };
@@ -12,15 +14,28 @@ const MintModal = ({ onClose }: Props) => {
   const handleInnerClick = (event: any) => {
     event.stopPropagation();
   };
-
   return (
     <div
       className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50"
       onClick={handleBackgroundClick}
     >
-      <div className="bg-white rounded-lg p-6 w-80" onClick={handleInnerClick}>
-        <h2 className="text-xl font-bold mb-4">Mint Modal</h2>
+      <div className="bg-white rounded-lg p-6" onClick={handleInnerClick}>
+        <h2 className="text-2xl font-bold mb-4">Enter the Nexus Information</h2>
         <form>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="chainId"
+            >
+              Chain ID:
+            </label>
+            <input
+              className="border rounded-md py-2 px-3 w-full"
+              id="chainId"
+              type="text"
+              placeholder="Enter Chain ID"
+            />
+          </div>
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -32,52 +47,27 @@ const MintModal = ({ onClose }: Props) => {
               className="border rounded-md py-2 px-3 w-full"
               id="address"
               type="text"
-              placeholder="Enter address"
-              value={''}
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="amount"
-            >
-              Amount:
-            </label>
-            <input
-              className="border rounded-md py-2 px-3 w-full"
-              id="amount"
-              type="number"
-              placeholder="Enter amount"
+              placeholder="Enter Address"
             />
           </div>
           <div className="flex justify-end">
             <button
-              className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
               type="submit"
             >
-              Mint
+              Submit
             </button>
           </div>
         </form>
         <button
-          className="absolute top-2 right-2 text-white hover:text-gray-200"
+          className="mt-4 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
           onClick={onClose}
         >
-          <svg
-            className="h-5 w-5"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
+          Close
         </button>
       </div>
     </div>
   );
 };
 
-export default MintModal;
+export default AccessNexusModal;
