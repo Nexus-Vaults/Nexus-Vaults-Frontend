@@ -12,6 +12,7 @@ import { fetchTransaction } from '@wagmi/core';
 import { useRouter } from 'next/router';
 import { ChainDeployments } from '../../../../pages/app/ContractsAddressesContext';
 import { decodeEventLog } from 'viem';
+import ConfirmationModal from '../../modals/ConfirmationModal';
 
 type Props = {
   nexusName: string;
@@ -60,24 +61,33 @@ const DeployNexusCard = ({
 
   useEffect(() => {
     if (dataNexus?.hash == undefined || transaction.data?.status != 'success') {
+      <ConfirmationModal success={false} />;
       return;
     }
 
     const f = async () => {
       const txReceipt = await publicClient.getTransactionReceipt({
-        hash: dataNexus?.hash!
+        hash: dataNexus?.hash!,
       });
 
-      const nexusDeployedLog = txReceipt.logs.filter(x => x.address.toUpperCase() == targetChain.nexusFactoryAddress.toUpperCase())[0];
+      const nexusDeployedLog = txReceipt.logs.filter(
+        (x) =>
+          x.address.toUpperCase() ==
+          targetChain.nexusFactoryAddress.toUpperCase()
+      )[0];
 
       const deployedLogArgs = decodeEventLog({
         abi: NexusFactory,
-        eventName: "NexusDeployed",
+        eventName: 'NexusDeployed',
         topics: nexusDeployedLog.topics,
-        data: nexusDeployedLog.data
+        data: nexusDeployedLog.data,
       });
-
-      router.push('/app/overview/' + deployedLogArgs.args.nexus);
+      <ConfirmationModal success={true} />;
+      useEffect(() => {
+        const timer = setTimeout(() => {}, 200);
+        router.push('/app/overview/' + deployedLogArgs.args.nexus);
+        return () => clearTimeout(timer);
+      }, []);
     };
 
     f();
