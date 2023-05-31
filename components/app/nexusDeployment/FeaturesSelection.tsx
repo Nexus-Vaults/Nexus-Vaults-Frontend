@@ -1,17 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FeaturesDashboard from './features/FeaturesDashboard';
+import type { ChainDeployment, Feature } from 'api';
+import { apiClient } from 'api';
 
 type Props = {
-  handleFeatures: (features: string[]) => void;
-  handleBasicFeatures: (features: string[]) => void;
+  handleFeatures: (features: Feature[]) => void;
+  handleBasicFeatures: (features: Feature[]) => void;
   handleCosts: (costs: number) => void;
+  targetChain: ChainDeployment;
 };
 
 const FeaturesSelection = ({
   handleFeatures,
   handleBasicFeatures,
   handleCosts,
+  targetChain,
 }: Props) => {
+  const [features, setFeatures] = useState<Feature[]>([]);
+
+  useEffect(() => {
+    if (targetChain == null) return;
+
+    const result: Feature[] = [];
+
+    targetChain.publicCatalogAddress.map((x) => {
+      apiClient.getFeatures(targetChain.contractChainId, x).map((y) => {
+        result.push(y);
+      });
+
+      setFeatures(result);
+    });
+  });
+
   return (
     <div className="flex flex-col  p-5 gap-10">
       <div className="flex flex-col p-5 gap-2">
@@ -26,11 +46,16 @@ const FeaturesSelection = ({
           free basic features.All the additional features needs to be payed.
         </p>
       </div>
-      <FeaturesDashboard
-        handleFeatures={handleFeatures}
-        handleBasicFeatures={handleBasicFeatures}
-        handleCosts={handleCosts}
-      ></FeaturesDashboard>
+      {features == null ? (
+        <div>no features available</div>
+      ) : (
+        <FeaturesDashboard
+          handleFeatures={handleFeatures}
+          handleBasicFeatures={handleBasicFeatures}
+          handleCosts={handleCosts}
+          features={features}
+        ></FeaturesDashboard>
+      )}
     </div>
   );
 };
