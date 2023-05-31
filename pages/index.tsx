@@ -5,27 +5,35 @@ export default function Home() {
   const router = useRouter();
 
   return (
-    <div className="bg-gray-800 bg-img">
-      <div className="flex flex-col items-center justify-center py-96">
-        <button
-          className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800"
-          onClick={() => router.push('/app')}
-        >
-          <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-            Enter Nexus
-          </span>
-        </button>
-        <button
-          className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-white rounded-lg group bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500"
-          onClick={() => router.push('/app')}
-        >
-          <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-            Learn more
-          </span>
-        </button>
-      </div>
+    <div className="bg-primary-gradient">
+      <div className="bg-img">
+        <div className="flex flex-col items-center py-12">
+          <div className="main-font">
+            <h1 className="primary-text">NEXUS</h1>
+            <span className="secondary-text">VAULTS</span>
+          </div>
 
+          <button
+            className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800"
+            onClick={() => router.push('/app')}
+          >
+            <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+              Enter Nexus
+            </span>
+          </button>
+          <button
+            className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-white rounded-lg group bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500"
+            onClick={() => router.push('/app')}
+          >
+            <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+              Learn more
+            </span>
+          </button>
+        </div>
+      </div>
+      
       <Learnmore></Learnmore>
+      <></>
     </div>
   );
 }
