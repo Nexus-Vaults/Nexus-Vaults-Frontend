@@ -46,7 +46,7 @@ const TargetChain = ({ handleTargetChain }: Props) => {
               }`}
               onClick={() => handleItemClick(x)}
             >
-              <Image src={fantom} width={32} height={32} alt="" />
+              <img src={`/images/chain/${x.evmChainId}.png`} width={64}></img>
             </div>
           </div>
         );
