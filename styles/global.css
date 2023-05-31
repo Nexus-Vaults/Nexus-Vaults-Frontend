@@ -18,11 +18,97 @@ body {
 }
 
 .bg-img {
-  background: url('../public/images/4edit2.png') no-repeat center center fixed;
+  background: url('../public/images/fancy.png') no-repeat center center fixed;
   background-size: cover;
+}
+
+.bg-primary-gradient {
+  background: linear-gradient(
+    180deg,
+    #0e0a3e 62.26%,
+    #211f4e 81.13%,
+    #5b21b6 100%
+  );
 }
 
 img {
   max-width: 100%;
   display: block;
+}
+
+.main-font {
+  font-family: 'Rubik 80s Fade', cursive;
+  font-size: 244px;
+  color: #bcbcbd;
+}
+
+.main-font .primary-text {
+  letter-spacing: 0.4em;
+}
+
+.main-font .secondary-text {
+  letter-spacing: 0.15em;
+}
+
+h2 .bg-header {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 96px;
+  line-height: 112px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.04em;
+
+  background: linear-gradient(
+    90deg,
+    #398ecc 14.37%,
+    #f39191 88.5%,
+    #ce3737 88.5%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  /* This property isn't standard, to be used with webkit ^ 
+  text-fill-color: transparent; */
+}
+
+.h3 .infobox-gradient {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 96px;
+  line-height: 112px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.04em;
+  color: whitesmoke;
+}
+
+/* .infobox .underline {
+
+} */
+
+.infobox p {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+}
+
+.card {
+  border-radius: 15px;
+}
+
+.card .card-title {
+  padding: 0.2em;
+  font-size: 24px;
 }
