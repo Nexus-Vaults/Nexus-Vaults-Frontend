@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   useAccount,
   useContractWrite,
@@ -6,15 +6,17 @@ import {
   useWaitForTransaction,
 } from 'wagmi';
 import { NexusFactory } from 'abiTypes/contracts/nexus/NexusFactory.sol/NexusFactory';
-import { Feature } from 'api';
+import { ChainDeployment, Feature } from 'api';
 import { usePublicClient } from 'wagmi';
 import { fetchTransaction } from '@wagmi/core';
 import { useRouter } from 'next/router';
+import { ChainDeployments } from '../../../../pages/app/ContractsAddressesContext';
 
 type Props = {
   nexusName: string;
   approved: boolean;
   connected: boolean;
+  targetChain: ChainDeployment;
   handleName: (name: string) => void;
   features: Feature[];
 };
@@ -23,6 +25,7 @@ type Props = {
 const DeployNexusCard = ({
   features,
   nexusName,
+  targetChain,
   approved,
   connected,
   handleName,
@@ -44,7 +47,7 @@ const DeployNexusCard = ({
   const publicClient = usePublicClient();
 
   const { config: configNexus } = usePrepareContractWrite({
-    address: process.env.NEXT_PUBLIC_NEXUS_FACTORY_ADD,
+    address: targetChain.nexusFactoryAddress,
     abi: NexusFactory,
     functionName: 'create',
     args: [nexusName, address!, facetInstallation],
@@ -65,7 +68,7 @@ const DeployNexusCard = ({
       });
 
       const { result } = await publicClient.simulateContract({
-        address: process.env.NEXT_PUBLIC_NEXUS_FACTORY_ADD,
+        address: targetChain.nexusFactoryAddress,
         abi: NexusFactory,
         functionName: 'create',
         args: [nexusName, address!, facetInstallation],
