@@ -1,5 +1,3 @@
-// import MenuIcon from '@mui/icons-material/Menu';
-// import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import Link from 'next/link';
 
