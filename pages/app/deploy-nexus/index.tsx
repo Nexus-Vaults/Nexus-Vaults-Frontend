@@ -4,18 +4,32 @@ import TargetChain from '../../../components/app/nexusDeployment/TargetChain';
 import FeaturesSelection from '../../../components/app/nexusDeployment/FeaturesSelection';
 import DeployNexus from '../../../components/app/nexusDeployment/DeployNexus';
 import { useRouter } from 'next/router';
-import { Chain } from 'api';
+import { Chain, apiClient, ChainDeployment, Feature } from 'api';
 
 type Props = {};
 
 const Index: React.FC<Props> = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [nexusName, setNexusName] = useState('');
-  const [targetChain, setTargetChain] = useState<Chain>('Localhost');
-  const [features, setFeatures] = useState<string[]>([]);
-  const [basicFeatures, setBasicFeatures] = useState<string[]>([]);
+  const [targetChain, setTargetChain] = useState<Chain | null>();
+  const [chainDeployment, setChainDeployment] =
+    useState<ChainDeployment | null>();
+  const [features, setFeatures] = useState<Feature[]>([]);
+  const [basicFeatures, setBasicFeatures] = useState<Feature[]>([]);
   const [costs, setCosts] = useState(0);
+
   const router = useRouter();
+
+  const contractsAddresses = apiClient.getContractsAddresses();
+
+  useEffect(() => {
+    if (targetChain == null) return;
+    const chainDeploymentTMP = contractsAddresses.find(
+      (x) => x.chainName.toLowerCase() == targetChain.toLowerCase()
+    );
+    if (chainDeploymentTMP == null) return;
+    setChainDeployment(chainDeploymentTMP);
+  });
 
   const handleNexusName = (name: string) => {
     setNexusName(name);
@@ -25,10 +39,10 @@ const Index: React.FC<Props> = () => {
     setTargetChain(chain);
   };
 
-  const handleFeatures = (features: string[]) => {
+  const handleFeatures = (features: Feature[]) => {
     setFeatures(features);
   };
-  const handleBasicFeatures = (features: string[]) => {
+  const handleBasicFeatures = (features: Feature[]) => {
     setBasicFeatures(features);
   };
 
@@ -40,22 +54,23 @@ const Index: React.FC<Props> = () => {
     <TargetChain handleTargetChain={handleTargetChain} />,
     <NexusName handleName={handleNexusName} />,
     <FeaturesSelection
+      chainDeployment={chainDeployment}
+      targetChain={targetChain!}
       handleFeatures={handleFeatures}
       handleBasicFeatures={handleBasicFeatures}
       handleCosts={handleCosts}
     />,
     <DeployNexus
       nexusName={nexusName}
-      targetChain={targetChain}
+      targetChain={targetChain!}
       features={features}
-      basicFeatures={basicFeatures}
       costs={costs}
       handleName={handleNexusName}
     />,
   ];
 
   const handleNext = () => {
-    if (currentStep < onboardingSteps.length - 1) {
+    if (currentStep < onboardingSteps.length - 1 && targetChain != null) {
       setCurrentStep((prevStep) => prevStep + 1);
     }
   };

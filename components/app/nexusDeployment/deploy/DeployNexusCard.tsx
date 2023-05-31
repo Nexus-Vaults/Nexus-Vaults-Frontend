@@ -6,8 +6,7 @@ import {
   useWaitForTransaction,
 } from 'wagmi';
 import { NexusFactory } from 'abiTypes/contracts/nexus/NexusFactory.sol/NexusFactory';
-import { Nexus } from 'abiTypes/contracts/nexus/Nexus.sol/Nexus';
-import { apiClient } from 'api';
+import { Feature } from 'api';
 import { router } from 'next/client';
 import { usePublicClient } from 'wagmi';
 import { fetchTransaction } from '@wagmi/core';
@@ -15,15 +14,15 @@ import { fetchTransaction } from '@wagmi/core';
 type Props = {
   nexusName: string;
   approved: boolean;
-  features: string[];
   connected: boolean;
   handleName: (name: string) => void;
+  features: Feature[];
 };
 
 // @ts-ignore
 const DeployNexusCard = ({
-  nexusName,
   features,
+  nexusName,
   approved,
   connected,
   handleName,
@@ -32,6 +31,13 @@ const DeployNexusCard = ({
     handleName(event.target.value);
   };
 
+  const facetInstallation = features.map((x) => {
+    return {
+      catalog: x.catalogAddress,
+      facet: x.address,
+    };
+  });
+
   const { address } = useAccount();
   const publicClient = usePublicClient();
 
@@ -39,7 +45,7 @@ const DeployNexusCard = ({
     address: process.env.NEXT_PUBLIC_NEXUS_FACTORY_ADD,
     abi: NexusFactory,
     functionName: 'create',
-    args: [nexusName, address!],
+    args: [nexusName, address!, facetInstallation],
     enabled: address != null,
   });
 
@@ -59,7 +65,7 @@ const DeployNexusCard = ({
         address: process.env.NEXT_PUBLIC_NEXUS_FACTORY_ADD,
         abi: NexusFactory,
         functionName: 'create',
-        args: [nexusName, address!],
+        args: [nexusName, address!, facetInstallation],
         nonce: fetchtransaction.nonce,
       });
 
@@ -73,47 +79,47 @@ const DeployNexusCard = ({
     writeNexus?.();
   }
 
-  //todo: needs to be moved
-  function getFeatureAddress(features: string[]) {
-    return [`0x$0000`] as const;
-  }
-
-  function getFeaturePayment(features: string[]) {
-    return [
-      {
-        token: `0x000` as const,
-        amount: BigInt(0),
-      },
-    ] as const;
-  }
-
-  const { config: featureConfigOne } = usePrepareContractWrite({
-    address: process.env.NEXT_PUBLIC_NEXUS_FACTORY_ADD,
-    abi: Nexus,
-    functionName: 'installFacetFromCatalog',
-    args: [
-      apiClient.getCatalogAddress(),
-      getFeatureAddress(features)[0],
-      getFeaturePayment(features)[0],
-    ],
-    enabled: false,
-  });
-
-  const { config: featureConfigMany } = usePrepareContractWrite({
-    address: process.env.NEXT_PUBLIC_NEXUS_FACTORY_ADD,
-    abi: Nexus,
-    functionName: 'batchInstallFacetFromCatalog',
-    args: [
-      apiClient.getCatalogAddress(),
-      getFeatureAddress(features),
-      getFeaturePayment(features),
-    ],
-    enabled: false,
-  });
-
-  const { write: writeFeature, error: errorFeature } = useContractWrite(
-    features.length === 1 ? featureConfigOne : featureConfigMany
-  );
+  // //todo: needs to be moved
+  // function getFeatureAddress(features: string[]) {
+  //   return [`0x$0000`] as const;
+  // }
+  //
+  // function getFeaturePayment(features: string[]) {
+  //   return [
+  //     {
+  //       token: `0x000` as const,
+  //       amount: BigInt(0),
+  //     },
+  //   ] as const;
+  // }
+  //
+  // const { config: featureConfigOne } = usePrepareContractWrite({
+  //   address: process.env.NEXT_PUBLIC_NEXUS_FACTORY_ADD,
+  //   abi: Nexus,
+  //   functionName: 'installFacetFromCatalog',
+  //   args: [
+  //     apiClient.getCatalogAddress(),
+  //     getFeatureAddress(features)[0],
+  //     getFeaturePayment(features)[0],
+  //   ],
+  //   enabled: false,
+  // });
+  //
+  // const { config: featureConfigMany } = usePrepareContractWrite({
+  //   address: process.env.NEXT_PUBLIC_NEXUS_FACTORY_ADD,
+  //   abi: Nexus,
+  //   functionName: 'batchInstallFacetFromCatalog',
+  //   args: [
+  //     apiClient.getCatalogAddress(),
+  //     getFeatureAddress(features),
+  //     getFeaturePayment(features),
+  //   ],
+  //   enabled: false,
+  // });
+  //
+  // const { write: writeFeature, error: errorFeature } = useContractWrite(
+  //   facetInstallation.length === 1 ? featureConfigOne : featureConfigMany
+  // );
 
   return (
     <div className="flex flex-col flex-1 gap-2">

@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import DeployNexusCard from './deploy/DeployNexusCard';
 import ConnectWallet from './deploy/ConnectWallet';
 import ApprovePayment from './deploy/ApprovePayment';
-import { Chain as Chain } from 'api';
+import { Chain, Feature } from 'api';
 
 type Props = {
   nexusName: string;
   targetChain: Chain;
-  features: string[];
-  basicFeatures: string[];
+  features: Feature[];
   costs: number;
   handleName: (name: string) => void;
 };
@@ -17,12 +16,9 @@ const DeployNexus = ({
   nexusName,
   targetChain,
   features,
-  basicFeatures,
   costs,
   handleName,
 }: Props) => {
-  const featuresCount = features.length + basicFeatures.length;
-
   const [isApproved, setApproved] = useState(false);
   const [isConnected, setConnected] = useState(false);
 
@@ -59,7 +55,7 @@ const DeployNexus = ({
       </div>
       <ApprovePayment
         costs={costs}
-        featuresCount={featuresCount}
+        features={features}
         handleApproval={handleApproval}
         connected={isConnected}
       ></ApprovePayment>
@@ -81,10 +77,10 @@ const DeployNexus = ({
       </div>
       <DeployNexusCard
         nexusName={nexusName}
-        features={features}
         approved={isApproved}
         connected={isConnected}
         handleName={handleName}
+        features={features}
       ></DeployNexusCard>
     </div>
   );

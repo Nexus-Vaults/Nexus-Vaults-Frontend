@@ -1,70 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import FeatureCard from './FeatureCard';
+import { Feature } from 'api';
 
 type Props = {
-  handleFeatures: (features: string[]) => void;
-  handleBasicFeatures: (features: string[]) => void;
+  handleFeatures: (features: Feature[]) => void;
+  handleBasicFeatures: (features: Feature[]) => void;
   handleCosts: (costs: number) => void;
+  features: Feature[];
 };
 
 const FeaturesDashboard = ({
   handleFeatures,
   handleBasicFeatures,
   handleCosts,
+  features,
 }: Props) => {
-  const [cards, setCards] = useState([
-    {
-      id: 1,
-      name: 'Card 1',
-      description: 'Description of Card 1',
-      cost: 10,
-      added: false,
-    },
-    {
-      id: 2,
-      name: 'Card 2',
-      description: 'Description of Card 2',
-      cost: 10,
-      added: false,
-    },
-    {
-      id: 3,
-      name: 'Card 3',
-      description: 'Description of Card 2',
-      cost: 10,
-      added: false,
-    },
-    {
-      id: 4,
-      name: 'Card 4',
-      description: 'Description of Card 2',
-      cost: 10,
-      added: false,
-    },
+  const basic = features
+    .filter((x) => x.isBasic)
+    .map((x, index) => ({ ...x, added: false, id: index + 1 }));
 
-    // Add more cards here...
-  ]);
-  const [basicFeatures, setBasicFeatures] = useState([
-    {
-      id: 5,
-      name: 'Basic Feature 1',
-      description: 'Description of Card 1',
-      cost: 0,
-      added: true,
-    },
-    {
-      id: 6,
-      name: 'Basic Feature 2',
-      description: 'Description of Card 2',
-      cost: 0,
-      added: true,
-    },
-
-    // Add more cards here...
-  ]);
+  const other = features
+    .filter((x) => !x.isBasic)
+    .map((x, index) => ({ ...x, added: false, id: index + 1 }));
+  const [otherFeatures, setOtherFeatures] = useState(other);
+  const [basicFeatures, setBasicFeatures] = useState(basic);
 
   const handleAddCard = (cardId: number) => {
-    setCards((prevCards) =>
+    setOtherFeatures((prevCards) =>
       prevCards.map((card) => {
         if (card.id === cardId) {
           return { ...card, added: true };
@@ -75,7 +37,7 @@ const FeaturesDashboard = ({
   };
 
   const handleRemoveCard = (cardId: number) => {
-    setCards((prevCards) =>
+    setOtherFeatures((prevCards) =>
       prevCards.map((card) => {
         if (card.id === cardId) {
           return { ...card, added: false };
@@ -111,30 +73,25 @@ const FeaturesDashboard = ({
     let totalCost = 0;
     basicFeatures.forEach((card) => {
       if (card.added) {
-        totalCost += card.cost;
+        totalCost += card.feeTokenAmount;
       }
     });
-    cards.forEach((card) => {
+    otherFeatures.forEach((card) => {
       if (card.added) {
-        totalCost += card.cost;
+        totalCost += card.feeTokenAmount;
       }
     });
     return totalCost;
   };
 
-  const addedCardIds = cards
-    .filter((card) => card.added)
-    .map((card) => card.name);
-
-  const addedFeaturesCardIds = basicFeatures
-    .filter((card) => card.added)
-    .map((card) => card.name);
+  const addedCardIds = otherFeatures.filter((card) => card.added);
+  const addedFeaturesCardIds = basicFeatures.filter((card) => card.added);
 
   useEffect(() => {
     handleFeatures(addedCardIds);
     handleBasicFeatures(addedFeaturesCardIds);
     handleCosts(calculateTotalCost());
-  }, [cards, basicFeatures]);
+  }, [otherFeatures, basicFeatures]);
 
   return (
     <div className="flex flex-col gap-10">
@@ -150,7 +107,8 @@ const FeaturesDashboard = ({
                 id={card.id}
                 name={card.name}
                 description={card.description}
-                cost={card.cost}
+                feeTokenSymbol={card.feeTokenSymbol}
+                feeTokenAmount={card.feeTokenAmount}
                 added={card.added}
                 onAdd={handleAddBasicFeature}
                 onRemove={handleRemoveBasicFeature}
@@ -163,13 +121,14 @@ const FeaturesDashboard = ({
             <h3>Additional Features</h3>
           </div>
           <div className="flex flex-wrap justify-center gap-5 ">
-            {cards.map((card) => (
+            {otherFeatures.map((card) => (
               <FeatureCard
                 key={card.id}
                 id={card.id}
                 name={card.name}
                 description={card.description}
-                cost={card.cost}
+                feeTokenSymbol={card.feeTokenSymbol}
+                feeTokenAmount={card.feeTokenAmount}
                 added={card.added}
                 onAdd={handleAddCard}
                 onRemove={handleRemoveCard}

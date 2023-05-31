@@ -1,14 +1,11 @@
-import {
-  polygon,
-  moonbeam,
-  hardhat,
-  polygonMumbai,
-  moonbaseAlpha,
-} from 'wagmi/chains';
+import { hardhat, polygonMumbai, moonbaseAlpha } from 'wagmi/chains';
 export abstract class ApiClient {
-  abstract getCatalogAddress(): `0x${string}`;
+  abstract getFeatures(
+    chainId: number,
+    catalogAddress: `0x${string}`
+  ): Feature[];
   abstract getVaults(nexus: Nexus): [Vault];
-  abstract getContracts(): ChainDeployment;
+  abstract getContractsAddresses(): ChainDeployment[];
 }
 
 export type Chain = keyof typeof CHAIN_DEFINITIONS;
@@ -36,16 +33,25 @@ interface Nexus {
   chain: Chain;
 }
 
-interface ChainDeployment {
-  gatewayAddress: `0x${string}`;
+export interface ChainDeployment {
+  chainName: string;
+  chainId: number;
+  nexusFactoryAddress: `0x${string}`;
+  publicCatalogAddress: [`0x${string}`];
+}
+
+export interface Feature {
+  name: string;
+  address: `0x${string}`;
+  description: string;
+  feeTokenSymbol: string;
+  feeTokenAddress: `0x${string}`;
+  feeTokenAmount: number;
+  isBasic: boolean;
+  catalogAddress: `0x${string}`;
 }
 
 class ApiClientMock extends ApiClient {
-  getCatalogAddress(): `0x${string}` {
-    // @ts-ignore
-    return process.env.NEXT_PUBLIC_CATALOG_ADD;
-  }
-
   getVaults(nexus: Nexus): [Vault] {
     return [
       {
@@ -56,8 +62,40 @@ class ApiClientMock extends ApiClient {
     ];
   }
 
-  getContracts(): ChainDeployment {
-    return { gatewayAddress: '0x000' };
+  getFeatures(chainId: number, address: `0x${string}`): Feature[] {
+    return [
+      {
+        name: 'Card 1',
+        address: '0x000',
+        description: 'Description of Card 1',
+        feeTokenAddress: '0x00',
+        feeTokenSymbol: 'usdt',
+        feeTokenAmount: 5,
+        isBasic: true,
+        catalogAddress: address,
+      },
+      {
+        name: 'Card 1',
+        address: '0x000',
+        description: 'Description of Card 1',
+        feeTokenAddress: '0x00',
+        feeTokenSymbol: 'usdt',
+        feeTokenAmount: 5,
+        isBasic: false,
+        catalogAddress: address,
+      },
+    ];
+  }
+
+  getContractsAddresses(): ChainDeployment[] {
+    return [
+      {
+        chainName: 'lol',
+        chainId: 4,
+        nexusFactoryAddress: '0x0000',
+        publicCatalogAddress: ['0x0000'],
+      },
+    ];
   }
 }
 

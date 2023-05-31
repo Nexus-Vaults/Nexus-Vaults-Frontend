@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import { Feature } from 'api';
 
 type Props = {
   costs: number;
-  featuresCount: number;
   connected: boolean;
+  features: Feature[];
   handleApproval: (b: boolean) => void;
 };
 
 const ApprovePayment = ({
   costs,
-  featuresCount,
   handleApproval,
   connected,
+  features,
 }: Props) => {
   const [isClicked, setIsClicked] = useState(false);
 
@@ -35,12 +36,18 @@ const ApprovePayment = ({
       </div>
       <div className="flex flex-col flex-1 justify-center gap-2">
         <div className="flex flex-row  border-solid border-2 border-black rounded-md py-1 px-3 ">
-          <p>Features Count:</p>
-          <p>{featuresCount}</p>
+          {features.map((x) => {
+            return (
+              <p>
+                {x.name}:{x.feeTokenAmount}
+                {x.feeTokenSymbol}
+              </p>
+            );
+          })}
+          {}
         </div>
         <div className="flex flex-row  border-solid border-2 border-black rounded-md py-1 px-3">
-          <p>Total Cost:</p>
-          <p>{costs}</p>
+          <p>Total Cost:{costs}</p>
         </div>
       </div>
 
