@@ -1,14 +1,14 @@
 import React from 'react';
 
-interface TableProps {
+type Props = {
   data: {
     assetName: string;
     amount: number;
     value: number;
   }[];
-}
+};
 
-const Table: React.FC<TableProps> = ({ data }) => {
+const VaultTable = ({ data }: Props) => {
   return (
     <div
       className="w-full border-sold bg-white shadow-lg border-2 border-gray-400 rounded-lg h-[30vh] overflow-y-auto  px-6"
@@ -41,6 +41,15 @@ const Table: React.FC<TableProps> = ({ data }) => {
             <th scope="col" className="px-6 py-4">
               Value
             </th>
+            <th scope="col" className="px-6 py-4">
+              Send
+            </th>
+            <th scope="col" className="px-6 py-4">
+              Receive
+            </th>
+            <th scope="col" className="px-6 py-4">
+              Mint
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -55,6 +64,21 @@ const Table: React.FC<TableProps> = ({ data }) => {
               <td className="whitespace-nowrap px-6 py-4 font-medium">
                 {item.value}
               </td>
+              <td className="whitespace-nowrap px-6 py-4 font-medium">
+                <button className="bg-purple hover:bg-purple text-white font-bold py-1 px-2 rounded-lg">
+                  Send
+                </button>
+              </td>
+              <td className="whitespace-nowrap px-6 py-4 font-medium">
+                <button className="bg-purple hover:bg-purple text-white font-bold py-1 px-2 rounded-lg">
+                  Receive
+                </button>
+              </td>
+              <td className="whitespace-nowrap px-6 py-4 font-medium">
+                <button className="bg-purple hover:bg-purple text-white font-bold py-1 px-2 rounded-lg">
+                  Mint
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -63,4 +87,4 @@ const Table: React.FC<TableProps> = ({ data }) => {
   );
 };
 
-export default Table;
+export default VaultTable;
