@@ -49,7 +49,7 @@ const AccessNexusModal = ({ onClose }: Props) => {
       const response = await fetch(`/app/${selectedItem}/${address}`);
       if (response.ok) {
         console.log('URL exists');
-        router.push(`/app/${selectedItem}/${address}`);
+        router.push(`/app/${selectedItem.contractChainId}/${address}`);
       } else {
         setError('URL does not exist');
         return;
