@@ -4,9 +4,8 @@ import { NextPageWithLayout } from '../../_app';
 import VaultRows from '../../../components/app/vaults/VaultRows';
 import Eth from '../../../public/images/eth.png';
 import CreateNewVaultModal from '../../../components/app/modals/CreateNewVaultModal';
-type Props = {};
 
-const Index: NextPageWithLayout = (props: Props) => {
+const Index: NextPageWithLayout = () => {
   const rows = [
     {
       logo: Eth,
