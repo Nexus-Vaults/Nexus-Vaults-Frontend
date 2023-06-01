@@ -25,7 +25,7 @@ const ConnectWallet = ({ targetChain, handleConection }: Props) => {
           Connect Wallet
         </h2>
         <p className="text-center ">
-          Before deploy the nexus make sure to connect the wallet to the target
+          Before deploying the nexus contract, make sure to connect the wallet to the target
           chain.
         </p>
       </div>
