@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { NextPageWithLayout } from '../../../_app';
 import React, { ReactElement } from 'react';
 import Overview from '../../../../components/app/overview';
+import Layout from '../../../../components/layout';
 type Props = {};
 
 const Index: NextPageWithLayout = (props: Props) => {
@@ -22,6 +23,10 @@ const Index: NextPageWithLayout = (props: Props) => {
         )}
     </>
   );
+};
+
+Index.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
 };
 
 export default Index;
