@@ -1,11 +1,8 @@
 import React from 'react';
+import { SubChain, VaultInfo } from 'api';
 
 interface TableProps {
-  data: {
-    assetName: string;
-    amount: number;
-    value: number;
-  }[];
+  data: VaultInfo[];
 }
 
 const Table: React.FC<TableProps> = ({ data }) => {
@@ -47,13 +44,10 @@ const Table: React.FC<TableProps> = ({ data }) => {
           {data.map((item, index) => (
             <tr key={index} className="border-b dark:border-neutral-500">
               <td className="whitespace-nowrap px-6 py-4 font-medium">
-                {item.assetName}
+                {item.address.toString()}
               </td>
               <td className="whitespace-nowrap px-6 py-4 font-medium">
-                {item.amount}
-              </td>
-              <td className="whitespace-nowrap px-6 py-4 font-medium">
-                {item.value}
+                {item.vaultId}
               </td>
             </tr>
           ))}
