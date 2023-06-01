@@ -1,8 +1,6 @@
 import React, { ReactElement } from 'react';
 import Layout from '../../../components/layout';
 import { NextPageWithLayout } from '../../_app';
-import Table from '../../../components/app/table';
-import { useAccount } from 'wagmi';
 
 type Props = {};
 
@@ -39,24 +37,6 @@ const Index: NextPageWithLayout = (props: Props) => {
   //   write: writeSetPrimaryVaultGatewayV1,
   //   error: errorSetPrimaryVaultGatewayV1,
   // } = useContractWrite(vaultV1FacetConfig);
-  const { address } = useAccount();
-
-  const tableData = [
-    { assetName: 'Asset 1', amount: 100, value: 100 },
-    { assetName: 'Asset 2', amount: 200, value: 100 },
-    { assetName: 'Asset 3', amount: 300, value: 100 },
-    { assetName: 'Asset 3', amount: 300, value: 100 },
-    { assetName: 'Asset 3', amount: 300, value: 100 },
-    { assetName: 'Asset 3', amount: 300, value: 100 },
-    { assetName: 'Asset 3', amount: 300, value: 100 },
-    { assetName: 'Asset 3', amount: 300, value: 100 },
-    { assetName: 'Asset 3', amount: 300, value: 100 },
-    { assetName: 'Asset 3', amount: 300, value: 100 },
-    { assetName: 'Asset 3', amount: 300, value: 100 },
-    { assetName: 'Asset 3', amount: 300, value: 100 },
-    { assetName: 'Asset 3', amount: 300, value: 100 },
-    { assetName: 'Asset 3', amount: 300, value: 100 },
-  ];
 
   return (
     <div className="flex flex-col flex-wrap justify-center content-center bg-whitesmoke  gap-2 h-screen">
@@ -75,9 +55,6 @@ const Index: NextPageWithLayout = (props: Props) => {
                   className="text-mono font-semibold text-center w-[60%] py-1 px-2 border-b  border-solid  hover:border-[#0e76fd] focus:border-[#0e76fd]  focus:rounded-lg  "
                   placeholder="Nexus Adress"
                 ></input>
-              </div>
-              <div className="w-full flex-1 ">
-                <Table data={tableData} />
               </div>
             </div>
           </div>
