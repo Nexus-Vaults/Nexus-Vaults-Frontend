@@ -1,5 +1,6 @@
 import GitHubIcon from '@mui/icons-material/GitHub';
 import Link from 'next/link';
+import React from 'react';
 
 const Footer = () => {
   return (

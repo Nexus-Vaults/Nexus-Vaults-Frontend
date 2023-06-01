@@ -1,4 +1,5 @@
 import SavingsIcon from '@mui/icons-material/Savings';
+import React from 'react';
 
 const Learnmore = () => {
   return (
@@ -8,7 +9,6 @@ const Learnmore = () => {
         <h2 className="bg-header tracking-wide font-extrabold col-span-3">Features</h2>
         <div className="grid-col-1 bg-rose rounded-md text-center p-3">
           <SavingsIcon />
-          <br/>
           Centralized exchange like experience for decentralized entities
         </div>
         <div className="grid grid-col-1 grid-rows-2 bg-rose rounded-md text-center p-3">
