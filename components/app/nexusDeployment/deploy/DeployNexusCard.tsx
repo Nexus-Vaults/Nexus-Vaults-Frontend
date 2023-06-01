@@ -11,7 +11,7 @@ import { ChainDeployment, Feature } from 'api';
 import { usePublicClient } from 'wagmi';
 import { fetchTransaction } from '@wagmi/core';
 import { useRouter } from 'next/router';
-import { ChainDeployments } from '../../../../pages/app/ContractsAddressesContext';
+import { ChainDeployments } from '../../../ContractsAddressesContext';
 import { decodeEventLog } from 'viem';
 import ConfirmationModal from '../../modals/ConfirmationModal';
 import { VaultV1Facet } from 'abiTypes/contracts/vault/v1/facet/VaultV1Facet.sol/VaultV1Facet';

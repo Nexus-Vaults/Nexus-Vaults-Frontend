@@ -7,7 +7,9 @@ import CreateNewVaultModal from '../../../components/app/modals/CreateNewVaultMo
 import fantom from '../../../public/images/chain/4002.png';
 import logo1 from '../../../public/images/chain/80001.png';
 
-const VaultList: NextPageWithLayout = () => {
+type Props = {};
+
+const VaultList: NextPageWithLayout = (props: Props) => {
   const rows = [
     {
       logo: Eth,
@@ -29,7 +31,9 @@ const VaultList: NextPageWithLayout = () => {
     },
   ];
 
-  return rows.map((row, index) => <VaultRows key={index} {...row} />);
+  return <></>;
+
+  //return rows.map((row, index) => <VaultRows key={index} {...row} />);
 };
 
 VaultList.getLayout = function getLayout(page: ReactElement) {

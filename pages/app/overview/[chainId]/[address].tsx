@@ -3,7 +3,7 @@ import { NextPageWithLayout } from '../../../_app';
 import React, { ReactElement, useContext, useState } from 'react';
 import Overview from '../../../../components/app/overview';
 import Layout from '../../../../components/layout';
-import { ChainDeployments } from '../../ContractsAddressesContext';
+import { ChainDeployments } from '../../../../components/ContractsAddressesContext';
 type Props = {};
 
 const Index: NextPageWithLayout = (props: Props) => {
