@@ -92,7 +92,7 @@ const Index: React.FC<Props> = () => {
   }, [currentStep]);
 
   return (
-    <div className="flex flex-col w-screen flex-wrap justify-center content-center bg-gradient-to-br from-black to-indigo-900 min-h-screen items-center p-8 gap-2 h-max">
+    <div className="flex flex-col w-screen flex-wrap justify-center content-center bg-gradient-to-br from-black to-indigo-900 min-h-screen items-center p-8 gap-2 h-max xl:h-2/3">
       <div className="flex-flex-col bg-white shadow-2xl border-solid border-2 border-gray-400 rounded-lg p-2 w-4/5 h-4/5">
         <div className="flex flex-row space-x-2 justify-center">
           {onboardingSteps.map((step, index) => (
