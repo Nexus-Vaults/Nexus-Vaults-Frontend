@@ -7,9 +7,9 @@ import { useRouter } from 'next/router';
 
 type Props = {
   logo: StaticImageData;
-  vaultId: number;
-  address: `0x${string}`;
-  totalAsset: number;
+  vaultId?: number;
+  address?: `0x${string}`;
+  totalAsset?: number;
 };
 
 const VaultRows = ({ logo, vaultId, address, totalAsset }: Props) => {
@@ -66,9 +66,9 @@ const VaultRows = ({ logo, vaultId, address, totalAsset }: Props) => {
               Gateway: V1
             </div>
             <div className="text-gray-500 cursor-pointer hover:text-blue50 s hover:font-semibold">
-              {address.slice(0, 12)}
+              {address?.slice(0, 12)}
               ...
-              {address.slice(-8)}
+              {address?.slice(-8)}
             </div>
           </div>
           <CryptoList coins={coins} />

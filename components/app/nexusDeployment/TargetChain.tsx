@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Image from 'next/image';
 import { ChainDeployment } from 'api';
 import { ChainDeployments } from '../../../pages/app/ContractsAddressesContext';
 
-import fantom from '../../../public/images/chain/1.png';
+import fantom from '../../../public/images/chain/4002.png';
 
 type Props = {
   handleTargetChain: (chainDeployment: ChainDeployment | undefined) => void;
@@ -21,6 +20,8 @@ const TargetChain = ({ handleTargetChain }: Props) => {
   const handleItemClick = (item: ChainDeployment) => {
     setSelectedItem(item);
   };
+
+  console.log(selectedItem?.contractChainId);
 
   return (
     <div className="flex flex-col   p-5 gap-y-10">
