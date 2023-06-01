@@ -7,16 +7,13 @@ import { useRouter } from 'next/router';
 
 type Props = {
   logo: StaticImageData;
-  version: string;
-  vaultId: string;
+  vaultId: number;
+  address: `0x${string}`;
   totalAsset: number;
 };
 
-const VaultRows = ({ logo, version, vaultId, totalAsset }: Props) => {
+const VaultRows = ({ logo, vaultId, address, totalAsset }: Props) => {
   const [expanded, setExpanded] = useState(false);
-  const [address, setAddress] = useState(
-    '0x78dc6fd3e008ae73823a015d52d7f0f5e1b8ae33805ebf0d48a708f1df5747f9'
-  );
 
   const toggleExpanded = () => {
     setExpanded(!expanded);
@@ -48,7 +45,6 @@ const VaultRows = ({ logo, version, vaultId, totalAsset }: Props) => {
         <div className="flex flex-row gap-2 items-center">
           <Image src={logo} width={32} height={32} alt="" />
           <div className="flex-1 flex flex-row justify-between ml-5">
-            <span className="font-mono mr-2">{version}</span>
             <span className="font-mono mr-2">{vaultId}</span>
           </div>
         </div>
