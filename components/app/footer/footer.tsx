@@ -4,12 +4,13 @@ import Link from 'next/link';
 const Footer = () => {
   return (
     <>
-      <div className="grid grid-cols-12 w-full bg-purple h-6">
+      <div className="flex flex-row justify-between w-full bg-purple p-2">
+        <p className='font-bold'>Farsight CDA UG</p>
         <Link
-          className="cols-span-1 col-end-13"
-          href="https://github.com/Nexus-Vaults/Nexus-Vaults-Frontend"
+          target='_blank'
+          href="https://github.com/Nexus-Vaults/Nexus-Vaults"
         >
-          <GitHubIcon className="float-right" />
+          <GitHubIcon className="float-right h-full w-full" />
         </Link>
       </div>
     </>

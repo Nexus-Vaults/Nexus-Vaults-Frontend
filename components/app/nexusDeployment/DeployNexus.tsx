@@ -32,12 +32,12 @@ const DeployNexus = ({
   };
 
   return (
-    <div className="flex flex-col xl:flex-row w-max">
+    <div className="flex flex-col xl:flex-row">
       <ConnectWallet
         targetChain={targetChain}
         handleConection={handleConnection}
       ></ConnectWallet>
-      <div className="p-8  flex-wrap flex flex-col justify-center content-center h-full">
+      <div className="p-8 xl:px-8 flex-wrap flex flex-col justify-center content-center">
         <div className="w-fit h-fit">
           <svg
             width="89"
@@ -59,7 +59,7 @@ const DeployNexus = ({
         handleApproval={handleApproval}
         connected={isConnected}
       ></ApprovePayment>
-      <div className="p-8 flex-wrap  flex flex-col justify-center content-center h-full">
+      <div className="p-8 xl:px-8 flex-wrap flex flex-row xl:flex-col justify-center content-center">
         <div className="w-fit h-fit">
           <svg
             width="89"

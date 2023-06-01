@@ -8,9 +8,9 @@ export default function Home() {
 
   return (
     <div className="bg-primary-gradient">
-      <div className="bg-img">
+      <div className="bg-img max-w-full">
         <div className="flex flex-col items-center py-12">
-          <div className="main-font">
+          <div className="main-font md:text-11xl lg:text-13xl xl:text-15xl">
             <h1 className="tracking-primary text-center">NEXUS</h1>
             <h1 className="tracking-secondary text-center">VAULTS</h1>
           </div>
