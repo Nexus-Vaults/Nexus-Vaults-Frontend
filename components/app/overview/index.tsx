@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Table from '../table';
 import CardsOverview from './cards-overview';
 import Graph from './graph/graph';
-import { apiClient, ChainDeployment, Nexus, SubChain, VaultInfo } from 'api';
+import { apiClient, Nexus, SubChain, VaultInfo } from 'api';
 
 type Props = {
   contractChainId: number;
@@ -12,7 +12,9 @@ type Props = {
 const Overview = ({ address, contractChainId }: Props) => {
   const [nexus, setNexus] = useState<Nexus>();
   const [subChains, setSubChains] = useState<SubChain[]>([]);
-  const [table, setTable] = useState<VaultInfo[]>([]);
+  const [table, setTable] = useState<VaultInfo[]>([
+    { address: '0x0000', vaultId: 0 },
+  ]);
 
   console.log(contractChainId);
   console.log(address);
@@ -30,9 +32,10 @@ const Overview = ({ address, contractChainId }: Props) => {
     setSubChains(subChainsTMP);
     if (subChains == undefined) return;
     const tableTMP = subChains.reduce(
-      (x, y, z) => x.concat(y.vaults),
+      (x, y) => x.concat(y.vaults),
       [] as VaultInfo[]
     );
+    if (tableTMP.length == 0) return;
     setTable(tableTMP);
   }, [nexus]);
 
