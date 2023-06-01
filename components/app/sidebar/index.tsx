@@ -11,7 +11,7 @@ const Sidebar = ({ isOpened }: Props) => {
   return (
     <div
       className={`bg-blue50 overflow-hidden shadow-lg  ${
-        isOpened ? 'w-1/5' : 'w-0'
+        isOpened ? 'w-2/5 lg:w-1/5' : 'w-0'
       }`}
     >
       <div className="flex flex-col gap-2  mb-10 ">
