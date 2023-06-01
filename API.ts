@@ -36,12 +36,12 @@ export interface Nexus {
   nexusId: `0x${string}`;
   name: string;
   owner: `0x${string}`;
-  subChains: SubChain[];
+  subchains: SubChain[];
 }
 
 export interface SubChain {
   contractChainId: number;
-  VaultInfo: VaultInfo[];
+  vaults: VaultInfo[];
   acceptedGatewayIds: number[];
 }
 
