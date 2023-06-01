@@ -2,15 +2,36 @@ import { useRouter } from 'next/router';
 import React, { useContext, useState } from 'react';
 import { ChainDeployment, apiClient } from 'api';
 import { ChainDeployments } from '../../../pages/app/ContractsAddressesContext';
+import {
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from 'wagmi';
+import { NexusFactory } from 'abiTypes/contracts/nexus/NexusFactory.sol/NexusFactory';
+import { VaultV1Facet } from 'abiTypes/contracts/vault/v1/facet/VaultV1Facet.sol/VaultV1Facet';
 
 type Props = {
   onClose: () => void;
 };
 
 const CreateNewVaultModal = ({ onClose }: Props) => {
-  const [address, setAddress] = useState('');
-  const [error, setError] = useState('');
+  const [vaultId, setVaultId] = useState<number>();
   const [selectedItem, setSelectedItem] = useState<ChainDeployment>();
+
+  const { config: configNexus, error: errorName } = usePrepareContractWrite({
+    address: '0x3F564D53550B86e41840b1D0135790D3BeEedA1f',
+    abi: VaultV1Facet,
+    functionName: 'createVaultV1',
+    args: [selectedItem?.contractChainId!, 1, vaultId!],
+    value: BigInt(0),
+  });
+
+  console.log(errorName);
+
+  const { write: writeNexus, data: dataNexus } = useContractWrite(configNexus);
+  const transaction = useWaitForTransaction({ hash: dataNexus?.hash });
+
+  const [error, setError] = useState('');
 
   const contractsAddresses = useContext(ChainDeployments);
 
@@ -29,7 +50,8 @@ const CreateNewVaultModal = ({ onClose }: Props) => {
   };
 
   const handleAddressChange = (event: any) => {
-    setAddress(event.target.value);
+    setVaultId(event.target.value);
+    setError(event.target.value);
   };
 
   const handleSubmit = async (e: any) => {
@@ -40,14 +62,18 @@ const CreateNewVaultModal = ({ onClose }: Props) => {
       return;
     }
 
-    if (address.trim() === '') {
+    if (vaultId === 0) {
       setError('Vault ID cannot be empty');
       return;
     }
-
-    setSelectedItem(undefined);
-    setAddress('');
-    setError('');
+    try {
+      writeNexus?.();
+      setSelectedItem(undefined);
+      setError('');
+      setError('');
+    } catch (error) {
+      console.error('An error occurred while creating new vault:', error);
+    }
   };
 
   return (
@@ -93,7 +119,8 @@ const CreateNewVaultModal = ({ onClose }: Props) => {
             <input
               className="border rounded-md py-2 px-3 w-full"
               id="address"
-              type="text"
+              type="number"
+              value={vaultId}
               placeholder="Enter Vault ID"
               onChange={handleAddressChange}
             />
