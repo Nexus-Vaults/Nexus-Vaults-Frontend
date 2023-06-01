@@ -8,21 +8,19 @@ const Learnmore = () => {
         <h2 className="bg-header tracking-wide font-extrabold col-span-3">
           Features
         </h2>
-        <div className="grid-col-1 bg-rose rounded-md text-center p-3">
+        <div className="grid-col-1 bg-rose rounded-md text-center items-center p-3">
           <SavingsIcon className="grid-row-1" />
           <p className="grid-row-1">
             Centralized exchange like experience for decentralized entities
           </p>
         </div>
         <div className="grid grid-col-1 grid-rows-2 bg-rose rounded-md text-center p-3">
-          {/* <div className="grid-row-1"></div> */}
-          <p className="grid-row-1">
+          <p className="rows-span-2 items-center">
             One point of access for your entire omnichain crypto treasury
           </p>
         </div>
-        <div className="grid-col-1 bg-rose rounded-md text-center p-3">
-          {/* <div className="grid-row-1"></div> */}
-          <p className="grid-row-1">
+        <div className="grid-col-1 bg-rose rounded-md text-center items-center p-3">
+          <p className="rows-span-2 items-center">
             Fully upgradable, extendable without sacrificing security. The devs
             can never access your treasury.
           </p>
