@@ -21,7 +21,7 @@ const Sidebar = ({ isOpened }: Props) => {
     >
       <div className="flex flex-col gap-2  mb-10 items-center">
         <div
-          className="text-center text-whitesmoke text-lg font-semibold cursor-pointer border-3xl"
+          className="p-4 text-center text-whitesmoke text-lg font-semibold cursor-pointer border-3xl"
           onClick={() => router.push('/')}
         >
           <Image
@@ -32,14 +32,7 @@ const Sidebar = ({ isOpened }: Props) => {
             alt="Nexus Vaults Logo"
           />
         </div>
-        <div>
-          <div className="text-center text-whitesmoke text-lg font-semibold cursor-pointer">
-            Name
-          </div>
-          <div className="text-center text-whitesmoke text-lg font-semibold cursor-pointer">
-            Address
-          </div>
-        </div>
+
         <div className="flex flex-row justify-center">
           <div className="w-4/5 h-px bg-gray-300"></div>
         </div>

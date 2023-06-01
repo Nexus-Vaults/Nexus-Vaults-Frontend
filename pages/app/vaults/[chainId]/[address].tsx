@@ -6,6 +6,7 @@ import Eth from '../../../../public/images/eth.png';
 import CreateNewVaultModal from '../../../../components/app/modals/CreateNewVaultModal';
 import { useRouter } from 'next/router';
 import { apiClient, Nexus, SubChain, Vault, VaultInfo } from 'api';
+import VaultList from '../VaultList';
 
 const Index: NextPageWithLayout = () => {
   const router = useRouter();
@@ -75,13 +76,7 @@ const Index: NextPageWithLayout = () => {
           ))}
         </div>
       </div>
-      {vaultInfos.length == 0 && (
-        <div className="flex flex-row justify-center">
-          <div className="flex-flex-col items-center w-fit bg-white shadow-2xl border-solid border-2 border-gray-400 rounded-lg p-2">
-            <div>this Nexus has no Vaults</div>
-          </div>
-        </div>
-      )}
+      {vaultInfos.length == 0 && <VaultList />}
     </div>
   );
 };
