@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Table from '../table';
 import CardsOverview from './cards-overview';
 import Graph from './graph/graph';
-import { apiClient, ChainDeployment, Nexus } from 'api';
+import { apiClient, ChainDeployment, Nexus, SubChain, VaultInfo } from 'api';
 
 type Props = {
   contractChainId: number;
@@ -11,6 +11,8 @@ type Props = {
 
 const Overview = ({ address, contractChainId }: Props) => {
   const [nexus, setNexus] = useState<Nexus>();
+  const [subChains, setSubChains] = useState<SubChain[]>([]);
+  const [table, setTable] = useState<VaultInfo[]>([]);
 
   console.log(contractChainId);
   console.log(address);
@@ -21,22 +23,18 @@ const Overview = ({ address, contractChainId }: Props) => {
     });
   }, []);
 
-  const tableData = [
-    { assetName: 'Asset 1', amount: 100, value: 100 },
-    { assetName: 'Asset 2', amount: 200, value: 100 },
-    { assetName: 'Asset 3', amount: 300, value: 100 },
-    { assetName: 'Asset 3', amount: 300, value: 100 },
-    { assetName: 'Asset 3', amount: 300, value: 100 },
-    { assetName: 'Asset 3', amount: 300, value: 100 },
-    { assetName: 'Asset 3', amount: 300, value: 100 },
-    { assetName: 'Asset 3', amount: 300, value: 100 },
-    { assetName: 'Asset 3', amount: 300, value: 100 },
-    { assetName: 'Asset 3', amount: 300, value: 100 },
-    { assetName: 'Asset 3', amount: 300, value: 100 },
-    { assetName: 'Asset 3', amount: 300, value: 100 },
-    { assetName: 'Asset 3', amount: 300, value: 100 },
-    { assetName: 'Asset 3', amount: 300, value: 100 },
-  ];
+  useEffect(() => {
+    if (nexus == undefined) return;
+    const subChainsTMP: SubChain[] = [];
+    nexus?.subchains.map((x) => subChainsTMP.push(x));
+    setSubChains(subChainsTMP);
+    if (subChains == undefined) return;
+    const tableTMP = subChains.reduce(
+      (x, y, z) => x.concat(y.vaults),
+      [] as VaultInfo[]
+    );
+    setTable(tableTMP);
+  }, [nexus]);
 
   return (
     <>
@@ -48,7 +46,7 @@ const Overview = ({ address, contractChainId }: Props) => {
             nexusName={nexus?.name}
             nexusId={nexus?.nexusId}
             owner={nexus?.owner}
-            subChains={nexus?.subChains}
+            subChains={nexus?.subchains}
           />
           <div className="w-full h-full flex-1 border-2 border-gray-400 bg-white shadow-lg rounded-lg">
             <h1 className="text-center text-gray-500 text-lg font-medium  font-sans">
@@ -57,7 +55,7 @@ const Overview = ({ address, contractChainId }: Props) => {
             <Graph></Graph>
           </div>
           <div className="w-full flex-1 ">
-            <Table data={tableData} />
+            <Table data={table} />
           </div>
         </div>
       )}
