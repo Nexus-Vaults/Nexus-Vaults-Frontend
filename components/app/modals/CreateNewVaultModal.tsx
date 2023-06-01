@@ -7,7 +7,7 @@ type Props = {
   onClose: () => void;
 };
 
-const AccessNexusModal = ({ onClose }: Props) => {
+const CreateNewVaultModal = ({ onClose }: Props) => {
   const [address, setAddress] = useState('');
   const [error, setError] = useState('');
   const [selectedItem, setSelectedItem] = useState<ChainDeployment>();
@@ -41,21 +41,8 @@ const AccessNexusModal = ({ onClose }: Props) => {
     }
 
     if (address.trim() === '') {
-      setError('Address cannot be empty');
+      setError('Vault ID cannot be empty');
       return;
-    }
-
-    try {
-      const response = await fetch(`/app/${selectedItem}/${address}`);
-      if (response.ok) {
-        console.log('URL exists');
-        router.push(`/app/${selectedItem}/${address}`);
-      } else {
-        setError('URL does not exist');
-        return;
-      }
-    } catch (error) {
-      console.error('An error occurred while checking URL existence:', error);
     }
 
     setSelectedItem(undefined);
@@ -101,13 +88,13 @@ const AccessNexusModal = ({ onClose }: Props) => {
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="address"
             >
-              Address:
+              Vault ID:
             </label>
             <input
               className="border rounded-md py-2 px-3 w-full"
               id="address"
               type="text"
-              placeholder="Enter Address"
+              placeholder="Enter Vault ID"
               onChange={handleAddressChange}
             />
           </div>
@@ -136,4 +123,4 @@ const AccessNexusModal = ({ onClose }: Props) => {
   );
 };
 
-export default AccessNexusModal;
+export default CreateNewVaultModal;
