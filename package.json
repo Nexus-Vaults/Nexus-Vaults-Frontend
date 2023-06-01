@@ -7,8 +7,8 @@
   "private": true,
   "scripts": {
     "dev": "node Convert.js && next dev",
-    "build": "node Convert.js && next build",
-    "start": "node Convert.js && next start"
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
     "@emotion/react": "^11.11.0",

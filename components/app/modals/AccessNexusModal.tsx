@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useContext, useState } from 'react';
 import { ChainDeployment } from 'api';
-import { ChainDeployments } from '../../../pages/app/ContractsAddressesContext';
+import { ChainDeployments } from '../../ContractsAddressesContext';
 
 type Props = {
   onClose: () => void;

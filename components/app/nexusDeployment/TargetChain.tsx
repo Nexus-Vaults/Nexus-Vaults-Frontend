@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { ChainDeployment } from 'api';
-import { ChainDeployments } from '../../../pages/app/ContractsAddressesContext';
+import { ChainDeployments } from '../../ContractsAddressesContext';
 
 import fantom from '../../../public/images/chain/4002.png';
 
