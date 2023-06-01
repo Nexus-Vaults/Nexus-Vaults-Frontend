@@ -42,8 +42,9 @@ const DeployNexusCard = ({
   const router = useRouter();
   const { address } = useAccount();
   const publicClient = usePublicClient();
-  const [ nexusAddress, setNexusAddress ] = useState<Address>("0xe40e8da81197e7b474d2659297656a5450f94c4b");
-  const [ success, setSuccess ] = useState<boolean>(false);
+  const [nexusAddress, setNexusAddress] = useState<Address>();
+  const [success, setSuccess] = useState<boolean>(false);
+  const [GatwayConfirm, setGatwayConfirm] = useState<boolean>(true);
 
   const facetInstallation = features.map((x) => {
     return {
@@ -62,18 +63,27 @@ const DeployNexusCard = ({
   const { config: acceptGatewayConfig } = usePrepareContractWrite({
     address: nexusAddress,
     abi: VaultV1Controller,
-    functionName: "addLocalAcceptedGateway",
-    args: [1]
+    functionName: 'addLocalAcceptedGateway',
+    args: [1],
   });
 
   const { write: writeNexus, data: dataNexus } = useContractWrite(configNexus);
-  const { write: writeAcceptedGateway, data: acceptGatewayIdData, error } = useContractWrite(acceptGatewayConfig);
+  const {
+    write: writeAcceptedGateway,
+    data: acceptGatewayIdData,
+    error,
+  } = useContractWrite(acceptGatewayConfig);
 
   const deployTransaction = useWaitForTransaction({ hash: dataNexus?.hash });
-  const acceptGatewayTransaction = useWaitForTransaction({hash: acceptGatewayIdData?.hash});
+  const acceptGatewayTransaction = useWaitForTransaction({
+    hash: acceptGatewayIdData?.hash,
+  });
 
   useEffect(() => {
-    if (dataNexus?.hash == undefined || deployTransaction.data?.status != 'success') {
+    if (
+      dataNexus?.hash == undefined ||
+      deployTransaction.data?.status != 'success'
+    ) {
       return;
     }
 
@@ -102,28 +112,48 @@ const DeployNexusCard = ({
   }, [deployTransaction]);
 
   useEffect(() => {
-    if (acceptGatewayTransaction.data?.status != "success") {
+    if (acceptGatewayTransaction.data?.status != 'success') {
       return;
     }
 
     setSuccess(true);
-  }, [acceptGatewayTransaction])
+  }, [acceptGatewayTransaction]);
 
   function deployNexus() {
     console.log('Deploying nexus...');
+    setGatwayConfirm(false);
     writeNexus?.();
   }
 
-  function acceptGateway() {
-    console.log("Accepting gateway...");
+  function wait(delay: number): Promise<void> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, delay);
+    });
+  }
 
+  async function acceptGateway() {
+    console.log('Accepting gateway...');
     console.log(nexusAddress);
     writeAcceptedGateway?.();
+    await wait(5);
+    await router.push(
+      `/app/overview/${targetChain.contractChainId}/${nexusAddress}`
+    );
   }
 
   return (
     <>
-    {success ? <ConfirmationModal show={true} nexusAddress={nexusAddress!} contractChainId={targetChain.contractChainId} /> : ''}
+      {success ? (
+        <ConfirmationModal
+          show={true}
+          nexusAddress={nexusAddress!}
+          contractChainId={targetChain.contractChainId}
+        />
+      ) : (
+        ''
+      )}
 
       <div className="flex flex-col flex-1 gap-2">
         <div className="flex-1 flex flex-col p-5">
@@ -165,13 +195,21 @@ const DeployNexusCard = ({
           >
             Deploy Nexus
           </button>
-                    <button
+          <button
             className="text-white bg-[#0e76fd] h-[40px] shadow-lg rounded-xl   font-bold py-1 px-3 inline-block "
             onClick={() => acceptGateway()}
-            disabled={!connected || !approved || nexusAddress == undefined}
+            disabled={
+              !connected ||
+              !approved ||
+              nexusAddress != undefined ||
+              GatwayConfirm
+            }
             //todo: proper styling for this, move to global
             style={
-              !connected || !approved || nexusAddress == undefined
+              !connected ||
+              !approved ||
+              nexusAddress != undefined ||
+              GatwayConfirm
                 ? {
                     backgroundColor: 'grey',
                     color: 'white',
