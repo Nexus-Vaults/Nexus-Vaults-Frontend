@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "dev": "node Convert.js && next dev",
-    "build": "node Convert.js && next build",
+    "build": "next build",
     "start": "node Convert.js && next start"
   },
   "dependencies": {
