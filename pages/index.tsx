@@ -2,6 +2,7 @@ import Learnmore from '../components/app/learnmore-section/learnmore-section';
 import Footer from '../components/app/footer/footer';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import React from 'react';
 
 export default function Home() {
   const router = useRouter();
