@@ -105,9 +105,11 @@ const CardsOverview = ({
         </div>
         <div className="flex-1 flex flex-col justify-between border-2 border-gray-400 rounded-lg bg-white hover:bg-background shadow-lg p-2">
           <div className="text-gray-500 text-base font-medium  font-sans">
-            Amount
+            Amount (comming soon)
           </div>
-          <div className="text-primary text-lg font-medium  font-sans">{}</div>
+          <div className="text-primary text-lg font-medium  font-sans">
+            69420.23 USDT
+          </div>
           <div className="flex items-center ">
             <div className=" h-fit  px-1 rounded-md bg-[#d0e2e5] text-[#4caf54] font-semibold">
               +15%
