@@ -12,6 +12,14 @@ module.exports = {
       wide: '0.04em',
     },
     extend: {
+      fontSize: {
+        '10xl': '6rem',
+        '11xl': '7.25rem',
+        '12xl': '8.75rem',
+        '13xl': '10rem',
+        '14xl': '11.5rem',
+        '15xl': '12.5rem',
+      },
       colors: {
         primary: '#0e76fd',
         white: '#FFFFFF',
