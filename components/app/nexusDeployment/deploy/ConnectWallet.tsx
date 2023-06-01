@@ -31,7 +31,7 @@ const ConnectWallet = ({ targetChain, handleConection }: Props) => {
       </div>
       <div className="flex-1 flex flex-col justify-center ">
         <div className="flex flex-row border-solid border-2 border-black rounded-md py-1 px-3 ">
-          <p>Target Chain:</p>
+          <p className="px-2">Target Chain:</p>
           <p>{targetChain.chainName}</p>
         </div>
       </div>
