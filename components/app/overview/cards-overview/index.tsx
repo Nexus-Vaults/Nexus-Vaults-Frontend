@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-type Props = {};
+import { SubChain } from 'api';
+import { ChainDeployments } from '../../../../pages/app/ContractsAddressesContext';
+type Props = {
+  address: `0x${string}`;
+  contractChainId: number;
+  nexusName: string;
+  nexusId: `0x${string}`;
+  owner: `0x${string}`;
+  subChains: SubChain[];
+};
 
-const CardsOverview = (props: Props) => {
-  const [address, setAddress] = useState(
-    '0x71C7656EC7ab88b098defB751B7401B5f6d897'
-  );
-  const [name, setName] = useState('My Nexus');
-
+const CardsOverview = ({
+  address,
+  nexusName,
+  nexusId,
+  owner,
+  contractChainId,
+  subChains,
+}: Props) => {
   const [showCopied, setShowCopied] = useState(false);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
@@ -19,6 +30,8 @@ const CardsOverview = (props: Props) => {
     }, 600);
   };
 
+  const chainDeployments = useContext(ChainDeployments);
+
   return (
     <div className="flex-1 w-full flex flex-col flex-wrap gap-4 ">
       <div className="flex-1 flex flex-row gap-4">
@@ -27,9 +40,16 @@ const CardsOverview = (props: Props) => {
             Nexus
           </div>
           <div className="text-primary text-lg font-medium  font-sans">
-            ethereum
+            {
+              chainDeployments.find((x) => {
+                return (
+                  x.contractChainId.toString().toLowerCase() ==
+                  contractChainId.toString().toLowerCase()
+                );
+              })?.chainName
+            }
           </div>
-          <CopyToClipboard text="0x71C7656EC7ab88b098defB751B7401B5f6d897">
+          <CopyToClipboard text={address}>
             <div
               className="flex flex-row gap-2 items-center text-sm font-medium rounded-md text-gray-500  font-sans cursor-pointer  hover:text-gray-700"
               onClick={handleCopyClick}
@@ -61,7 +81,7 @@ const CardsOverview = (props: Props) => {
             Name
           </div>
           <div className="text-primary text-lg font-medium  font-sans">
-            {name}
+            {nexusName}
           </div>
           <div className="w-[340px] text-sm font-medium rounded-md text-gray-500  font-sans cursor-pointer  hover:text-gray-700">
             change name
@@ -71,7 +91,7 @@ const CardsOverview = (props: Props) => {
       <div className="flex-1 flex flex-row gap-4">
         <div className="flex-1 flex flex-col justify-between border-2 border-gray-400 rounded-lg bg-white hover:bg-background shadow-lg p-2">
           <div className="text-gray-500 text-base font-medium  font-sans">
-            Value
+            Value (comming soon)
           </div>
           <div className="text-primary text-lg font-medium  font-sans">
             69420.23 USDT
@@ -87,9 +107,7 @@ const CardsOverview = (props: Props) => {
           <div className="text-gray-500 text-base font-medium  font-sans">
             Amount
           </div>
-          <div className="text-primary text-lg font-medium  font-sans">
-            42.23 eth
-          </div>
+          <div className="text-primary text-lg font-medium  font-sans">{}</div>
           <div className="flex items-center ">
             <div className=" h-fit  px-1 rounded-md bg-[#d0e2e5] text-[#4caf54] font-semibold">
               +15%

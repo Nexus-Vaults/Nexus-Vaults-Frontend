@@ -36,7 +36,6 @@ export interface Nexus {
   nexusId: `0x${string}`;
   name: string;
   owner: `0x${string}`;
-  //todo: [Vault]????
   subChains: SubChain[];
 }
 
@@ -132,10 +131,7 @@ class ApiClientMock extends ApiClient {
     }
     const jason = await response.json();
     // TODO change object
-    if (jason.deployments == undefined) {
-      throw new Error('Could not find chains');
-    }
-    return jason.deployments as Nexus;
+    return jason as Nexus;
   }
 }
 
