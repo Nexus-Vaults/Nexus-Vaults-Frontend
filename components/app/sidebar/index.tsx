@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import React, { useContext } from 'react';
-import { ChainDeployments } from '../../../pages/app/ContractsAddressesContext';
+import { ChainDeployments } from '../../ContractsAddressesContext';
 import Image from 'next/image';
 import Logo from '../../../public/images/Logo.png';
 

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { SubChain } from 'api';
-import { ChainDeployments } from '../../../../pages/app/ContractsAddressesContext';
+import { ChainDeployments } from '../../../ContractsAddressesContext';
 type Props = {
   address: `0x${string}`;
   contractChainId: number;

@@ -56,7 +56,7 @@ h2.bg-header {
   background: linear-gradient(90deg, #398ecc 50%, #5b21b6 99.99%);
 }
 
-.infobox p {
+p {
   font-family: 'Roboto';
   font-size: 24px;
   line-height: 28px;

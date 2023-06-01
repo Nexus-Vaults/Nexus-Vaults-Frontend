@@ -30,7 +30,7 @@ import {
 } from '@rainbow-me/rainbowkit/wallets';
 import { apiClient, ChainDeployment } from 'api';
 import React, { useContext, useState } from 'react';
-import { ChainDeployments } from './app/ContractsAddressesContext';
+import { ChainDeployments } from '../components/ContractsAddressesContext';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
