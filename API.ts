@@ -89,7 +89,7 @@ class ApiClientMock extends ApiClient {
   async getFeatures(
     chainId: number,
     address: `0x${string}`
-  ): Promise<[Feature]> {
+  ): Promise<Feature[]> {
     const response = await fetch(
       `/api/chains/${chainId}/catalogs/${address}/features`
     );
@@ -102,7 +102,15 @@ class ApiClientMock extends ApiClient {
     if (json.features == undefined) {
       throw new Error('Could not find chains');
     }
-    return json.features as [Feature];
+    
+    const features = json.features as [Feature];
+
+    return features.map(x => {
+      return {
+        ...x,
+        catalogAddress: address,
+      };
+    })
   }
 
   async getContractsAddresses(): Promise<ChainDeployment[]> {

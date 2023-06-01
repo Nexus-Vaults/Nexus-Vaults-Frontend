@@ -1,38 +1,40 @@
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
 type Props = {
-  success: boolean;
+  show: boolean;
+  contractChainId: number;
+  nexusAddress: string;
 };
 
-const ConfirmationModal = ({ success }: Props) => {
+const ConfirmationModal = ({ show, contractChainId, nexusAddress }: Props) => {
+  const router = useRouter();
+
   const [isOpen, setIsOpen] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsOpen(false);
-    }, 20000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   const handleCloseOnClick = () => {
-    if (success) {
+    if (show) {
     }
   };
+
+  async function goToNexus() {
+    await router.push('/app/overview/' + contractChainId + "/" + nexusAddress);
+  }
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
       <div
         className={`flex flex-col items-center modal-content bg-white p-6 rounded-md shadow-md ${
-          success ? 'border-green-500 font-mono font-bold' : 'border-red-500'
+          show ? 'border-green-500 font-mono font-bold' : 'border-red-500'
         }`}
       >
-        {success ? (
+        {show ? (
           <>
             <h2 className="text-2xl mb-4 text-green-500">
               Deployment Successful!
             </h2>
             <p>Your Nexus has been deployed successfully.</p>
+            <button onClick={goToNexus}>Go to Overview</button>
           </>
         ) : (
           <>
