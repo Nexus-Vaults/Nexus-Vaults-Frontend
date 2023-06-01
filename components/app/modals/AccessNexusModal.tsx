@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import React, { useContext, useState } from 'react';
-import { ChainDeployment, apiClient } from 'api';
+import { ChainDeployment } from 'api';
 import { ChainDeployments } from '../../../pages/app/ContractsAddressesContext';
 
 type Props = {
@@ -46,10 +46,10 @@ const AccessNexusModal = ({ onClose }: Props) => {
     }
 
     try {
-      const response = await fetch(`/app/${selectedItem}/${address}`);
+      const response = await fetch(`/app/overview/${selectedItem}/${address}`);
       if (response.ok) {
         console.log('URL exists');
-        router.push(`/app/${selectedItem.contractChainId}/${address}`);
+        router.push(`/app/overview/${selectedItem.contractChainId}/${address}`);
       } else {
         setError('URL does not exist');
         return;
