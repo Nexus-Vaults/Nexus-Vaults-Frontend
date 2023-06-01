@@ -102,15 +102,15 @@ class ApiClientMock extends ApiClient {
     if (json.features == undefined) {
       throw new Error('Could not find chains');
     }
-    
+
     const features = json.features as [Feature];
 
-    return features.map(x => {
+    return features.map((x) => {
       return {
         ...x,
         catalogAddress: address,
       };
-    })
+    });
   }
 
   async getContractsAddresses(): Promise<ChainDeployment[]> {
