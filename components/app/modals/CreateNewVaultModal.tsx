@@ -33,7 +33,7 @@ const CreateNewVaultModal = ({ onClose }: Props) => {
 
   const [error, setError] = useState('');
 
-  const contractsAddresses = useContext(ChainDeployments);
+  const { chainDeployment: contractsAddresses } = useContext(ChainDeployments);
 
   const handleItemClick = (item: ChainDeployment) => {
     setSelectedItem(item);

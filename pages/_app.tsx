@@ -59,6 +59,17 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
   const [deployment, setDeployment] = useState<ChainDeployment[]>([]);
+  const [address, setAddress] = useState<`0x${string}`>();
+  const [chainId, setChainId] = useState<number>();
+
+  const handleAddress = (add: `0x${string}`) => {
+    setAddress(add);
+  };
+
+  const handleChainId = (nr: number) => {
+    setChainId(nr);
+  };
+
   const [wagmiConfig, setWagmiConfig] =
     useState<Config<PublicClient, WebSocketPublicClient>>();
 
@@ -111,7 +122,15 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
             modalSize="compact"
             chains={deployment.map((x) => mapEVMChainIdToChain(x.evmChainId))}
           >
-            <ChainDeployments.Provider value={deployment}>
+            <ChainDeployments.Provider
+              value={{
+                chainDeployment: deployment,
+                updatedAddress: handleAddress,
+                chainId,
+                address,
+                updatedChainId: handleChainId,
+              }}
+            >
               {getLayout(<Component {...pageProps} />)}
             </ChainDeployments.Provider>
           </RainbowKitProvider>

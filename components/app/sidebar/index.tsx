@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router';
+import React, { useContext } from 'react';
+import { ChainDeployments } from '../../../pages/app/ContractsAddressesContext';
 import Image from 'next/image';
 import Logo from '../../../public/images/Logo.png'
-import React from 'react';
 
 type Props = {
   isOpened: boolean;
@@ -9,6 +10,8 @@ type Props = {
 
 const Sidebar = ({ isOpened }: Props) => {
   const router = useRouter();
+
+  const { chainId, address } = useContext(ChainDeployments);
 
   return (
     <div
@@ -39,7 +42,10 @@ const Sidebar = ({ isOpened }: Props) => {
         </div>
       </div>
       <div className=" flex-1 flex flex-col justify-between gap-2">
-        <div className="flex-1" onClick={() => router.push('/app/overview')}>
+        <div
+          className="flex-1"
+          onClick={() => router.push(`/app/overview/${chainId}/${address}`)}
+        >
           <h1 className="cursor-pointer text-center text-whitesmoke text-lg font-semibold cursor-pointer hover:bg-blue200 hover:text-white px-3 py-2 rounded-md text-sm font-medium ">
             Overview
           </h1>
@@ -47,7 +53,7 @@ const Sidebar = ({ isOpened }: Props) => {
         <div className="flex-1">
           <h1
             className=" text-center text-whitesmoke text-lg font-semibold cursor-pointer hover:bg-blue200 hover:text-white px-3 py-2 rounded-md text-sm font-medium "
-            onClick={() => router.push('/app/vaults')}
+            onClick={() => router.push(`/app/vaults/${chainId}/${address}`)}
           >
             Vaults
           </h1>

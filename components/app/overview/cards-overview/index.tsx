@@ -30,7 +30,7 @@ const CardsOverview = ({
     }, 600);
   };
 
-  const chainDeployments = useContext(ChainDeployments);
+  const { chainDeployment: chainDeployments } = useContext(ChainDeployments);
 
   return (
     <div className="flex-1 w-full flex flex-col flex-wrap gap-4 ">

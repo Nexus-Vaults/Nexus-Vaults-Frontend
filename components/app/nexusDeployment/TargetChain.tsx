@@ -12,7 +12,7 @@ type Props = {
 const TargetChain = ({ handleTargetChain }: Props) => {
   const [selectedItem, setSelectedItem] = useState<ChainDeployment>();
 
-  const contractsAddresses = useContext(ChainDeployments);
+  const { chainDeployment: contractsAddresses } = useContext(ChainDeployments);
 
   useEffect(() => {
     handleTargetChain(selectedItem);

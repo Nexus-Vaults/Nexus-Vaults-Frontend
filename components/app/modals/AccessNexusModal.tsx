@@ -12,7 +12,7 @@ const AccessNexusModal = ({ onClose }: Props) => {
   const [error, setError] = useState('');
   const [selectedItem, setSelectedItem] = useState<ChainDeployment>();
 
-  const contractsAddresses = useContext(ChainDeployments);
+  const { chainDeployment: contractsAddresses } = useContext(ChainDeployments);
 
   const handleItemClick = (item: ChainDeployment) => {
     setSelectedItem(item);
