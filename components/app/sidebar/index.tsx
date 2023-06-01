@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import React, { useContext } from 'react';
 import { ChainDeployments } from '../../../pages/app/ContractsAddressesContext';
 import Image from 'next/image';
-import Logo from '../../../public/images/Logo.png'
+import Logo from '../../../public/images/Logo.png';
 
 type Props = {
   isOpened: boolean;
@@ -20,7 +20,10 @@ const Sidebar = ({ isOpened }: Props) => {
       }`}
     >
       <div className="flex flex-col gap-2  mb-10 items-center">
-        <div className="text-center text-whitesmoke text-lg font-semibold cursor-pointer border-3xl">
+        <div
+          className="text-center text-whitesmoke text-lg font-semibold cursor-pointer border-3xl"
+          onClick={() => router.push('/')}
+        >
           <Image
             className="p-2 rounded-full"
             src={Logo}
