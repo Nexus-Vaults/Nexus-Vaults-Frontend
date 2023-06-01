@@ -1,5 +1,5 @@
 import React from 'react';
-import { SubChain, VaultInfo } from 'api';
+import { VaultInfo } from 'api';
 
 interface TableProps {
   data: VaultInfo[];
@@ -30,13 +30,10 @@ const Table: React.FC<TableProps> = ({ data }) => {
         <thead className="sticky top-0 bg-white  border-b font-medium dark:border-neutral-500">
           <tr>
             <th scope="col" className="px-6 py-4">
-              Asset Name
+              Address
             </th>
             <th scope="col" className="px-6 py-4">
               Amount
-            </th>
-            <th scope="col" className="px-6 py-4">
-              Value
             </th>
           </tr>
         </thead>
