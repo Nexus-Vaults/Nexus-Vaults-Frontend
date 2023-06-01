@@ -47,7 +47,7 @@ const ApprovePayment = ({
           {}
         </div>
         <div className="flex flex-row  border-solid border-2 border-black rounded-md py-1 px-3">
-          <p>Total Cost:{costs}</p>
+          <p className="px-2">Total Cost:{costs}</p>
         </div>
       </div>
 

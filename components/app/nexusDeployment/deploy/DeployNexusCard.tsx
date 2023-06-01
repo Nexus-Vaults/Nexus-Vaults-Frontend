@@ -150,7 +150,7 @@ const DeployNexusCard = ({
       </div>
       <div className="flex-1 flex flex-col justify-center ">
         <div className="flex flex-row  border-solid border-2 border-black rounded-md py-1 px-3 ">
-          <p>Name:</p>
+          <p className="px-2">Name:</p>
           {
             //todo: remove black border of input field
           }
