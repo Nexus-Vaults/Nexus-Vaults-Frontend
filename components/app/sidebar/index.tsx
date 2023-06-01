@@ -1,4 +1,6 @@
 import { useRouter } from 'next/router';
+import Image from 'next/image';
+import Logo from '../../../public/images/Logo.png'
 import React from 'react';
 
 type Props = {
@@ -14,9 +16,15 @@ const Sidebar = ({ isOpened }: Props) => {
         isOpened ? 'w-2/5 lg:w-1/5' : 'w-0'
       }`}
     >
-      <div className="flex flex-col gap-2  mb-10 ">
-        <div className="text-center text-whitesmoke text-lg font-semibold cursor-pointer">
-          Logo of chain
+      <div className="flex flex-col gap-2  mb-10 items-center">
+        <div className="text-center text-whitesmoke text-lg font-semibold cursor-pointer border-3xl">
+          <Image
+            className="p-2 rounded-full"
+            src={Logo}
+            width={120}
+            height={120}
+            alt="Nexus Vaults Logo"
+          />
         </div>
         <div>
           <div className="text-center text-whitesmoke text-lg font-semibold cursor-pointer">
