@@ -112,6 +112,12 @@ const DeployNexusCard = ({
   }, [deployTransaction]);
 
   useEffect(() => {
+    console.log('approved' + approved);
+    console.log('connected' + connected);
+    console.log(' nexusAddress == undefined' + nexusAddress != undefined);
+  }, [approved]);
+
+  useEffect(() => {
     if (acceptGatewayTransaction.data?.status != 'success') {
       return;
     }
