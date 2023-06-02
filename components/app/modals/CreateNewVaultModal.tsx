@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react';
 import { ChainDeployment, apiClient } from 'api';
 import { ChainDeployments } from '../../ContractsAddressesContext';
 import {
+  Address,
   useContractWrite,
   usePrepareContractWrite,
   useWaitForTransaction,
@@ -11,15 +12,16 @@ import { NexusFactory } from 'abiTypes/contracts/nexus/NexusFactory.sol/NexusFac
 import { VaultV1Facet } from 'abiTypes/contracts/vault/v1/facet/VaultV1Facet.sol/VaultV1Facet';
 
 type Props = {
+  nexusAddress: Address;
   onClose: () => void;
 };
 
-const CreateNewVaultModal = ({ onClose }: Props) => {
+const CreateNewVaultModal = ({ nexusAddress, onClose }: Props) => {
   const [vaultId, setVaultId] = useState<number>();
   const [selectedItem, setSelectedItem] = useState<ChainDeployment>();
 
   const { config: configNexus, error: errorName } = usePrepareContractWrite({
-    address: '0x3F564D53550B86e41840b1D0135790D3BeEedA1f',
+    address: nexusAddress,
     abi: VaultV1Facet,
     functionName: 'createVaultV1',
     args: [selectedItem?.contractChainId!, 1, vaultId!],

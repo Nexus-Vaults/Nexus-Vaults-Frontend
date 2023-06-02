@@ -47,7 +47,7 @@ const Index: NextPageWithLayout = () => {
 
   return (
     <div className="w-[80%] h-full py-4 px-10">
-      {isOpened && <CreateNewVaultModal onClose={toggle} />}{' '}
+      {isOpened && <CreateNewVaultModal nexusAddress={add} onClose={toggle} />}{' '}
       <div className="flex flex-col p-2 gap-10">
         <div className="flex flex-row justify-center">
           <div
