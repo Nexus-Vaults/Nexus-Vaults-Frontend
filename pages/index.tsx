@@ -3,6 +3,7 @@ import Footer from '../components/app/footer/footer';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import React from 'react';
+import crossWordPNG from "../public/images/crosswordPNG.png"
 
 export default function Home() {
   const router = useRouter();
@@ -41,7 +42,7 @@ export default function Home() {
         </h2>
         <Image
           className="py-8"
-          src="/../public/images/crosswordPNG.png"
+          src={crossWordPNG}
           width="281"
           height="464"
           alt="Extendable. Flexible. Modular. Secure."
