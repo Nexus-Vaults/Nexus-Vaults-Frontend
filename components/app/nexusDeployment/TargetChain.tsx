@@ -21,8 +21,6 @@ const TargetChain = ({ handleTargetChain }: Props) => {
     setSelectedItem(item);
   };
 
-  console.log(selectedItem?.contractChainId);
-
   return (
     <div className="flex flex-col   p-5 gap-y-10">
       <div className="flex flex-col p-5 gap-2">

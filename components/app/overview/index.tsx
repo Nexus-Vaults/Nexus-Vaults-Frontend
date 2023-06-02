@@ -16,9 +16,6 @@ const Overview = ({ address, contractChainId }: Props) => {
     { address: '0x0000', vaultId: 0 },
   ]);
 
-  console.log(contractChainId);
-  console.log(address);
-
   useEffect(() => {
     apiClient.getNexusOverview(contractChainId, address).then((nexus) => {
       setNexus(nexus);

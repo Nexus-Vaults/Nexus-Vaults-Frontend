@@ -27,7 +27,6 @@ const DeployNexus = ({
   };
 
   const handleConnection = (b: boolean) => {
-    console.log('connection:' + b);
     setConnected(b);
   };
 

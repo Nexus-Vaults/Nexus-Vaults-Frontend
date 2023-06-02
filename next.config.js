@@ -3,7 +3,7 @@ module.exports = {
     return [
       {
         source: '/api/:slug*',
-        destination: 'https://nexus-vaults-testnet.playwo.de/api/:slug*',
+        destination: 'https://nexus-vaults.playwo.de/api/:slug*',
       },
     ];
   },

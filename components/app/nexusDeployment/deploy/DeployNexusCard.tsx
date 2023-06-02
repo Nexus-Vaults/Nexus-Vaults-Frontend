@@ -43,8 +43,18 @@ const DeployNexusCard = ({
   const { address } = useAccount();
   const publicClient = usePublicClient();
   const [nexusAddress, setNexusAddress] = useState<Address>();
-  const [success, setSuccess] = useState<boolean>(false);
-  const [GatwayConfirm, setGatwayConfirm] = useState<boolean>(true);
+
+  enum DeploymentStatus {
+    Idle,
+    PendingDeployment,
+    Deployed,
+    DeploymentFailed,
+    PendingAcceptGateway,
+    AcceptFailed,
+    Completed
+  }
+
+  const [status, setStatus] = useState<DeploymentStatus>(DeploymentStatus.Idle);
 
   const facetInstallation = features.map((x) => {
     return {
@@ -82,8 +92,14 @@ const DeployNexusCard = ({
   useEffect(() => {
     if (
       dataNexus?.hash == undefined ||
-      deployTransaction.data?.status != 'success'
+      deployTransaction.data == undefined ||
+      status >= DeploymentStatus.Deployed
     ) {
+      return;
+    }
+
+    if (deployTransaction.data.status == 'reverted') {
+      setStatus(DeploymentStatus.DeploymentFailed);
       return;
     }
 
@@ -106,54 +122,47 @@ const DeployNexusCard = ({
       });
 
       setNexusAddress(deployedLogArgs.args.nexus!);
+      setStatus(DeploymentStatus.Deployed);
     };
 
     f();
   }, [deployTransaction]);
 
   useEffect(() => {
-    console.log('approved' + approved);
-    console.log('connected' + connected);
-    console.log(' nexusAddress == undefined' + nexusAddress != undefined);
-  }, [approved]);
-
-  useEffect(() => {
-    if (acceptGatewayTransaction.data?.status != 'success') {
+    if (
+      acceptGatewayIdData?.hash == undefined ||
+      acceptGatewayTransaction.data == undefined
+    ) {
       return;
     }
 
-    setSuccess(true);
+
+    if (acceptGatewayTransaction.data?.status == 'reverted') {
+      setStatus(DeploymentStatus.AcceptFailed);
+      return;
+    }
+
+    setStatus(DeploymentStatus.Completed);  
   }, [acceptGatewayTransaction]);
+
 
   function deployNexus() {
     console.log('Deploying nexus...');
-    setGatwayConfirm(false);
+    setStatus(DeploymentStatus.PendingDeployment);
     writeNexus?.();
-  }
-
-  function wait(delay: number): Promise<void> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, delay);
-    });
   }
 
   async function acceptGateway() {
     console.log('Accepting gateway...');
-    console.log(nexusAddress);
+    setStatus(DeploymentStatus.PendingAcceptGateway);
     writeAcceptedGateway?.();
-    await wait(5);
-    await router.push(
-      `/app/overview/${targetChain.contractChainId}/${nexusAddress}`
-    );
   }
 
   return (
     <>
-      {success ? (
+      {status == DeploymentStatus.Completed || status == DeploymentStatus.DeploymentFailed || status == DeploymentStatus.AcceptFailed ? (
         <ConfirmationModal
-          show={true}
+          isSuccess={status == DeploymentStatus.Completed}
           nexusAddress={nexusAddress!}
           contractChainId={targetChain.contractChainId}
         />
@@ -185,10 +194,10 @@ const DeployNexusCard = ({
           <button
             className="text-white bg-[#0e76fd] h-[40px] shadow-lg rounded-xl   font-bold py-1 px-3 inline-block "
             onClick={() => deployNexus()}
-            disabled={!connected || !approved || nexusAddress != undefined}
+            disabled={!connected || !approved || status != DeploymentStatus.Idle}
             //todo: proper styling for this, move to global
             style={
-              !connected || !approved || nexusAddress != undefined
+              !connected || !approved || status != DeploymentStatus.Idle
                 ? {
                     backgroundColor: 'grey',
                     color: 'white',
@@ -199,7 +208,10 @@ const DeployNexusCard = ({
                   }
             }
           >
-            Deploy Nexus
+            {status == DeploymentStatus.Idle ? 'Deploy Nexus' : ''}
+            {status == DeploymentStatus.PendingDeployment ? 'Pending...' : ''}
+            {status == DeploymentStatus.DeploymentFailed ? 'Deployment failed...' : ''}
+            {status >= DeploymentStatus.Deployed ? 'Deployment successful' : ''}
           </button>
           <button
             className="text-white bg-[#0e76fd] h-[40px] shadow-lg rounded-xl   font-bold py-1 px-3 inline-block "
@@ -207,15 +219,13 @@ const DeployNexusCard = ({
             disabled={
               !connected ||
               !approved ||
-              nexusAddress != undefined ||
-              GatwayConfirm
+              status != DeploymentStatus.Deployed
             }
             //todo: proper styling for this, move to global
             style={
               !connected ||
               !approved ||
-              nexusAddress != undefined ||
-              GatwayConfirm
+              status != DeploymentStatus.Deployed
                 ? {
                     backgroundColor: 'grey',
                     color: 'white',
@@ -226,7 +236,10 @@ const DeployNexusCard = ({
                   }
             }
           >
-            AcceptGateway
+            {status <= DeploymentStatus.Deployed ? 'Accept Gateway' : ''}
+            {status == DeploymentStatus.PendingAcceptGateway ? 'Pending...' : ''}
+            {status == DeploymentStatus.AcceptFailed ? 'Gateway accept failed...' : ''}
+            {status >= DeploymentStatus.Completed ? 'Accepted successfully' : ''}
           </button>
         </div>
       </div>

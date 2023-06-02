@@ -37,7 +37,6 @@ const Index: NextPageWithLayout = () => {
       (x, y) => x.concat(y.vaults),
       [] as VaultInfo[]
     );
-    console.log(subChainsTMP);
     setVaultInfos(vaultInfosTMP);
   }, [nexus]);
 

@@ -66,7 +66,7 @@ const Index: React.FC<Props> = () => {
     <DeployNexus
       nexusName={nexusName}
       targetChain={targetChain!}
-      features={features}
+      features={features.concat(basicFeatures)}
       costs={costs}
       handleName={handleNexusName}
     />,
@@ -86,10 +86,6 @@ const Index: React.FC<Props> = () => {
       setError(false);
     }
   };
-
-  useEffect(() => {
-    console.log(currentStep);
-  }, [currentStep]);
 
   return (
     <div className="flex flex-col w-screen flex-wrap justify-center content-center bg-gradient-to-br from-black to-indigo-900 min-h-screen items-center p-8 gap-2 h-max xl:h-2/3">
