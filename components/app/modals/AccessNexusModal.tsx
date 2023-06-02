@@ -87,7 +87,7 @@ const AccessNexusModal = ({ onClose }: Props) => {
                     onClick={() => handleItemClick(x)}
                   >
                     <img
-                      src={`../images/chain/${x.evmChainId}.png`}
+                      src={`/images/chain/${x.evmChainId}.png`}
                       width={64}
                     ></img>
                   </div>

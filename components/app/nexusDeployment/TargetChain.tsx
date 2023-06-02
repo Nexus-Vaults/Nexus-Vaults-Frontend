@@ -2,8 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { ChainDeployment } from 'api';
 import { ChainDeployments } from '../../ContractsAddressesContext';
 
-import fantom from '../../../public/images/chain/4002.png';
-
 type Props = {
   handleTargetChain: (chainDeployment: ChainDeployment | undefined) => void;
 };
@@ -51,7 +49,7 @@ const TargetChain = ({ handleTargetChain }: Props) => {
                   onClick={() => handleItemClick(x)}
                 >
                   <img
-                    src={`../images/chain/${x.evmChainId}.png`}
+                    src={`/images/chain/${x.evmChainId}.png`}
                     width={64}
                   ></img>
                 </div>

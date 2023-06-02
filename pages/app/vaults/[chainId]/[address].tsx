@@ -3,8 +3,7 @@ import Layout from '../../../../components/layout';
 import { NextPageWithLayout } from '../../../_app';
 import VaultRows from '../../../../components/app/vaults/VaultRows';
 import Eth from '../../../../public/images/chain/137.png';
-import fantom from '../../../public/images/chain/250.png';
-import logo1 from '../../../public/images/chain/1284.png';
+
 import CreateNewVaultModal from '../../../../components/app/modals/CreateNewVaultModal';
 import { useRouter } from 'next/router';
 import { apiClient, Nexus, SubChain, Vault, VaultInfo } from 'api';
