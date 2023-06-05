@@ -38,7 +38,7 @@ const ApprovePayment = ({
         <div className="flex flex-row  border-solid border-2 border-black rounded-md py-1 px-3 ">
           {features.map((x) => {
             return (
-              <p>
+              <p key={x.address}>
                 {x.name}:{x.feeTokenAmount}
                 {x.feeTokenSymbol}
               </p>
