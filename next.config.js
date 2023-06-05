@@ -1,9 +1,17 @@
+const { env } = require('process');
+
 module.exports = {
   async rewrites() {
+    if (env.REACT_APP_NODE_ENV == 'production') {
+      return [];
+    }
+
     return [
       {
         source: '/api/:slug*',
-        destination: 'https://nexus-vaults.playwo.de/api/:slug*',
+        destination: env.NEXT_PUBLIC_TESTNET
+          ? 'https://nexus-vaults-testnet.playwo.de/api/:slug*'
+          : 'https://nexus-vaults.playwo.de/api/:slug*',
       },
     ];
   },
