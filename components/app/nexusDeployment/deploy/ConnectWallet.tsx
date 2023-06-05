@@ -13,7 +13,7 @@ const ConnectWallet = ({ targetChain, handleConection }: Props) => {
   const { error, switchNetwork } = useSwitchNetwork();
 
   useEffect(() => {
-    if (chain?.name.toLowerCase() == targetChain.chainName.toLowerCase()) {
+    if (chain?.id == targetChain.evmChainId) {
       handleConection(true);
     } else handleConection(false);
   }, [chain]);
@@ -40,7 +40,7 @@ const ConnectWallet = ({ targetChain, handleConection }: Props) => {
       </div>
       <div className=" flex flex-row justify-center">
         {chain &&
-          chain.name.toLowerCase() != targetChain.chainName.toLowerCase() && (
+          chain.id != targetChain.evmChainId && (
             <button
               className="text-white bg-[#0e76fd] h-[40px] shadow-lg rounded-xl   font-bold py-1 px-3 inline-block "
               onClick={() => switchNetwork?.(targetChain.evmChainId)}
