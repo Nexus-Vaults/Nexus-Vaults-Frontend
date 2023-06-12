@@ -18,7 +18,7 @@ type Props = {
 };
 
 const CreateNewVaultModal = ({ nexusAddress, onClose }: Props) => {
-  const [vaultId, setVaultId] = useState<number>();
+  const [vaultId, setVaultId] = useState<number>(0);
   const [selectedItem, setSelectedItem] = useState<ChainDeployment>();
 
   const { config: configNexus, error: errorName } = usePrepareContractWrite({
@@ -26,14 +26,11 @@ const CreateNewVaultModal = ({ nexusAddress, onClose }: Props) => {
     abi: VaultV1Facet,
     functionName: 'createVaultV1',
     args: [selectedItem?.contractChainId!, 1, vaultId!],
-    value: BigInt(parseEther("1.0")),
+    value: BigInt(parseEther('1.0' as `${number}`)),
   });
-
-  console.log(errorName);
 
   const { write: writeNexus, data: dataNexus } = useContractWrite(configNexus);
   const transaction = useWaitForTransaction({ hash: dataNexus?.hash });
-
   const [error, setError] = useState('');
 
   const { chainDeployment: contractsAddresses } = useContext(ChainDeployments);
@@ -54,7 +51,6 @@ const CreateNewVaultModal = ({ nexusAddress, onClose }: Props) => {
 
   const handleAddressChange = (event: any) => {
     setVaultId(event.target.value);
-    setError(event.target.value);
   };
 
   const handleSubmit = async (e: any) => {
@@ -65,14 +61,13 @@ const CreateNewVaultModal = ({ nexusAddress, onClose }: Props) => {
       return;
     }
 
-    if (vaultId === 0) {
-      setError('Vault ID cannot be empty');
+    if (vaultId < 1) {
+      setError('Vault ID cannot be zero');
       return;
     }
     try {
       writeNexus?.();
       setSelectedItem(undefined);
-      setError('');
       setError('');
     } catch (error) {
       console.error('An error occurred while creating new vault:', error);
