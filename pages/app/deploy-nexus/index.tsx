@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import NexusName from '../../../components/app/nexusDeployment/NexusName';
 import TargetChain from '../../../components/app/nexusDeployment/TargetChain';
 import FeaturesSelection from '../../../components/app/nexusDeployment/FeaturesSelection';
 import DeployNexus from '../../../components/app/nexusDeployment/DeployNexus';
 import { useRouter } from 'next/router';
-import { apiClient, ChainDeployment, Feature } from 'api';
+import { ChainDeployment, Feature } from 'api';
 
 type Props = {};
 
@@ -21,10 +21,17 @@ const Index: React.FC<Props> = () => {
 
   const handleValidation = () => {
     if (currentStep === 0 && !targetChain) {
-      setErrorMessage('Chain is empty.Please select a chain.');
+      setErrorMessage('Chain is empty. Please select a chain.');
       setError(true);
     } else if (currentStep === 1 && !nexusName.trim()) {
-      setErrorMessage('Nexus name is empty.Please enter a name.');
+      setErrorMessage('Nexus name is empty. Please enter a name.');
+      setError(true);
+    } else if (
+      currentStep === 2 &&
+      basicFeatures.length == 0 &&
+      features.length == 0
+    ) {
+      setErrorMessage('No features selected. Please select a feature');
       setError(true);
     } else {
       setError(false);
@@ -33,7 +40,7 @@ const Index: React.FC<Props> = () => {
   };
 
   const router = useRouter();
-  
+
   const handleNexusName = (name: string) => {
     setNexusName(name);
   };

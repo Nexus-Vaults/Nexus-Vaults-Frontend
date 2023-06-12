@@ -17,7 +17,7 @@ const FeaturesDashboard = ({
 }: Props) => {
   const basic = features
     .filter((x) => x.isBasic)
-    .map((x, index) => ({ ...x, added: false, id: index + 1 }));
+    .map((x, index) => ({ ...x, added: true, id: index + 1 }));
 
   const other = features
     .filter((x) => !x.isBasic)
