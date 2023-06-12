@@ -31,6 +31,7 @@ import {
 import { apiClient, ChainDeployment } from 'api';
 import React, { useContext, useState } from 'react';
 import { ChainDeployments } from '../components/ContractsAddressesContext';
+import { mapEVMChainIdToChain } from '../utils';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -42,18 +43,6 @@ type AppPropsWithLayout = AppProps & {
 
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
 const alchemyId = process.env.NEXT_PUBLIC_ALCHEMY_ID;
-
-function mapEVMChainIdToChain(evmChainId: number) {
-  for (const chain of Object.values(supportedChains)) {
-    if ('id' in chain) {
-      if (chain.id === evmChainId) {
-        return chain;
-      }
-    }
-  }
-
-  throw 'Unsupported Chain';
-}
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
