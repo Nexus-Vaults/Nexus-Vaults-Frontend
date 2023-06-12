@@ -10,6 +10,7 @@ import {
 } from 'wagmi';
 import { NexusFactory } from 'abiTypes/contracts/nexus/NexusFactory.sol/NexusFactory';
 import { VaultV1Facet } from 'abiTypes/contracts/vault/v1/facet/VaultV1Facet.sol/VaultV1Facet';
+import { parseEther } from 'viem';
 
 type Props = {
   nexusAddress: Address;
@@ -25,7 +26,7 @@ const CreateNewVaultModal = ({ nexusAddress, onClose }: Props) => {
     abi: VaultV1Facet,
     functionName: 'createVaultV1',
     args: [selectedItem?.contractChainId!, 1, vaultId!],
-    value: BigInt(0),
+    value: BigInt(parseEther("1.0")),
   });
 
   console.log(errorName);

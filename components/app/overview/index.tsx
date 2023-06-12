@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Table from '../table';
+import Table, { AssetBalance } from '../table';
 import CardsOverview from './cards-overview';
 import Graph from './graph/graph';
 import { apiClient, Nexus, SubChain, VaultInfo } from 'api';
@@ -11,30 +11,12 @@ type Props = {
 
 const Overview = ({ address, contractChainId }: Props) => {
   const [nexus, setNexus] = useState<Nexus>();
-  const [subChains, setSubChains] = useState<SubChain[]>([]);
-  const [table, setTable] = useState<VaultInfo[]>([
-    { address: '0x0000', vaultId: 0 },
-  ]);
 
   useEffect(() => {
     apiClient.getNexusOverview(contractChainId, address).then((nexus) => {
       setNexus(nexus);
     });
   }, []);
-
-  useEffect(() => {
-    if (nexus == undefined) return;
-    const subChainsTMP: SubChain[] = [];
-    nexus?.subchains.map((x) => subChainsTMP.push(x));
-    setSubChains(subChainsTMP);
-    if (subChains == undefined) return;
-    const tableTMP = subChains.reduce(
-      (x, y) => x.concat(y.vaults),
-      [] as VaultInfo[]
-    );
-    if (tableTMP.length == 0) return;
-    setTable(tableTMP);
-  }, [nexus]);
 
   return (
     <>
@@ -55,7 +37,21 @@ const Overview = ({ address, contractChainId }: Props) => {
             <Graph></Graph>
           </div>
           <div className="w-full flex-1 ">
-            <Table data={table} />
+            <Table
+              data={nexus.subchains.reduce(
+                (x, y) =>
+                  x.concat(
+                    y.balances.map((tokenBalance) => {
+                      return {
+                        assetContractChainId: y.contractChainId,
+                        balance: tokenBalance.balance,
+                        token: tokenBalance.token,
+                      };
+                    })
+                  ),
+                [] as AssetBalance[]
+              )}
+            />
           </div>
         </div>
       )}

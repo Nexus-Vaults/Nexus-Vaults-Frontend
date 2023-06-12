@@ -83,32 +83,25 @@ const CardsOverview = ({
           <div className="text-primary text-lg font-medium  font-sans">
             {nexusName}
           </div>
-          <div className="w-[340px] text-sm font-medium rounded-md text-gray-500  font-sans cursor-pointer  hover:text-gray-700">
-            change name
-          </div>
+          <div className="w-[340px] text-sm font-medium rounded-md text-gray-500  font-sans cursor-pointer  hover:text-gray-700"></div>
         </div>
       </div>
       <div className="flex-1 flex flex-row gap-4">
         <div className="flex-1 flex flex-col justify-between border-2 border-gray-400 rounded-lg bg-white hover:bg-background shadow-lg p-2">
           <div className="text-gray-500 text-base font-medium  font-sans">
-            Value (comming soon)
+            Owner
           </div>
           <div className="text-primary text-lg font-medium  font-sans">
-            69420.23 USDT
+            {owner}
           </div>
-          <div className="flex items-center ">
-            <div className=" h-fit  px-1 rounded-md bg-[#d0e2e5] text-[#4caf54] font-semibold">
-              +15%
-            </div>
-            <div className=" text-gray-500 p-2">Since Last Month</div>
-          </div>
+          <div></div>
         </div>
         <div className="flex-1 flex flex-col justify-between border-2 border-gray-400 rounded-lg bg-white hover:bg-background shadow-lg p-2">
           <div className="text-gray-500 text-base font-medium  font-sans">
-            Amount (comming soon)
+            Total Value
           </div>
           <div className="text-primary text-lg font-medium  font-sans">
-            69420.23 USDT
+            Coming soon...
           </div>
           <div className="flex items-center ">
             <div className=" h-fit  px-1 rounded-md bg-[#d0e2e5] text-[#4caf54] font-semibold">

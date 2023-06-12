@@ -1,8 +1,14 @@
 import React from 'react';
-import { VaultInfo } from 'api';
+import { TokenInfoDTO, VaultInfo } from 'api';
+
+export interface AssetBalance {
+  assetContractChainId: number;
+  token: TokenInfoDTO;
+  balance: number;
+}
 
 interface TableProps {
-  data: VaultInfo[];
+  data: AssetBalance[];
 }
 
 const Table: React.FC<TableProps> = ({ data }) => {
@@ -30,6 +36,9 @@ const Table: React.FC<TableProps> = ({ data }) => {
         <thead className="sticky top-0 bg-white  border-b font-medium dark:border-neutral-500">
           <tr>
             <th scope="col" className="px-6 py-4">
+              Chain
+            </th>
+            <th scope="col" className="px-6 py-4">
               Address
             </th>
             <th scope="col" className="px-6 py-4">
@@ -41,11 +50,12 @@ const Table: React.FC<TableProps> = ({ data }) => {
           {data.map((item, index) => (
             <tr key={index} className="border-b dark:border-neutral-500">
               <td className="whitespace-nowrap px-6 py-4 font-medium">
-                {item.address.toString()}
+                {item.assetContractChainId}
               </td>
               <td className="whitespace-nowrap px-6 py-4 font-medium">
-                {item.vaultId}
+                {item.token.tokenType == 1 ? 'Native Asset' : 'Other'}
               </td>
+              <td>{item.balance}</td>
             </tr>
           ))}
         </tbody>

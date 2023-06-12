@@ -42,7 +42,18 @@ export interface Nexus {
 export interface SubChain {
   contractChainId: number;
   vaults: VaultInfo[];
+  balances: TokenBalanceDTO[];
   acceptedGatewayIds: number[];
+}
+
+export interface TokenInfoDTO {
+  tokenType: number;
+  tokenIdentifier: string;
+}
+
+export interface TokenBalanceDTO {
+  token: TokenInfoDTO;
+  balance: number;
 }
 
 export interface ChainDeployment {
