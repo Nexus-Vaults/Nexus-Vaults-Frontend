@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ChainDeployment, apiClient } from 'api';
 import { ChainDeployments } from '../../ContractsAddressesContext';
 import {
@@ -11,22 +11,84 @@ import {
 import { NexusFactory } from 'abiTypes/contracts/nexus/NexusFactory.sol/NexusFactory';
 import { VaultV1Facet } from 'abiTypes/contracts/vault/v1/facet/VaultV1Facet.sol/VaultV1Facet';
 import { parseEther } from 'viem';
+import {
+  AxelarQueryAPI,
+  AxelarQueryAPIFeeResponse,
+  Environment,
+} from '@axelar-network/axelarjs-sdk';
 
 type Props = {
+  nexusContractChainId: number;
   nexusAddress: Address;
   onClose: () => void;
 };
 
-const CreateNewVaultModal = ({ nexusAddress, onClose }: Props) => {
+const CreateNewVaultModal = ({
+  nexusContractChainId,
+  nexusAddress,
+  onClose,
+}: Props) => {
   const [vaultId, setVaultId] = useState<number>(0);
   const [selectedItem, setSelectedItem] = useState<ChainDeployment>();
+
+  const [fee, setFee] = useState<bigint | null>(null);
+
+  const deployment = useContext(ChainDeployments);
+
+  useEffect(() => {
+    if (selectedItem == null) {
+      setFee(null);
+      return;
+    }
+    if (nexusContractChainId == selectedItem.contractChainId) {
+      setFee(BigInt(0));
+    }
+
+    const sdk = new AxelarQueryAPI({
+      environment: process.env.NEXT_PUBLIC_TESTNET
+        ? Environment.TESTNET
+        : Environment.MAINNET,
+    });
+
+    const sourceChain = deployment.chainDeployment.find(
+      (x) => x.contractChainId == nexusContractChainId
+    )!;
+    const destionationChain = deployment.chainDeployment.find(
+      (x) => x.contractChainId == selectedItem.contractChainId
+    )!;
+
+    sdk
+      .estimateGasFee(
+        sourceChain.chainName,
+        destionationChain.chainName,
+        'FTM',
+        undefined,
+        undefined,
+        undefined,
+        {
+          showDetailedFees: true,
+          destinationContractAddress: undefined!,
+          sourceContractAddress: undefined!,
+          tokenSymbol: undefined!,
+        }
+      )
+      .then((resp) => {
+        const response = resp as AxelarQueryAPIFeeResponse;
+        const fee =
+          BigInt(response.baseFee) +
+          BigInt(response.executionFeeWithMultiplier);
+
+        setFee(fee);
+      });
+  }, [selectedItem]);
 
   const { config: configNexus, error: errorName } = usePrepareContractWrite({
     address: nexusAddress,
     abi: VaultV1Facet,
     functionName: 'createVaultV1',
     args: [selectedItem?.contractChainId!, 1, vaultId!],
-    value: BigInt(parseEther('1.0' as `${number}`)),
+    value: fee ?? BigInt(0),
+    enabled: fee != null,
   });
 
   const { write: writeNexus, data: dataNexus } = useContractWrite(configNexus);
