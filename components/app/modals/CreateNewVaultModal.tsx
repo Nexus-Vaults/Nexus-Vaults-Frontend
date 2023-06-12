@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
-import { ChainDeployment, apiClient } from 'api';
+import { ChainDeployment } from 'api';
 import { ChainDeployments } from '../../ContractsAddressesContext';
 import {
   Address,
@@ -8,14 +8,13 @@ import {
   usePrepareContractWrite,
   useWaitForTransaction,
 } from 'wagmi';
-import { NexusFactory } from 'abiTypes/contracts/nexus/NexusFactory.sol/NexusFactory';
 import { VaultV1Facet } from 'abiTypes/contracts/vault/v1/facet/VaultV1Facet.sol/VaultV1Facet';
-import { parseEther } from 'viem';
 import {
   AxelarQueryAPI,
   AxelarQueryAPIFeeResponse,
   Environment,
 } from '@axelar-network/axelarjs-sdk';
+import { getEvmChainId, mapEVMChainIdToChain } from '../../../utils';
 
 type Props = {
   nexusContractChainId: number;
@@ -28,7 +27,7 @@ const CreateNewVaultModal = ({
   nexusAddress,
   onClose,
 }: Props) => {
-  const [vaultId, setVaultId] = useState<number>(0);
+  const [vaultId, setVaultId] = useState<number | null>(null);
   const [selectedItem, setSelectedItem] = useState<ChainDeployment>();
 
   const [fee, setFee] = useState<bigint | null>(null);
@@ -61,7 +60,7 @@ const CreateNewVaultModal = ({
       .estimateGasFee(
         sourceChain.chainName,
         destionationChain.chainName,
-        'FTM',
+        mapEVMChainIdToChain(sourceChain.evmChainId).nativeCurrency.symbol,
         undefined,
         undefined,
         undefined,
@@ -88,11 +87,10 @@ const CreateNewVaultModal = ({
     functionName: 'createVaultV1',
     args: [selectedItem?.contractChainId!, 1, vaultId!],
     value: fee ?? BigInt(0),
-    enabled: fee != null,
+    enabled: fee != null && vaultId != null && selectedItem != null,
   });
 
   const { write: writeNexus, data: dataNexus } = useContractWrite(configNexus);
-  const transaction = useWaitForTransaction({ hash: dataNexus?.hash });
   const [error, setError] = useState('');
 
   const { chainDeployment: contractsAddresses } = useContext(ChainDeployments);
@@ -120,6 +118,11 @@ const CreateNewVaultModal = ({
 
     if (selectedItem === undefined) {
       setError('Chain ID cannot be empty');
+      return;
+    }
+
+    if (vaultId == null) {
+      setError('Vault ID is required');
       return;
     }
 
@@ -180,7 +183,6 @@ const CreateNewVaultModal = ({
               className="border rounded-md py-2 px-3 w-full"
               id="address"
               type="number"
-              value={vaultId}
               placeholder="Enter Vault ID"
               onChange={handleAddressChange}
             />
