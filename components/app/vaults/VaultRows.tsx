@@ -1,29 +1,32 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Image, { StaticImageData } from 'next/image';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import CryptoList from './CryptoList';
 import ViewCozyIcon from '@mui/icons-material/ViewCozy';
 import { useRouter } from 'next/router';
+import { getEvmChainId } from '../../../utils';
+import { ChainDeployments } from '../../ContractsAddressesContext';
 
 type Props = {
-  logo: StaticImageData;
-  vaultId?: number;
-  address?: `0x${string}`;
-  totalAsset?: number;
+  contractChainId: number;
+  vaultId: number;
+  address: `0x${string}`;
+  totalAsset: number;
 };
 
-const VaultRows = ({ logo, vaultId, address, totalAsset }: Props) => {
+const VaultRows = ({
+  contractChainId,
+  vaultId,
+  address,
+  totalAsset,
+}: Props) => {
   const [expanded, setExpanded] = useState(false);
 
   const toggleExpanded = () => {
     setExpanded(!expanded);
   };
 
-  const coins = [
-    { id: 1, name: 'USDC', amount: 2.5, amountUSD: 125000 },
-    { id: 2, name: 'USDT', amount: 10, amountUSD: 30000 },
-    { id: 3, name: 'ETH', amount: 100, amountUSD: 5000 },
-  ];
+  const deployment = useContext(ChainDeployments);
 
   const handleVaultOverviewClick = (event: any) => {
     event.stopPropagation();
@@ -36,14 +39,21 @@ const VaultRows = ({ logo, vaultId, address, totalAsset }: Props) => {
     <div
       className={`flex flex-col ${
         expanded && 'bg-blue50 text-white'
-      } shadow-md  border border-gray-300 mb-4 rounded-md hover:bg-blue50  hover:text-white hover:shadow-lg hover:border-transparent hover:cursor-pointer hover:scale-105`}
+      } shadow-md  border border-gray-300 mb-4 rounded-md hover:bg-blue50   hover:shadow-lg hover:border-transparent hover:cursor-pointer`}
     >
       <div
         className="flex items-center px-4 py-2 cursor-pointer justify-between"
         onClick={toggleExpanded}
       >
         <div className="flex flex-row gap-2 items-center">
-          <Image src={logo} width={32} height={32} alt="" />
+          <img
+            width={32}
+            height={32}
+            src={`/images/chain/${getEvmChainId(
+              deployment.chainDeployment,
+              contractChainId
+            )}.png`}
+          ></img>
           <div className="flex-1 flex flex-row justify-between ml-5">
             <span className="font-mono mr-2">{vaultId}</span>
           </div>
@@ -51,12 +61,12 @@ const VaultRows = ({ logo, vaultId, address, totalAsset }: Props) => {
 
         <div className="relative flex flex-row items-center justify-center">
           <span className="font-mono font-bold mr-8">${totalAsset}</span>
-          <div
-            className="absolute left-14 flex flex-row items-center  hover:scale-125"
-            onClick={handleVaultOverviewClick}
-          >
-            <ViewCozyIcon />
-          </div>
+        </div>
+        <div
+          className="flex flex-row items-center  hover:scale-125"
+          onClick={handleVaultOverviewClick}
+        >
+          <ViewCozyIcon />
         </div>
       </div>
       {expanded && (
@@ -71,7 +81,6 @@ const VaultRows = ({ logo, vaultId, address, totalAsset }: Props) => {
               {address?.slice(-8)}
             </div>
           </div>
-          <CryptoList coins={coins} />
           <div className="flex flex-row justify-center absolute bottom-0 left-0 right-0">
             <ExpandLessIcon
               className="cursor-pointer "

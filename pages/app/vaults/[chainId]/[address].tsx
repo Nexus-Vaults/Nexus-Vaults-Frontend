@@ -53,13 +53,11 @@ const Index: NextPageWithLayout = () => {
             <div className="flex flex-row gap-8">
               <div>Vault Id</div>
             </div>
-
-            <div className="">Total Amount (coming soon)</div>
           </div>
           {nexus?.subchains.map((subchain) =>
             subchain.vaults.map((vault) => (
               <VaultRows
-                logo={Eth}
+                contractChainId={subchain.contractChainId}
                 key={
                   subchain.contractChainId.toString() + vault.vaultId.toString()
                 }
