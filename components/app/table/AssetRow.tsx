@@ -31,6 +31,16 @@ const AssetRow = ({
         ).nativeCurrency
       : null;
 
+  function bigIntToDecimalAdjustedString(value: number, decimals: number) {
+    const divider = Math.ceil(Math.pow(10, decimals)) / 1000;
+    const adjusted = Number(value / divider);
+
+    return adjusted / 1000;
+  }
+
+  const decimals = assetDetails?.decimals ?? 0;
+  const balance_string = bigIntToDecimalAdjustedString(balance, decimals);
+
   return (
     <>
       <td className="whitespace-nowrap px-6 py-4 font-medium">
@@ -43,7 +53,7 @@ const AssetRow = ({
         />
       </td>
       <td>{asset.tokenType == 1 ? assetDetails?.symbol : 'Other'}</td>
-      <td>{balance / Math.pow(10, assetDetails?.decimals ?? 0)}</td>
+      <td>{balance_string}</td>
       <td>
         <button
           disabled={balance == 0}
