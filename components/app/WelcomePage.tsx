@@ -21,7 +21,7 @@ const WelcomePage = (props: Props) => {
       </p>
       <div className="flex justify-center">
         <div
-          className="cursor-pointer bg-white rounded-md font-medium text-xl px-6 py-3 mr-4 transition-colors duration-300 hover:bg-gray-200 hover:scale-105 transition-all duration-300 font-mono"
+          className="cursor-pointer bg-white rounded-md font-medium text-xl px-6 py-3 mr-4 hover:bg-gray-200 hover:scale-105 transition-all duration-300 font-mono"
           onClick={() => router.push('/app/deploy-nexus')}
         >
           <h1 className="text-center  text-indigo-900 font-semibold ">
@@ -29,7 +29,7 @@ const WelcomePage = (props: Props) => {
           </h1>
         </div>
         <div
-          className="cursor-pointer bg-white  rounded-md font-medium text-xl px-6 py-3 transition-colors duration-300 hover:bg-gray-200 hover:bg-gray-200 hover:scale-105 transition-all duration-300 font-mono"
+          className="cursor-pointer bg-white  rounded-md font-medium text-xl px-6 py-3 hover:bg-gray-200 hover:scale-105 transition-all duration-300 font-mono"
           onClick={() => setIsModalOpen(true)}
         >
           <h1 className="text-center text-indigo-900 font-semibold ">
