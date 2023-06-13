@@ -17,7 +17,7 @@ const WelcomePage = (props: Props) => {
         Welcome to Nexus Vaults
       </h1>
       <p className="text-white text-lg text-center mb-8 font-mono">
-        Deploy a new Nexus if you don´t have one or access an excisting Nexus
+        Deploy a new Nexus if you don´t have one or access an existing Nexus
       </p>
       <div className="flex justify-center">
         <div
