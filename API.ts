@@ -23,6 +23,10 @@ export abstract class ApiClient {
     tokenType: number,
     tokenIdentifier: string
   ): Promise<VaultAssetBalanceDTO[]>;
+  abstract getNexusExistence(
+    contractChainId: number,
+    nexusAddress: Address
+  ): Promise<boolean>;
 }
 
 interface TokenBalance {

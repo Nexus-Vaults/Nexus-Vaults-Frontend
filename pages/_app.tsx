@@ -16,8 +16,6 @@ import {
   WagmiConfig,
   WebSocketPublicClient,
 } from 'wagmi';
-import * as supportedChains from 'wagmi/chains';
-import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 import { Chain } from '@wagmi/chains';
 import {
