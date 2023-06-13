@@ -32,7 +32,13 @@ const AssetRow = ({ assetContractChainId, asset, balance }: Props) => {
       </td>
       <td>{balance}</td>
       <td>
-        <button className="bg-purple hover:bg-purple text-white font-bold py-1 px-2 rounded-lg">
+        <button
+          disabled={balance == 0}
+          className={
+            (balance > 0 ? 'bg-purple hover:bg-purple' : 'bg-gray-500') +
+            ' text-white font-bold py-1 px-2 rounded-lg'
+          }
+        >
           Send
         </button>
       </td>
