@@ -1,3 +1,5 @@
+import { Address } from 'wagmi';
+
 export abstract class ApiClient {
   abstract getFeatures(
     chainId: number,
@@ -87,14 +89,11 @@ class ApiClientMock extends ApiClient {
     );
 
     if (!response.ok) {
-      throw new Error('no response from api/chains/x/x/Features');
+      throw new Error(`API Request failed, error code ${response.status}`);
     }
-    const jason = await response.json();
-    // TODO change object
-    if (jason.deployments == undefined) {
-      throw new Error('Could not find chains');
-    }
-    return jason.deployments as Vault;
+
+    const json = await response.json();
+    return json.deployments as Vault;
   }
 
   async getFeatures(
@@ -106,15 +105,11 @@ class ApiClientMock extends ApiClient {
     );
 
     if (!response.ok) {
-      throw new Error('no response from api/chains/x/x/Features');
-    }
-    const json = await response.json();
-    // TODO change object
-    if (json.features == undefined) {
-      throw new Error('Could not find chains');
+      throw new Error(`API Request failed, error code ${response.status}`);
     }
 
-    const features = json.features as [Feature];
+    const json = await response.json();
+    const features = json.features as Feature[];
 
     return features.map((x) => {
       return {
@@ -128,12 +123,10 @@ class ApiClientMock extends ApiClient {
     const response = await fetch('/api/deployments');
 
     if (!response.ok) {
-      throw new Error('no response from api/deployments');
+      throw new Error(`API Request failed, error code ${response.status}`);
     }
+
     const result = await response.json();
-    if (result.deployments == undefined) {
-      throw new Error('Could not find deployments');
-    }
     return result.deployments as ChainDeployment[];
   }
 
@@ -146,11 +139,32 @@ class ApiClientMock extends ApiClient {
     );
 
     if (!response.ok) {
-      throw new Error('no response from api/chains/x/x/Features');
+      throw new Error(`API Request failed, error code ${response.status}`);
     }
-    const jason = await response.json();
-    // TODO change object
-    return jason as Nexus;
+
+    const json = await response.json();
+    return json as Nexus;
+  }
+
+  async getVaultAssetBalances(
+    contractChainId: number,
+    nexusAddress: Address,
+    subchainContractChainId: number,
+    tokenType: number,
+    tokenIdentifier: string
+  ) {
+    const response = await fetch(
+      `/api/Chains/${contractChainId}/Nexuses/${nexusAddress}/Subchains/${subchainContractChainId}/Assets/${tokenType}/${
+        tokenIdentifier.length == 0 ? '%20' : tokenIdentifier
+      }/VaultBalances`
+    );
+
+    if (!response.ok) {
+      throw new Error(`API Request failed, error code ${response.status}`);
+    }
+
+    const json = await response.json();
+    return json as Nexus;
   }
 }
 
