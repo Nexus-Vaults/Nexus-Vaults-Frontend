@@ -16,6 +16,13 @@ export abstract class ApiClient {
     vaultContractChainId: number,
     vaultId: `0x${string}`
   ): Promise<Vault>;
+  abstract getVaultAssetBalances(
+    contractChainId: number,
+    nexusAddress: Address,
+    subchainContractChainId: number,
+    tokenType: number,
+    tokenIdentifier: string
+  ): Promise<VaultAssetBalanceDTO[]>;
 }
 
 interface TokenBalance {
@@ -64,6 +71,12 @@ export interface ChainDeployment {
   contractChainId: number;
   nexusFactoryAddress: `0x${string}`;
   publicCatalogAddress: `0x${string}`;
+}
+
+export interface VaultAssetBalanceDTO {
+  vaultInfo: VaultInfo;
+  tokenInfo: TokenInfoDTO;
+  balance: bigint;
 }
 
 export interface Feature {
@@ -164,7 +177,7 @@ class ApiClientMock extends ApiClient {
     }
 
     const json = await response.json();
-    return json as Nexus;
+    return json.vaultBalances as VaultAssetBalanceDTO[];
   }
 }
 
