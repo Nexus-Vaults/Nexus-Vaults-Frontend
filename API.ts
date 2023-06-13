@@ -3,18 +3,18 @@ import { Address } from 'wagmi';
 export abstract class ApiClient {
   abstract getFeatures(
     chainId: number,
-    catalogAddress: `0x${string}`
+    catalogAddress: Address
   ): Promise<Feature[]>;
   abstract getContractsAddresses(): Promise<ChainDeployment[]>;
   abstract getNexusOverview(
     contractChainId: number,
-    nexusAddress: `0x${string}`
+    nexusAddress: Address
   ): Promise<Nexus>;
   abstract getVaultOverview(
     nexusContractChainId: number,
-    nexusAddress: `0x${string}`,
+    nexusAddress: Address,
     vaultContractChainId: number,
-    vaultId: `0x${string}`
+    vaultId: Address
   ): Promise<Vault>;
   abstract getVaultAssetBalances(
     contractChainId: number,
@@ -33,18 +33,18 @@ interface TokenBalance {
 
 export interface Vault {
   balances: [TokenBalance];
-  address: `0x${string}`;
+  address: Address;
 }
 
 export interface VaultInfo {
-  vault: `0x${string}`;
+  vault: Address;
   vaultId: number;
 }
 
 export interface Nexus {
-  nexusId: `0x${string}`;
+  nexusId: Address;
   name: string;
-  owner: `0x${string}`;
+  owner: Address;
   subchains: SubChain[];
 }
 
@@ -69,8 +69,8 @@ export interface ChainDeployment {
   chainName: string;
   evmChainId: number;
   contractChainId: number;
-  nexusFactoryAddress: `0x${string}`;
-  publicCatalogAddress: `0x${string}`;
+  nexusFactoryAddress: Address;
+  publicCatalogAddress: Address;
 }
 
 export interface VaultAssetBalanceDTO {
@@ -81,21 +81,21 @@ export interface VaultAssetBalanceDTO {
 
 export interface Feature {
   name: string;
-  address: `0x${string}`;
+  address: Address;
   description: string;
   feeTokenSymbol: string;
-  feeTokenAddress: `0x${string}`;
+  feeTokenAddress: Address;
   feeTokenAmount: number;
   isBasic: boolean;
-  catalogAddress: `0x${string}`;
+  catalogAddress: Address;
 }
 
 class ApiClientMock extends ApiClient {
   async getVaultOverview(
     nexusContractChainId: number,
-    nexusAddress: `0x${string}`,
+    nexusAddress: Address,
     vaultContractChainId: number,
-    vaultId: `0x${string}`
+    vaultId: Address
   ): Promise<Vault> {
     const response = await fetch(
       `/api/chains/${nexusContractChainId}/${nexusAddress}/Subchains/${vaultContractChainId}/Vaults/${vaultId}`
@@ -109,10 +109,7 @@ class ApiClientMock extends ApiClient {
     return json.deployments as Vault;
   }
 
-  async getFeatures(
-    chainId: number,
-    address: `0x${string}`
-  ): Promise<Feature[]> {
+  async getFeatures(chainId: number, address: Address): Promise<Feature[]> {
     const response = await fetch(
       `/api/chains/${chainId}/catalogs/${address}/features`
     );
@@ -145,7 +142,7 @@ class ApiClientMock extends ApiClient {
 
   async getNexusOverview(
     contractChainId: number,
-    nexusAddress: `0x${string}`
+    nexusAddress: Address
   ): Promise<Nexus> {
     const response = await fetch(
       `/api/Chains/${contractChainId}/Nexuses/${nexusAddress}`
@@ -157,6 +154,22 @@ class ApiClientMock extends ApiClient {
 
     const json = await response.json();
     return json as Nexus;
+  }
+
+  async getNexusExistence(
+    contractChainId: number,
+    nexusAddress: Address
+  ): Promise<boolean> {
+    const response = await fetch(
+      `/api/Chains/${contractChainId}/Nexuses/${nexusAddress}/Exists`
+    );
+
+    if (!response.ok) {
+      throw new Error(`API Request failed, error code ${response.status}`);
+    }
+
+    const json = await response.json();
+    return json.exists as boolean;
   }
 
   async getVaultAssetBalances(
