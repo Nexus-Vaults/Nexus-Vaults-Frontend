@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import React, { useContext, useState } from 'react';
-import { ChainDeployment } from 'api';
+import { apiClient, ChainDeployment } from 'api';
 import { ChainDeployments } from '../../ContractsAddressesContext';
 
 type Props = {
@@ -8,8 +8,8 @@ type Props = {
 };
 
 const AccessNexusModal = ({ onClose }: Props) => {
-  const [address, setAddress] = useState('');
-  const [error, setError] = useState('');
+  const [nexusAddress, setNexusAddress] = useState<`0x${string}`>('0x');
+  const [response, setResponse] = useState<boolean>(true);
   const [selectedItem, setSelectedItem] = useState<ChainDeployment>();
 
   const { chainDeployment: contractsAddresses } = useContext(ChainDeployments);
@@ -20,7 +20,7 @@ const AccessNexusModal = ({ onClose }: Props) => {
 
   const router = useRouter();
 
-  const handleBackgroundClick = (event: any) => {
+  const handleBackgroundClick = () => {
     onClose();
   };
 
@@ -29,38 +29,43 @@ const AccessNexusModal = ({ onClose }: Props) => {
   };
 
   const handleAddressChange = (event: any) => {
-    setAddress(event.target.value);
+    setNexusAddress(event.target.value);
   };
+
+  //todo: change to correct end point
+  async function exists2() {
+    if (selectedItem == null) return false;
+    let response = true;
+    await apiClient
+      .getNexusOverview(selectedItem?.contractChainId, nexusAddress)
+      .then(() => {
+        null;
+      })
+      .catch(() => {
+        response = false;
+      });
+    return response;
+  }
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    if (selectedItem === undefined) {
-      setError('Chain ID cannot be empty');
+    if (selectedItem == null || nexusAddress == null) {
       return;
     }
+    const response = await exists2();
 
-    if (address.trim() === '') {
-      setError('Address cannot be empty');
-      return;
+    if (!response) return;
+    else {
+      console.log('URL exists');
+      router.push(
+        '/app/chain/' +
+          selectedItem.contractChainId +
+          '/nexus/' +
+          nexusAddress +
+          '/NexusOverview'
+      );
     }
-
-    try {
-      const response = await fetch(`/app/overview/${selectedItem}/${address}`);
-      if (response.ok) {
-        console.log('URL exists');
-        router.push(`/app/overview/${selectedItem.contractChainId}/${address}`);
-      } else {
-        setError('URL does not exist');
-        return;
-      }
-    } catch (error) {
-      console.error('An error occurred while checking URL existence:', error);
-    }
-
-    setSelectedItem(undefined);
-    setAddress('');
-    setError('');
   };
 
   return (
@@ -119,9 +124,9 @@ const AccessNexusModal = ({ onClose }: Props) => {
               Submit
             </button>
           </div>
-          {error && (
+          {response && (
             <p className="text-red text-center pt-10 font-mono font-bold">
-              {error}
+              {response}
             </p>
           )}
         </form>
