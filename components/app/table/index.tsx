@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { TokenInfoDTO, VaultInfo } from 'api';
+import { ChainDeployments } from '../../ContractsAddressesContext';
+import { getEvmChainId, mapEVMChainIdToChain } from '../../../utils';
 
 export interface AssetBalance {
   assetContractChainId: number;
@@ -12,6 +14,8 @@ interface TableProps {
 }
 
 const Table: React.FC<TableProps> = ({ data }) => {
+  const { chainDeployment } = useContext(ChainDeployments);
+
   return (
     <div
       className="w-full border-sold bg-white shadow-lg border-2 border-gray-400 rounded-lg h-[30vh] overflow-y-auto  px-6"
@@ -39,10 +43,13 @@ const Table: React.FC<TableProps> = ({ data }) => {
               Chain
             </th>
             <th scope="col" className="px-6 py-4">
-              Address
+              Token
             </th>
             <th scope="col" className="px-6 py-4">
               Amount
+            </th>
+            <th scope="col" className="px-6 py-4">
+              Action
             </th>
           </tr>
         </thead>
@@ -50,11 +57,22 @@ const Table: React.FC<TableProps> = ({ data }) => {
           {data.map((item, index) => (
             <tr key={index} className="border-b dark:border-neutral-500">
               <td className="whitespace-nowrap px-6 py-4 font-medium">
-                {item.assetContractChainId}
+                <img
+                  src={`/images/chain/${getEvmChainId(
+                    chainDeployment,
+                    item.assetContractChainId
+                  )}.png`}
+                  width={64}
+                />
               </td>
-              <td className="whitespace-nowrap px-6 py-4 font-medium">
-                {item.token.tokenType == 1 ? 'Native Asset' : 'Other'}
+              <td>
+                {item.token.tokenType == 1
+                  ? 'Native'
+                  : mapEVMChainIdToChain(
+                      getEvmChainId(chainDeployment, item.assetContractChainId)
+                    ).nativeCurrency.symbol}
               </td>
+              <td>{item.balance}</td>
               <td>{item.balance}</td>
             </tr>
           ))}
