@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
-import Layout from '../../../components/layout';
-import { NextPageWithLayout } from '../../_app';
+import Layout from '../../../../../../components/layout';
+import { NextPageWithLayout } from '../../../../../_app';
 
 type Props = {};
 
