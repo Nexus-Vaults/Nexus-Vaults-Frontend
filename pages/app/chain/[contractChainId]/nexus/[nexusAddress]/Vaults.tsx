@@ -60,7 +60,7 @@ const Index: NextPageWithLayout = () => {
         </div>
       )}
 
-      {(nexus?.subchains.flatMap((x) => x.vaults) ?? []).length == 0 && (
+      {nexus?.subchains.flatMap((x) => x.vaults)?.length == 0 && (
         <div>
           <p>You have no vaults...</p>
         </div>
