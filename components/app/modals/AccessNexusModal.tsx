@@ -2,13 +2,14 @@ import { useRouter } from 'next/router';
 import React, { useContext, useState } from 'react';
 import { apiClient, ChainDeployment } from 'api';
 import { ChainDeployments } from '../../ContractsAddressesContext';
+import { Address } from 'viem';
 
 type Props = {
   onClose: () => void;
 };
 
 const AccessNexusModal = ({ onClose }: Props) => {
-  const [nexusAddress, setNexusAddress] = useState<`0x${string}`>('0x');
+  const [nexusAddress, setNexusAddress] = useState<Address>('0x');
   const [response, setResponse] = useState<boolean>(true);
   const [selectedItem, setSelectedItem] = useState<ChainDeployment>();
 

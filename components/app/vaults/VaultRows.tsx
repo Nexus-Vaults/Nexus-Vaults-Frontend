@@ -6,11 +6,12 @@ import ViewCozyIcon from '@mui/icons-material/ViewCozy';
 import { useRouter } from 'next/router';
 import { getEvmChainId } from '../../../utils';
 import { ChainDeployments } from '../../ContractsAddressesContext';
+import { Address } from 'viem';
 
 type Props = {
   contractChainId: number;
   vaultId: number;
-  address: `0x${string}`;
+  address: Address;
   totalAsset: number;
 };
 

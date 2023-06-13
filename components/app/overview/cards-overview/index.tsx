@@ -2,12 +2,13 @@ import React, { useContext, useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { SubChain } from 'api';
 import { ChainDeployments } from '../../../ContractsAddressesContext';
+import { Address } from 'viem';
 type Props = {
-  address: `0x${string}`;
+  address: Address;
   contractChainId: number;
   nexusName: string;
-  nexusId: `0x${string}`;
-  owner: `0x${string}`;
+  nexusId: Address;
+  owner: Address;
   subChains: SubChain[];
 };
 

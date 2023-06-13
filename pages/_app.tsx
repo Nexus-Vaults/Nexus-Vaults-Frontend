@@ -8,6 +8,7 @@ import {
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
 import {
+  Address,
   Config,
   configureChains,
   createConfig,
@@ -48,10 +49,10 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
   const [deployment, setDeployment] = useState<ChainDeployment[]>([]);
-  const [address, setAddress] = useState<`0x${string}`>();
+  const [address, setAddress] = useState<Address>();
   const [chainId, setChainId] = useState<number>();
 
-  const handleAddress = (add: `0x${string}`) => {
+  const handleAddress = (add: Address) => {
     setAddress(add);
   };
 

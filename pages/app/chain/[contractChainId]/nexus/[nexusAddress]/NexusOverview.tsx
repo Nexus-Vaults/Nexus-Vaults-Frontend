@@ -3,6 +3,7 @@ import { NextPageWithLayout } from '../../../../../_app';
 import React, { ReactElement, useContext, useState } from 'react';
 import Overview from '../../../../../../components/app/overview';
 import Layout from '../../../../../../components/layout';
+import { Address } from 'viem';
 type Props = {};
 
 const Index: NextPageWithLayout = (props: Props) => {
@@ -10,7 +11,7 @@ const Index: NextPageWithLayout = (props: Props) => {
   const { contractChainId, nexusAddress } = router.query;
 
   const contractChainIdTMP = contractChainId?.valueOf() as number;
-  const add = nexusAddress as `0x${string}`;
+  const add = nexusAddress as Address;
 
   return (
     <>

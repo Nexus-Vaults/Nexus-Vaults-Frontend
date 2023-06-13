@@ -6,13 +6,14 @@ import VaultRows from '../../../../../../components/app/vaults/VaultRows';
 import CreateNewVaultModal from '../../../../../../components/app/modals/CreateNewVaultModal';
 import { useRouter } from 'next/router';
 import { apiClient, Nexus } from 'api';
+import { Address } from 'viem';
 
 const Index: NextPageWithLayout = () => {
   const router = useRouter();
   const { contractChainId, nexusAddress } = router.query;
 
   const contractChainIdTMP = contractChainId?.valueOf() as number;
-  const add = nexusAddress as `0x${string}`;
+  const add = nexusAddress as Address;
 
   const [nexus, setNexus] = useState<Nexus>();
 

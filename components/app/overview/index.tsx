@@ -3,10 +3,11 @@ import Table, { AssetBalance } from '../table';
 import CardsOverview from './cards-overview';
 import Graph from './graph/graph';
 import { apiClient, Nexus, SubChain, VaultInfo } from 'api';
+import { Address } from 'viem';
 
 type Props = {
   contractChainId: number;
-  address: `0x${string}`;
+  address: Address;
 };
 
 const Overview = ({ address, contractChainId }: Props) => {
