@@ -1,25 +1,24 @@
-import React, { ReactElement, useEffect, useState } from 'react';
-import Layout from '../../../../components/layout';
-import { NextPageWithLayout } from '../../../_app';
-import VaultRows from '../../../../components/app/vaults/VaultRows';
-import Eth from '../../../../public/images/chain/137.png';
+import React, { ReactElement, useContext, useEffect, useState } from 'react';
+import Layout from '../../../../../../components/layout';
+import { NextPageWithLayout } from '../../../../../_app';
+import VaultRows from '../../../../../../components/app/vaults/VaultRows';
 
-import CreateNewVaultModal from '../../../../components/app/modals/CreateNewVaultModal';
+import CreateNewVaultModal from '../../../../../../components/app/modals/CreateNewVaultModal';
 import { useRouter } from 'next/router';
-import { apiClient, Nexus, SubChain, Vault, VaultInfo } from 'api';
-import { AxelarQueryAPI, Environment } from '@axelar-network/axelarjs-sdk';
+import { apiClient, Nexus } from 'api';
+import { ChainDeployments } from '../../../../../../components/ContractsAddressesContext';
 
 const Index: NextPageWithLayout = () => {
   const router = useRouter();
-  const { chainId, address } = router.query;
+  const { contractChainId, nexusAddress } = router.query;
 
-  const contractChainId = chainId?.valueOf() as number;
-  const add = address as `0x${string}`;
+  const contractChainIdTMP = contractChainId?.valueOf() as number;
+  const add = nexusAddress as `0x${string}`;
 
   const [nexus, setNexus] = useState<Nexus>();
 
   useEffect(() => {
-    apiClient.getNexusOverview(contractChainId, add).then((nexus) => {
+    apiClient.getNexusOverview(contractChainIdTMP, add).then((nexus) => {
       setNexus(nexus);
     });
   }, []);
@@ -35,7 +34,7 @@ const Index: NextPageWithLayout = () => {
       {isOpened && (
         <CreateNewVaultModal
           nexusAddress={add}
-          nexusContractChainId={contractChainId}
+          nexusContractChainId={contractChainIdTMP}
           onClose={toggle}
         />
       )}{' '}
