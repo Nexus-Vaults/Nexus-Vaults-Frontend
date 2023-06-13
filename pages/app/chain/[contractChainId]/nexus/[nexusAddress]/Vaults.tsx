@@ -7,6 +7,7 @@ import CreateNewVaultModal from '../../../../../../components/app/modals/CreateN
 import { useRouter } from 'next/router';
 import { apiClient, Nexus } from 'api';
 import { Address } from 'viem';
+import LoadingAnimation from '../../../../../../components/app/utils/LoadingAnimation';
 
 const Index: NextPageWithLayout = () => {
   const router = useRouter();
@@ -30,43 +31,49 @@ const Index: NextPageWithLayout = () => {
   }
 
   return (
-    <div className="w-[80%] h-full py-4 px-10">
+    <div className="w-[80%] mt-6 grid grid-cols-1 auto-rows-max gap-2">
       {isOpened && (
         <CreateNewVaultModal
           nexusAddress={add}
           nexusContractChainId={contractChainIdTMP}
           onClose={toggle}
         />
-      )}{' '}
-      <div className="flex flex-col p-2 gap-10">
-        <div className="flex flex-row justify-center">
-          <div
-            className="w-fit cursor-pointer flex items-center bg-blue50 text-white rounded-md py-1 px-2 hover:scale-105 "
-            onClick={toggle}
-          >
-            + Create a new vault
+      )}
+
+      <div className="flex flex-row justify-between">
+        <h1 className="font-bold text-2xl">Your Vaults</h1>
+        <button
+          className="w-fit cursor-pointer flex items-center bg-blue50 text-white rounded-md py-1 px-2 hover:scale-105 "
+          onClick={toggle}
+        >
+          + Create a new vault
+        </button>
+      </div>
+
+      <hr className="border-black border-2"></hr>
+
+      {nexus == null && (
+        <div className="flex flex-col items-center">
+          <div className="w-3/5 md:w-1/3 xl:w-1/6">
+            <LoadingAnimation></LoadingAnimation>
           </div>
         </div>
-        <div className="container mx-auto">
-          <div className="flex flex-row justify-between pl-20 pr-6 text-gray-400 font-medium">
-            <div className="flex flex-row gap-8">
-              <div>Vault Id</div>
-            </div>
-          </div>
-          {nexus?.subchains.map((subchain) =>
-            subchain.vaults.map((vault) => (
-              <VaultRows
-                contractChainId={subchain.contractChainId}
-                key={
-                  subchain.contractChainId.toString() + vault.vaultId.toString()
-                }
-                vaultId={vault.vaultId}
-                address={vault.vault}
-                totalAsset={0}
-              ></VaultRows>
-            ))
-          )}
-        </div>
+      )}
+
+      <div className="grid grid-cols-1">
+        {nexus?.subchains.map((subchain) =>
+          subchain.vaults.map((vault) => (
+            <VaultRows
+              contractChainId={subchain.contractChainId}
+              key={
+                subchain.contractChainId.toString() + vault.vaultId.toString()
+              }
+              vaultId={vault.vaultId}
+              address={vault.vault}
+              totalAsset={0}
+            ></VaultRows>
+          ))
+        )}
       </div>
     </div>
   );
