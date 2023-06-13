@@ -60,6 +60,12 @@ const Index: NextPageWithLayout = () => {
         </div>
       )}
 
+      {(nexus?.subchains.flatMap((x) => x.vaults) ?? []).length == 0 && (
+        <div>
+          <p>You have no vaults...</p>
+        </div>
+      )}
+
       <div className="grid grid-cols-1">
         {nexus?.subchains.map((subchain) =>
           subchain.vaults.map((vault) => (
