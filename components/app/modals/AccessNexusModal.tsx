@@ -19,10 +19,6 @@ const AccessNexusModal = ({ onClose }: Props) => {
 
   const validAddress = nexusAddress != null && isAddress(nexusAddress);
 
-  function handleBackgroundClick() {
-    onClose();
-  }
-
   function handleAddressChange(event: any) {
     setNexusAddress(event.target.value);
 
@@ -65,7 +61,7 @@ const AccessNexusModal = ({ onClose }: Props) => {
   return (
     <div
       className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50"
-      onClick={handleBackgroundClick}
+      onClick={onClose}
     >
       <div
         className="bg-white rounded-lg p-6 grid grid-cols-1 gap-4"
