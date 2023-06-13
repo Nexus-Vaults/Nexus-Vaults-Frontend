@@ -114,10 +114,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
             <ChainDeployments.Provider
               value={{
                 chainDeployment: deployment,
-                updatedAddress: handleAddress,
-                chainId,
-                address,
-                updatedChainId: handleChainId,
               }}
             >
               {getLayout(<Component {...pageProps} />)}
