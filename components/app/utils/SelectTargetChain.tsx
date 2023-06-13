@@ -21,26 +21,21 @@ const SelectTargetChain = ({ handleTargetChain }: Props) => {
   };
 
   return (
-    <div className="flex flex-row justify-center gap-4">
-      {contractsAddresses.map((x, key) => {
-        return (
+    <div className="grid grid-cols-3 gap-8">
+      {contractsAddresses.map((x, key) => (
+        <div className=" flex flex-col" key={key}>
           <div
-            className="flex flex-row  flex-wrap justify-center gap-6 p-2"
-            key={key}
+            className={`border p-2 rounded-2xl w-16 h-16 flex flex-col justify-center items-center ${
+              selectedItem?.contractChainId === x.contractChainId
+                ? 'bg-indigo-900'
+                : 'hover:bg-indigo-900'
+            }`}
+            onClick={() => handleItemClick(x)}
           >
-            <div
-              className={`border p-2 rounded-2xl ${
-                selectedItem?.contractChainId === x.contractChainId
-                  ? 'bg-indigo-900'
-                  : 'hover:bg-indigo-900'
-              }`}
-              onClick={() => handleItemClick(x)}
-            >
-              <img src={`/images/chain/${x.evmChainId}.png`} width={64}></img>
-            </div>
+            <img src={`/images/chain/${x.evmChainId}.png`} width={64}></img>
           </div>
-        );
-      })}
+        </div>
+      ))}
     </div>
   );
 };
