@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 type Props = {
   isSuccess: boolean;
@@ -7,11 +7,21 @@ type Props = {
   nexusAddress: string;
 };
 
-const ConfirmationModal = ({ isSuccess, contractChainId, nexusAddress }: Props) => {
+const ConfirmationModal = ({
+  isSuccess,
+  contractChainId,
+  nexusAddress,
+}: Props) => {
   const router = useRouter();
 
   async function goToNexus() {
-    await router.push('/app/overview/' + contractChainId + "/" + nexusAddress);
+    await router.push(
+      '/app/chain/' +
+        contractChainId +
+        '/nexus/' +
+        nexusAddress +
+        '/NexusOverview'
+    );
   }
 
   return (
@@ -28,10 +38,11 @@ const ConfirmationModal = ({ isSuccess, contractChainId, nexusAddress }: Props) 
             </h2>
             <p>Your Nexus has been deployed successfully.</p>
             <br></br>
-            <button 
-              className='className="w-fit text-white bg-indigo-900 h-[40px] shadow-lg rounded-xl font-bold py-1 px-3 hover:scale-105 transition-all duration-300"' 
-              onClick={goToNexus}>
-                Go to Overview
+            <button
+              className='className="w-fit text-white bg-indigo-900 h-[40px] shadow-lg rounded-xl font-bold py-1 px-3 hover:scale-105 transition-all duration-300"'
+              onClick={goToNexus}
+            >
+              Go to Overview
             </button>
           </>
         ) : (
