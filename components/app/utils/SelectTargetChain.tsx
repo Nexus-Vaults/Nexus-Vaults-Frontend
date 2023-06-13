@@ -3,11 +3,13 @@ import { ChainDeployment } from 'api';
 import { ChainDeployments } from '../../ContractsAddressesContext';
 
 type Props = {
-  handleTargetChain: (chainDeployment: ChainDeployment | undefined) => void;
+  handleTargetChain: (chainDeployment: ChainDeployment | null) => void;
 };
 
 const SelectTargetChain = ({ handleTargetChain }: Props) => {
-  const [selectedItem, setSelectedItem] = useState<ChainDeployment>();
+  const [selectedItem, setSelectedItem] = useState<ChainDeployment | null>(
+    null
+  );
   const { chainDeployment: contractsAddresses } = useContext(ChainDeployments);
 
   useEffect(() => {

@@ -30,7 +30,7 @@ export interface Vault {
 }
 
 export interface VaultInfo {
-  address: `0x${string}`;
+  vault: `0x${string}`;
   vaultId: number;
 }
 

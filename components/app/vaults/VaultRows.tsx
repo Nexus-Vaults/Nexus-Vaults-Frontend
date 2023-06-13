@@ -62,6 +62,11 @@ const VaultRows = ({
         <div className="relative flex flex-row items-center justify-center">
           <span className="font-mono font-bold mr-8">${totalAsset}</span>
         </div>
+        <div>
+          {address?.slice(0, 12)}
+          ...
+          {address?.slice(-8)}
+        </div>
         <div
           className="flex flex-row items-center  hover:scale-125"
           onClick={handleVaultOverviewClick}
@@ -76,9 +81,7 @@ const VaultRows = ({
               Gateway: V1
             </div>
             <div className="text-gray-500 cursor-pointer hover:text-blue50 s hover:font-semibold">
-              {address?.slice(0, 12)}
-              ...
-              {address?.slice(-8)}
+              {address}
             </div>
           </div>
           <div className="flex flex-row justify-center absolute bottom-0 left-0 right-0">

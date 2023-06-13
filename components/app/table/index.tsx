@@ -1,6 +1,7 @@
 import React from 'react';
 import { TokenInfoDTO } from 'api';
 import AssetRow from './AssetRow';
+import { Address } from 'wagmi';
 
 export interface AssetBalance {
   assetContractChainId: number;
@@ -9,10 +10,16 @@ export interface AssetBalance {
 }
 
 interface TableProps {
+  nexusContractChainId: number;
+  nexusAddress: Address;
   data: AssetBalance[];
 }
 
-const Table: React.FC<TableProps> = ({ data }) => {
+const Table: React.FC<TableProps> = ({
+  nexusContractChainId,
+  nexusAddress,
+  data,
+}) => {
   return (
     <div
       className="w-full border-sold bg-white shadow-lg border-2 border-gray-400 rounded-lg h-[30vh] overflow-y-auto  px-6"
@@ -54,6 +61,8 @@ const Table: React.FC<TableProps> = ({ data }) => {
           {data.map((item, index) => (
             <tr key={index} className="border-b dark:border-neutral-500">
               <AssetRow
+                nexusContractChainId={nexusContractChainId}
+                nexusAddress={nexusAddress}
                 asset={item.token}
                 balance={item.balance}
                 assetContractChainId={item.assetContractChainId}

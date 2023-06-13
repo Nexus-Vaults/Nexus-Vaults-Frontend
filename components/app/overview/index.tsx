@@ -38,6 +38,8 @@ const Overview = ({ address, contractChainId }: Props) => {
           </div>
           <div className="w-full flex-1 ">
             <Table
+              nexusContractChainId={contractChainId}
+              nexusAddress={address}
               data={nexus.subchains.reduce(
                 (x, y) =>
                   x.concat(

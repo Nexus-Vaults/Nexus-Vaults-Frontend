@@ -60,7 +60,7 @@ const Index: NextPageWithLayout = () => {
                   subchain.contractChainId.toString() + vault.vaultId.toString()
                 }
                 vaultId={vault.vaultId}
-                address={vault.address}
+                address={vault.vault}
                 totalAsset={0}
               ></VaultRows>
             ))
