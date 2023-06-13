@@ -1,6 +1,10 @@
 import { TokenInfoDTO } from 'api';
 import React, { useContext, useState } from 'react';
-import { getEvmChainId, mapEVMChainIdToChain } from '../../../utils';
+import {
+  getEvmChainId,
+  mapEVMChainIdToChain,
+  numberToDecimalAdjustedString,
+} from '../../../utils';
 import { ChainDeployments } from '../../ContractsAddressesContext';
 import SendPaymentModal from '../modals/SendPaymentModal';
 import { Address } from 'wagmi';
@@ -31,15 +35,8 @@ const AssetRow = ({
         ).nativeCurrency
       : null;
 
-  function bigIntToDecimalAdjustedString(value: number, decimals: number) {
-    const divider = Math.ceil(Math.pow(10, decimals)) / 1000;
-    const adjusted = Number(value / divider);
-
-    return adjusted / 1000;
-  }
-
   const decimals = assetDetails?.decimals ?? 0;
-  const balance_string = bigIntToDecimalAdjustedString(balance, decimals);
+  const balance_string = numberToDecimalAdjustedString(balance, decimals);
 
   return (
     <>

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
-import { ChainDeployment } from 'api';
+import { ChainDeployment, SubChain, VaultInfo } from 'api';
 import { ChainDeployments } from '../../ContractsAddressesContext';
 import {
   Address,
@@ -14,33 +14,72 @@ import {
   AxelarQueryAPIFeeResponse,
   Environment,
 } from '@axelar-network/axelarjs-sdk';
-import { getEvmChainId, mapEVMChainIdToChain } from '../../../utils';
+import {
+  bigIntToDecimalAdjustedString,
+  getEvmChainId,
+  mapEVMChainIdToChain,
+} from '../../../utils';
+import SelectTargetChain from '../utils/SelectTargetChain';
 
 type Props = {
   nexusContractChainId: number;
   nexusAddress: Address;
+  subchains: SubChain[];
   onClose: () => void;
 };
 
 const CreateNewVaultModal = ({
   nexusContractChainId,
   nexusAddress,
+  subchains,
   onClose,
 }: Props) => {
   const [vaultId, setVaultId] = useState<number | null>(null);
-  const [selectedItem, setSelectedItem] = useState<ChainDeployment>();
-
+  const [targetChain, setTargetChain] = useState<ChainDeployment | null>(null);
   const [fee, setFee] = useState<bigint | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const deployment = useContext(ChainDeployments);
+  const feeAsset =
+    targetChain == null
+      ? null
+      : mapEVMChainIdToChain(targetChain.evmChainId).nativeCurrency;
+
+  const vaultIdAlreadyUsed = subchains
+    .flatMap((subchain) =>
+      subchain.vaults.map((vault) => {
+        return { vaultInfo: vault, chainId: subchain.contractChainId };
+      })
+    )
+    .some(
+      (vault) =>
+        vault.chainId == targetChain?.contractChainId &&
+        vault.vaultInfo.vaultId == vaultId
+    );
 
   useEffect(() => {
-    if (selectedItem == null) {
-      setFee(null);
+    if (vaultIdAlreadyUsed) {
+      setError('Vault with that Id already exists on that chain');
+    } else if (targetChain == null) {
+      setError('Select a target chain');
+    } else if (vaultId == null) {
+      setError('Set a vault Id');
+    } else if (vaultId < 1) {
+      setError('Vault Id must be greater than 0');
+    } else {
+      setError(null);
+    }
+  }, [targetChain, vaultId]);
+
+  useEffect(() => {
+    setFee(null);
+
+    if (targetChain == null) {
       return;
     }
-    if (nexusContractChainId == selectedItem.contractChainId) {
+    if (nexusContractChainId == targetChain.contractChainId) {
       setFee(BigInt(0));
+      return;
     }
 
     const sdk = new AxelarQueryAPI({
@@ -53,7 +92,7 @@ const CreateNewVaultModal = ({
       (x) => x.contractChainId == nexusContractChainId
     )!;
     const destionationChain = deployment.chainDeployment.find(
-      (x) => x.contractChainId == selectedItem.contractChainId
+      (x) => x.contractChainId == targetChain.contractChainId
     )!;
 
     sdk
@@ -61,7 +100,7 @@ const CreateNewVaultModal = ({
         sourceChain.chainName,
         destionationChain.chainName,
         mapEVMChainIdToChain(sourceChain.evmChainId).nativeCurrency.symbol,
-        undefined,
+        1_000_000,
         undefined,
         undefined,
         {
@@ -79,134 +118,98 @@ const CreateNewVaultModal = ({
 
         setFee(fee);
       });
-  }, [selectedItem]);
+  }, [targetChain]);
 
-  const { config: configNexus, error: errorName } = usePrepareContractWrite({
+  const createVaultWrite = usePrepareContractWrite({
     address: nexusAddress,
     abi: VaultV1Facet,
     functionName: 'createVaultV1',
-    args: [selectedItem?.contractChainId!, 1, vaultId!],
+    args: [targetChain?.contractChainId!, 1, vaultId!],
     value: fee ?? BigInt(0),
-    enabled: fee != null && vaultId != null && selectedItem != null,
+    enabled: error == null && fee != null,
   });
 
-  const { write: writeNexus, data: dataNexus } = useContractWrite(configNexus);
-  const [error, setError] = useState('');
+  const { write: createVaultAsync } = useContractWrite(createVaultWrite.config);
 
-  const { chainDeployment: contractsAddresses } = useContext(ChainDeployments);
-
-  const handleItemClick = (item: ChainDeployment) => {
-    setSelectedItem(item);
-  };
-
-  const router = useRouter();
-
-  const handleBackgroundClick = (event: any) => {
-    onClose();
-  };
-
-  const handleInnerClick = (event: any) => {
-    event.stopPropagation();
-  };
-
-  const handleAddressChange = (event: any) => {
-    setVaultId(event.target.value);
-  };
-
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-
-    if (selectedItem === undefined) {
-      setError('Chain ID cannot be empty');
+  function triggerCreateVault() {
+    if (
+      vaultIdAlreadyUsed ||
+      targetChain === null ||
+      vaultId == null ||
+      vaultId < 1
+    ) {
       return;
     }
 
-    if (vaultId == null) {
-      setError('Vault ID is required');
+    if (createVaultAsync == undefined) {
+      setError('Call simulation failure');
       return;
     }
 
-    if (vaultId < 1) {
-      setError('Vault ID cannot be zero');
-      return;
-    }
     try {
-      writeNexus?.();
-      setSelectedItem(undefined);
-      setError('');
+      createVaultAsync();
     } catch (error) {
       console.error('An error occurred while creating new vault:', error);
+      setError((error as any).toString());
     }
-  };
+  }
 
   return (
     <div
       className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50"
-      onClick={handleBackgroundClick}
+      onClick={onClose}
     >
-      <div className="bg-white rounded-lg p-6" onClick={handleInnerClick}>
-        <h2 className="text-2xl font-bold mb-4">Enter the Nexus Information</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="flex flex-row justify-center gap-4">
-            {contractsAddresses.map((x, key) => {
-              return (
-                <div
-                  className="flex flex-row  flex-wrap justify-center gap-6 p-2"
-                  key={key}
-                >
-                  <div
-                    className={`border p-2 rounded-2xl ${
-                      selectedItem?.contractChainId === x.contractChainId
-                        ? 'bg-indigo-900'
-                        : 'hover:bg-indigo-900'
-                    }`}
-                    onClick={() => handleItemClick(x)}
-                  >
-                    <img
-                      src={`/images/chain/${x.evmChainId}.png`}
-                      width={64}
-                    ></img>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="address"
-            >
-              Vault ID:
-            </label>
-            <input
-              className="border rounded-md py-2 px-3 w-full"
-              id="address"
-              type="number"
-              placeholder="Enter Vault ID"
-              onChange={handleAddressChange}
-            />
-          </div>
-          <div className="flex justify-end">
-            <button
-              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-              type="submit"
-            >
-              Submit
-            </button>
-          </div>
-          {error && (
-            <p className="text-red text-center pt-10 font-mono font-bold">
-              {error}
-            </p>
-          )}
-        </form>
-        <button
-          className="mt-4 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-          onClick={onClose}
-        >
-          Close
-        </button>
+      <div
+        className="bg-white rounded-lg p-6 grid grid-cols-1 gap-4"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h2 className="text-2xl font-bold mb-4">Create a Vault</h2>
+        <SelectTargetChain
+          handleTargetChain={(chainDeployment) =>
+            setTargetChain(chainDeployment)
+          }
+        ></SelectTargetChain>
+        <div>
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="address"
+          >
+            Vault ID:
+          </label>
+          <input
+            className="border rounded-md py-2 px-3 w-full"
+            id="address"
+            type="number"
+            placeholder="Enter Vault ID"
+            onChange={(e) => setVaultId(parseInt(e.target.value))}
+          />
+        </div>
+        Bridging Fee:{' '}
+        {targetChain == null || feeAsset == null
+          ? 'Idle'
+          : fee == null
+          ? 'Estimation is running...'
+          : bigIntToDecimalAdjustedString(fee, feeAsset.decimals)}{' '}
+        {fee != null ? feeAsset?.symbol : ''}
+        {error && (
+          <p className="text-red-500 text-center font-mono font-bold">
+            {error}
+          </p>
+        )}
+        <div className="flex justify-between">
+          <button
+            className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+            onClick={onClose}
+          >
+            Close
+          </button>
+          <button
+            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+            onClick={triggerCreateVault}
+          >
+            Create
+          </button>
+        </div>
       </div>
     </div>
   );

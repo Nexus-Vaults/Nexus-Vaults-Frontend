@@ -36,6 +36,7 @@ const Index: NextPageWithLayout = () => {
         <CreateNewVaultModal
           nexusAddress={add}
           nexusContractChainId={contractChainIdTMP}
+          subchains={nexus?.subchains ?? []}
           onClose={toggle}
         />
       )}
