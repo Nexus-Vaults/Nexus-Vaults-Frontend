@@ -54,7 +54,7 @@ const AccessNexusModal = ({ onClose }: Props) => {
         chainDeployment.contractChainId +
         '/nexus/' +
         nexusAddress +
-        '/NexusOverview'
+        '/'
     );
   }
 

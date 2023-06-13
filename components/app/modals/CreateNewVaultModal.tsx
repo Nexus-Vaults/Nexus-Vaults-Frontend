@@ -36,14 +36,19 @@ const CreateNewVaultModal = ({
 }: Props) => {
   const [vaultId, setVaultId] = useState<number | null>(null);
   const [targetChain, setTargetChain] = useState<ChainDeployment | null>(null);
-  const [fee, setFee] = useState<bigint | null>(null);
+  const [feeEstimation, setFeeEstimation] = useState<bigint | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const deployment = useContext(ChainDeployments);
-  const feeAsset =
-    targetChain == null
-      ? null
-      : mapEVMChainIdToChain(targetChain.evmChainId).nativeCurrency;
+
+  const sourceChain = deployment.chainDeployment.find(
+    (x) => x.contractChainId == nexusContractChainId
+  )!;
+  const destionationChain = deployment.chainDeployment.find(
+    (x) => x.contractChainId == targetChain?.contractChainId
+  )!;
+
+  const feeAsset = mapEVMChainIdToChain(sourceChain.evmChainId).nativeCurrency;
 
   const vaultIdAlreadyUsed = subchains
     .flatMap((subchain) =>
@@ -72,13 +77,13 @@ const CreateNewVaultModal = ({
   }, [targetChain, vaultId]);
 
   useEffect(() => {
-    setFee(null);
+    setFeeEstimation(null);
 
     if (targetChain == null) {
       return;
     }
     if (nexusContractChainId == targetChain.contractChainId) {
-      setFee(BigInt(0));
+      setFeeEstimation(BigInt(0));
       return;
     }
 
@@ -87,13 +92,6 @@ const CreateNewVaultModal = ({
         ? Environment.TESTNET
         : Environment.MAINNET,
     });
-
-    const sourceChain = deployment.chainDeployment.find(
-      (x) => x.contractChainId == nexusContractChainId
-    )!;
-    const destionationChain = deployment.chainDeployment.find(
-      (x) => x.contractChainId == targetChain.contractChainId
-    )!;
 
     sdk
       .estimateGasFee(
@@ -116,7 +114,7 @@ const CreateNewVaultModal = ({
           BigInt(response.baseFee) +
           BigInt(response.executionFeeWithMultiplier);
 
-        setFee(fee);
+        setFeeEstimation(fee);
       });
   }, [targetChain]);
 
@@ -125,8 +123,12 @@ const CreateNewVaultModal = ({
     abi: VaultV1Facet,
     functionName: 'createVaultV1',
     args: [targetChain?.contractChainId!, 1, vaultId!],
-    value: fee ?? BigInt(0),
-    enabled: error == null && fee != null,
+    value: feeEstimation ?? BigInt(0),
+    enabled:
+      !vaultIdAlreadyUsed &&
+      vaultId != null &&
+      targetChain != null &&
+      feeEstimation != null,
   });
 
   const { write: createVaultAsync } = useContractWrite(createVaultWrite.config);
@@ -187,10 +189,13 @@ const CreateNewVaultModal = ({
         Bridging Fee:{' '}
         {targetChain == null || feeAsset == null
           ? 'Idle'
-          : fee == null
+          : feeEstimation == null
           ? 'Estimation is running...'
-          : bigIntToDecimalAdjustedString(fee, feeAsset.decimals)}{' '}
-        {fee != null ? feeAsset?.symbol : ''}
+          : bigIntToDecimalAdjustedString(
+              feeEstimation,
+              feeAsset.decimals
+            )}{' '}
+        {feeEstimation != null ? feeAsset?.symbol : ''}
         {error && (
           <p className="text-red-500 text-center font-mono font-bold">
             {error}

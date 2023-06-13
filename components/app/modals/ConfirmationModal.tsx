@@ -16,11 +16,7 @@ const ConfirmationModal = ({
 
   async function goToNexus() {
     await router.push(
-      '/app/chain/' +
-        contractChainId +
-        '/nexus/' +
-        nexusAddress +
-        '/NexusOverview'
+      '/app/chain/' + contractChainId + '/nexus/' + nexusAddress + '/'
     );
   }
 
