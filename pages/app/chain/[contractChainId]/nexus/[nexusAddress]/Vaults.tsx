@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import Layout from '../../../../../../components/layout';
 import { NextPageWithLayout } from '../../../../../_app';
 import VaultRows from '../../../../../../components/app/vaults/VaultRows';
@@ -6,7 +6,6 @@ import VaultRows from '../../../../../../components/app/vaults/VaultRows';
 import CreateNewVaultModal from '../../../../../../components/app/modals/CreateNewVaultModal';
 import { useRouter } from 'next/router';
 import { apiClient, Nexus } from 'api';
-import { ChainDeployments } from '../../../../../../components/ContractsAddressesContext';
 
 const Index: NextPageWithLayout = () => {
   const router = useRouter();
