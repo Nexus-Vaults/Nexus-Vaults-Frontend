@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
-import { TokenInfoDTO, VaultInfo } from 'api';
-import { ChainDeployments } from '../../ContractsAddressesContext';
-import { getEvmChainId, mapEVMChainIdToChain } from '../../../utils';
+import React from 'react';
+import { TokenInfoDTO } from 'api';
+import AssetRow from './AssetRow';
 
 export interface AssetBalance {
   assetContractChainId: number;
@@ -14,8 +13,6 @@ interface TableProps {
 }
 
 const Table: React.FC<TableProps> = ({ data }) => {
-  const { chainDeployment } = useContext(ChainDeployments);
-
   return (
     <div
       className="w-full border-sold bg-white shadow-lg border-2 border-gray-400 rounded-lg h-[30vh] overflow-y-auto  px-6"
@@ -56,24 +53,11 @@ const Table: React.FC<TableProps> = ({ data }) => {
         <tbody>
           {data.map((item, index) => (
             <tr key={index} className="border-b dark:border-neutral-500">
-              <td className="whitespace-nowrap px-6 py-4 font-medium">
-                <img
-                  src={`/images/chain/${getEvmChainId(
-                    chainDeployment,
-                    item.assetContractChainId
-                  )}.png`}
-                  width={64}
-                />
-              </td>
-              <td>
-                {item.token.tokenType == 1
-                  ? 'Native'
-                  : mapEVMChainIdToChain(
-                      getEvmChainId(chainDeployment, item.assetContractChainId)
-                    ).nativeCurrency.symbol}
-              </td>
-              <td>{item.balance}</td>
-              <td>{item.balance}</td>
+              <AssetRow
+                asset={item.token}
+                balance={item.balance}
+                assetContractChainId={item.assetContractChainId}
+              ></AssetRow>
             </tr>
           ))}
         </tbody>
