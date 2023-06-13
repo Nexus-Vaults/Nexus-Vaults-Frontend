@@ -75,11 +75,8 @@ const DeployNexusCard = ({
   });
 
   const { write: writeNexus, data: dataNexus } = useContractWrite(configNexus);
-  const {
-    write: writeAcceptedGateway,
-    data: acceptGatewayIdData,
-    error,
-  } = useContractWrite(acceptGatewayConfig);
+  const { write: writeAcceptedGateway, data: acceptGatewayIdData } =
+    useContractWrite(acceptGatewayConfig);
 
   const deployTransaction = useWaitForTransaction({ hash: dataNexus?.hash });
   const acceptGatewayTransaction = useWaitForTransaction({
