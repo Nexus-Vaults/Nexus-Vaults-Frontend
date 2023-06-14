@@ -62,6 +62,13 @@ const SendPaymentModal = ({
 
   useEffect(() => {
     if (targetChain == null) {
+      setFeeEstimation(null);
+      return;
+    }
+    if (
+      assetContractChainId == nexusContractChainId &&
+      targetChain.contractChainId == nexusContractChainId
+    ) {
       setFeeEstimation(BigInt(0));
       return;
     }
@@ -115,6 +122,9 @@ const SendPaymentModal = ({
       amount,
     ],
     value: feeEstimation ?? BigInt(0),
+    enabled:
+      feeEstimation != null &&
+      targetChain?.contractChainId == assetContractChainId,
   });
   const { writeAsync: sendPaymentAsync } = useContractWrite(
     sendPaymentWrite.config
@@ -126,8 +136,8 @@ const SendPaymentModal = ({
     functionName: 'bridgeOut',
     args: [
       assetContractChainId,
-      sourceVaultId!,
       1,
+      sourceVaultId!,
       tokenInfo.tokenType,
       tokenInfo.tokenIdentifier,
       1,
@@ -136,6 +146,10 @@ const SendPaymentModal = ({
       amount,
     ],
     value: feeEstimation ?? BigInt(0),
+    enabled:
+      feeEstimation != null &&
+      targetChain != null &&
+      targetChain.contractChainId != assetContractChainId,
   });
 
   const { writeAsync: mintIOUTokensAsync } = useContractWrite(
@@ -160,8 +174,6 @@ const SendPaymentModal = ({
       await mintIOUTokensAsync?.();
     }
   }
-
-  console.log(sourceVaultId);
 
   return (
     <div
