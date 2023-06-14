@@ -8,16 +8,16 @@ export default function Document() {
           rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
         />
-        <link 
+        <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Rubik+80s+Fade&display=swap">
-        </link>
+          href="https://fonts.googleapis.com/css2?family=Rubik+80s+Fade&display=swap"
+        ></link>
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
         />
       </Head>
-      <body>
+      <body className="h-full">
         <Main />
         <NextScript />
       </body>
