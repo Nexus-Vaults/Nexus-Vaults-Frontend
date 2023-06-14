@@ -98,8 +98,8 @@ const CreateNewVaultModal = ({
         sourceChain.chainName,
         destionationChain.chainName,
         mapEVMChainIdToChain(sourceChain.evmChainId).nativeCurrency.symbol,
-        1_000_000,
-        undefined,
+        800_000,
+        1.2,
         undefined,
         {
           showDetailedFees: true,

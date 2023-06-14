@@ -81,8 +81,8 @@ const SendPaymentModal = ({
         sourceChain.chainName,
         targetChain.chainName,
         mapEVMChainIdToChain(sourceChain.evmChainId).nativeCurrency.symbol,
-        undefined,
-        undefined,
+        1_100_000,
+        1.2,
         undefined,
         {
           showDetailedFees: true,
