@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useContext, useState } from 'react';
 import { apiClient, ChainDeployment } from 'api';
-import { ChainDeployments } from '../../ContractsAddressesContext';
+import { ChainDeployments } from '../../Context';
 import { Address, isAddress } from 'viem';
 import SelectTargetChain from '../utils/SelectTargetChain';
 

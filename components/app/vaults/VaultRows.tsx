@@ -5,7 +5,7 @@ import CryptoList from './CryptoList';
 import ViewCozyIcon from '@mui/icons-material/ViewCozy';
 import { useRouter } from 'next/router';
 import { getEvmChainId } from '../../../utils';
-import { ChainDeployments } from '../../ContractsAddressesContext';
+import { ChainDeployments } from '../../Context';
 import { Address } from 'viem';
 
 type Props = {

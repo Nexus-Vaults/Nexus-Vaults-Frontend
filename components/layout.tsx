@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import Sidebar from './app/sidebar';
 import Navbar from './app/navbar/navbar';
-import { ChainDeployments } from './ContractsAddressesContext';
+import { ChainDeployments } from './Context';
 
 type Props = {
   children: React.ReactNode;

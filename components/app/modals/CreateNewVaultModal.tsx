@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
 import { ChainDeployment, SubChain, VaultInfo } from 'api';
-import { ChainDeployments } from '../../ContractsAddressesContext';
+import { ChainDeployments } from '../../Context';
 import {
   Address,
   useContractWrite,

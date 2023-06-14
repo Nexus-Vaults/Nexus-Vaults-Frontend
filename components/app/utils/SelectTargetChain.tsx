@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { ChainDeployment } from 'api';
-import { ChainDeployments } from '../../ContractsAddressesContext';
+import { ChainDeployments } from '../../Context';
 
 type Props = {
   handleTargetChain: (chainDeployment: ChainDeployment | null) => void;

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { SubChain } from 'api';
-import { ChainDeployments } from '../../../ContractsAddressesContext';
+import { ChainDeployments } from '../../../Context';
 import { Address } from 'viem';
 type Props = {
   address: Address;

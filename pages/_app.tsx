@@ -29,7 +29,7 @@ import {
 } from '@rainbow-me/rainbowkit/wallets';
 import { apiClient, ChainDeployment } from 'api';
 import React, { useContext, useState } from 'react';
-import { ChainDeployments } from '../components/ContractsAddressesContext';
+import { ChainDeployments } from '../components/Context';
 import { mapEVMChainIdToChain } from '../utils';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -47,16 +47,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
   const [deployment, setDeployment] = useState<ChainDeployment[]>([]);
-  const [address, setAddress] = useState<Address>();
-  const [chainId, setChainId] = useState<number>();
-
-  const handleAddress = (add: Address) => {
-    setAddress(add);
-  };
-
-  const handleChainId = (nr: number) => {
-    setChainId(nr);
-  };
 
   const [wagmiConfig, setWagmiConfig] =
     useState<Config<PublicClient, WebSocketPublicClient>>();

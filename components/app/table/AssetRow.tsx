@@ -5,7 +5,7 @@ import {
   mapEVMChainIdToChain,
   numberToDecimalAdjustedString,
 } from '../../../utils';
-import { ChainDeployments } from '../../ContractsAddressesContext';
+import { ChainDeployments } from '../../Context';
 import SendPaymentModal from '../modals/SendPaymentModal';
 import { Address } from 'wagmi';
 

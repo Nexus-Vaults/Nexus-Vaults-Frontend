@@ -10,7 +10,7 @@ import {
   AxelarQueryAPIFeeResponse,
   Environment,
 } from '@axelar-network/axelarjs-sdk';
-import { ChainDeployments } from '../../ContractsAddressesContext';
+import { ChainDeployments } from '../../Context';
 import { mapEVMChainIdToChain } from '../../../utils';
 
 type Props = {
