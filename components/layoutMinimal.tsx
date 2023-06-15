@@ -23,7 +23,9 @@ export default function LayoutMinimal({ children }: Props) {
           <ConnectButton />
         </div>
       </div>
-      <div className="flex overflow-auto bg-whitesmoke">{children}</div>
+      <div className="flex overflow-auto bg-whitesmoke justify-center">
+        {children}
+      </div>
     </div>
   );
 }
