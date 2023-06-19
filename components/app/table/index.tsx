@@ -22,24 +22,9 @@ const Table: React.FC<TableProps> = ({
 }) => {
   return (
     <div
-      className="w-full border-sold bg-white shadow-lg border-2 border-gray-400 rounded-lg h-[30vh] overflow-y-auto  px-6"
+      className="w-full border-sold bg-white shadow-lg border-2 border-gray-400 rounded-lg px-6"
       style={{ scrollbarWidth: 'thin' }}
     >
-      <style>
-        {`
-    .overflow-y-auto::-webkit-scrollbar {
-      width: 0.5rem; /* Adjust as needed */
-    }
-  
-    .overflow-y-auto::-webkit-scrollbar-track {
-      background-color: transparent;
-    }
-  
-    .overflow-y-auto::-webkit-scrollbar-thumb {
-      background-color: transparent;
-    }
-    `}
-      </style>
       <table className="w-full min-w-full text-left text-sm font-light sticky top-0">
         <thead className="sticky top-0 bg-white  border-b font-medium dark:border-neutral-500">
           <tr>
