@@ -114,8 +114,7 @@ const NexusExtensions: NextPageWithLayout = (props: Props) => {
 
   return (
     <div className="w-[80%] mt-6 grid grid-cols-1 auto-rows-max gap-2">
-      <h1 className="font-bold text-4xl ">Extension Store</h1>
-      <hr className="border-black border-2 mb-4" />
+      <h1 className="font-bold text-4xl mb-2">Extension Store</h1>
       {availableFeatures == null && (
         <div className="flex flex-col items-center">
           <div className="w-3/5 md:w-1/3 xl:w-1/6">
