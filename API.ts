@@ -50,6 +50,8 @@ export interface Nexus {
   name: string;
   owner: Address;
   subchains: SubChain[];
+  hasLoupeFacet: boolean;
+  facetAddresses: string[];
 }
 
 export interface SubChain {

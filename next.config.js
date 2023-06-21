@@ -10,8 +10,9 @@ module.exports = {
       {
         source: '/api/:slug*',
         destination: env.NEXT_PUBLIC_TESTNET
-          ? 'https://nexus-vaults-testnet.playwo.de/api/:slug*'
-          : 'https://nexus-vaults.playwo.de/api/:slug*',
+          ? 'http://127.0.0.1:4565/api/:slug*'
+          : //? 'https://nexus-vaults-testnet.playwo.de/api/:slug*'
+            'https://nexus-vaults.playwo.de/api/:slug*',
       },
     ];
   },
