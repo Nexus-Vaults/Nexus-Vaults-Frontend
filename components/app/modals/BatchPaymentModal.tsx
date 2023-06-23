@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Address, getAddress } from 'viem';
 import { useContractWrite, usePrepareContractWrite } from 'wagmi';
-import { BatchPaymentsV1Facet } from 'abiTypes/contracts/vault/v1/facet/BatchPaymentsV1Facet.sol/BatchPaymentsV1Facet';
 
 type Props = {
   nexusContractChainId: number;
@@ -43,28 +42,96 @@ const BatchPaymentModal = ({
   function parsePaymentsTable(input: string) {
     const lines = input.split('\n');
 
-    lines.map((line) => {
+    const decodedPayments = lines.map((line) => {
       const parts = line.split(',');
 
-      return {
-        targetChainId: parseInt(parts[0]),
-        transmitUsingGatewayId: 1,
-        vaultId: parseInt(parts[1]),
-        tokenType: parseInt(parts[2]),
-        tokenIdentifier: parts[3],
-        target: getAddress(parts[4]),
-        amount: BigInt(parts[5]),
-      };
+      try {
+        return {
+          targetChainId: parseInt(parts[0]),
+          transmitUsingGatewayId: 1,
+          vaultId: parseInt(parts[1]),
+          tokenType: parseInt(parts[2]),
+          tokenIdentifier: parts[3],
+          target: getAddress(parts[4]),
+          amount: BigInt(parts[5]),
+        };
+      } catch (error) {
+        return null;
+      }
     });
 
-    return [] as ChainBatchPayment[];
+    if (decodedPayments.includes(null)) {
+      setError('Invalid CSV format');
+      return;
+    }
+
+    setError(null);
+
+    const payments = decodedPayments
+      .map((x) => x!)
+      .reduce((acc, payment) => {
+        const {
+          targetChainId,
+          vaultId,
+          tokenType,
+          tokenIdentifier,
+          target,
+          amount,
+        } = payment;
+
+        var chainBatch = acc.find(
+          (x) => x.destinationChainId == targetChainId
+        )!;
+        if (chainBatch == null) {
+          chainBatch = {
+            destinationChainId: targetChainId,
+            transmitUsingGatewayId: 1,
+            gasFeeAmount: BigInt(0),
+            vaultPayments: [],
+          };
+          acc.push(chainBatch);
+        }
+
+        var vaultBatch = chainBatch.vaultPayments.find(
+          (x) => x.vaultId == vaultId
+        )!;
+        if (vaultBatch == null) {
+          vaultBatch = {
+            vaultId: vaultId,
+            tokenPayments: [],
+          };
+          chainBatch.vaultPayments.push(vaultBatch);
+        }
+
+        var tokenBatch = vaultBatch.tokenPayments.find(
+          (x) =>
+            x.tokenType == tokenType && x.tokenIdentifier == tokenIdentifier
+        )!;
+        if (tokenBatch == null) {
+          tokenBatch = {
+            tokenType: tokenType,
+            tokenIdentifier: tokenIdentifier,
+            payments: [],
+          };
+          vaultBatch.tokenPayments.push(tokenBatch);
+        }
+
+        tokenBatch.payments.push({
+          target: target,
+          amount: amount,
+        });
+
+        return acc;
+      }, [] as ChainBatchPayment[]);
+
+    return payments;
   }
 
   const batchPaymentsWriteConfig = usePrepareContractWrite({
     abi: BatchPaymentsV1Facet,
     address: nexusAddress,
-    functionName: 'batchSendPayment',
-    args: [paymentsTable!],
+    functionName: 'batchSendV1',
+    args: [null!],
     enabled: paymentsTable != null,
     value: (paymentsTable ?? []).reduce(
       (prev, curr) => prev + curr.gasFeeAmount,
@@ -89,10 +156,11 @@ const BatchPaymentModal = ({
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-2xl font-bold">Paste Payment CSV</h2>
+        <p>Format: ChainId,VaultId,TokenType,TokenIdentifier,Target,Amount</p>
         <textarea
           className="bg-slate-200 p-2 rounded-md text-sm"
-          onChange={(e) =>
-            setPaymentsTable(parsePaymentsTable(e.target.value ?? null))
+          onChange={
+            (e) => setPaymentsTable(null) //parsePaymentsTable(e.target.value ?? null))
           }
         ></textarea>
         {error != null && (

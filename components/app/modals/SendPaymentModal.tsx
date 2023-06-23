@@ -111,7 +111,7 @@ const SendPaymentModal = ({
   const sendPaymentWrite = usePrepareContractWrite({
     address: nexusAddress,
     abi: VaultV1Facet,
-    functionName: 'sendPayment',
+    functionName: 'sendPaymentV1',
     args: [
       assetContractChainId,
       1,
@@ -133,7 +133,7 @@ const SendPaymentModal = ({
   const mintIOTTokensWrite = usePrepareContractWrite({
     address: nexusAddress,
     abi: VaultV1Facet,
-    functionName: 'bridgeOut',
+    functionName: 'bridgeOutV1',
     args: [
       assetContractChainId,
       1,
