@@ -13,7 +13,7 @@ import { usePublicClient } from 'wagmi';
 import { decodeEventLog } from 'viem';
 import ConfirmationModal from '../../modals/ConfirmationModal';
 
-import { VaultV1Controller } from 'abiTypes/contracts/vault/v1/controller/VaultV1Controller.sol/VaultV1Controller';
+import { VaultV1Facet } from 'abiTypes/contracts/vault/v1/facet/VaultV1Facet.sol/VaultV1Facet';
 
 type Props = {
   nexusName: string;
@@ -69,8 +69,8 @@ const DeployNexusCard = ({
   });
   const { config: acceptGatewayConfig } = usePrepareContractWrite({
     address: nexusAddress,
-    abi: VaultV1Controller,
-    functionName: 'addLocalAcceptedGateway',
+    abi: VaultV1Facet,
+    functionName: 'addLocalAcceptedGatewayV1',
     args: [1],
   });
 

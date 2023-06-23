@@ -1,3 +1,4 @@
+import { BatchPaymentsV1Facet } from 'abiTypes/contracts/vault/v1/facet/BatchPaymentsV1Facet.sol/BatchPaymentsV1Facet';
 import React, { useState } from 'react';
 import { Address, getAddress } from 'viem';
 import { useContractWrite, usePrepareContractWrite } from 'wagmi';

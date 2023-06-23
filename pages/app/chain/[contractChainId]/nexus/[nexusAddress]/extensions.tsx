@@ -7,8 +7,6 @@ import { Address, useContractWrite, usePrepareContractWrite } from 'wagmi';
 import { useRouter } from 'next/router';
 import LoadingAnimation from '../../../../../../components/app/utils/LoadingAnimation';
 import { Nexus } from 'abiTypes/contracts/nexus/Nexus.sol/Nexus';
-import { FacetCatalog } from 'abiTypes/contracts/catalog/FacetCatalog.sol/FacetCatalog';
-import { decodeErrorResult } from 'viem';
 
 type Props = {};
 
