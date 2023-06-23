@@ -1,6 +1,8 @@
+import { Nexus } from 'abiTypes/contracts/nexus/Nexus.sol/Nexus';
+import { VaultV1Controller } from 'abiTypes/contracts/vault/v1/controller/VaultV1Controller.sol/VaultV1Controller';
 import { BatchPaymentsV1Facet } from 'abiTypes/contracts/vault/v1/facet/BatchPaymentsV1Facet.sol/BatchPaymentsV1Facet';
 import React, { useState } from 'react';
-import { Address, getAddress } from 'viem';
+import { Address, decodeErrorResult, getAddress } from 'viem';
 import { useContractWrite, usePrepareContractWrite } from 'wagmi';
 
 type Props = {
@@ -13,13 +15,11 @@ interface ChainBatchPayment {
   destinationChainId: number;
   transmitUsingGatewayId: number;
   gasFeeAmount: bigint;
-  vaultPayments: VaultBatchPayment[];
-}
-interface VaultBatchPayment {
-  vaultId: number;
-  tokenPayments: TokenBatchPayment[];
+  vaultPayments: TokenBatchPayment[];
 }
 interface TokenBatchPayment {
+  tokenChainId: number;
+  vaultId: number;
   tokenType: number;
   tokenIdentifier: string;
   payments: Payment[];
@@ -49,12 +49,13 @@ const BatchPaymentModal = ({
       try {
         return {
           targetChainId: parseInt(parts[0]),
+          tokenChainId: parseInt(parts[1]),
           transmitUsingGatewayId: 1,
-          vaultId: parseInt(parts[1]),
-          tokenType: parseInt(parts[2]),
-          tokenIdentifier: parts[3],
-          target: getAddress(parts[4]),
-          amount: BigInt(parts[5]),
+          vaultId: parseInt(parts[2]),
+          tokenType: parseInt(parts[3]),
+          tokenIdentifier: parts[4],
+          target: getAddress(parts[5]),
+          amount: BigInt(parts[6]),
         };
       } catch (error) {
         return null;
@@ -63,7 +64,7 @@ const BatchPaymentModal = ({
 
     if (decodedPayments.includes(null)) {
       setError('Invalid CSV format');
-      return;
+      return null;
     }
 
     setError(null);
@@ -73,6 +74,7 @@ const BatchPaymentModal = ({
       .reduce((acc, payment) => {
         const {
           targetChainId,
+          tokenChainId,
           vaultId,
           tokenType,
           tokenIdentifier,
@@ -93,28 +95,21 @@ const BatchPaymentModal = ({
           acc.push(chainBatch);
         }
 
-        var vaultBatch = chainBatch.vaultPayments.find(
-          (x) => x.vaultId == vaultId
-        )!;
-        if (vaultBatch == null) {
-          vaultBatch = {
-            vaultId: vaultId,
-            tokenPayments: [],
-          };
-          chainBatch.vaultPayments.push(vaultBatch);
-        }
-
-        var tokenBatch = vaultBatch.tokenPayments.find(
+        var tokenBatch = chainBatch.vaultPayments.find(
           (x) =>
-            x.tokenType == tokenType && x.tokenIdentifier == tokenIdentifier
+            x.vaultId == vaultId &&
+            x.tokenType == tokenType &&
+            x.tokenIdentifier == tokenIdentifier
         )!;
         if (tokenBatch == null) {
           tokenBatch = {
+            tokenChainId: tokenChainId,
+            vaultId: vaultId,
             tokenType: tokenType,
             tokenIdentifier: tokenIdentifier,
             payments: [],
           };
-          vaultBatch.tokenPayments.push(tokenBatch);
+          chainBatch.vaultPayments.push(tokenBatch);
         }
 
         tokenBatch.payments.push({
@@ -132,7 +127,7 @@ const BatchPaymentModal = ({
     abi: BatchPaymentsV1Facet,
     address: nexusAddress,
     functionName: 'batchSendV1',
-    args: [null!],
+    args: [paymentsTable!],
     enabled: paymentsTable != null,
     value: (paymentsTable ?? []).reduce(
       (prev, curr) => prev + curr.gasFeeAmount,
@@ -157,11 +152,14 @@ const BatchPaymentModal = ({
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-2xl font-bold">Paste Payment CSV</h2>
-        <p>Format: ChainId,VaultId,TokenType,TokenIdentifier,Target,Amount</p>
+        <p>
+          Format:
+          TargetChainId,AssetChainId,VaultId,TokenType,TokenIdentifier,Target,Amount
+        </p>
         <textarea
           className="bg-slate-200 p-2 rounded-md text-sm"
-          onChange={
-            (e) => setPaymentsTable(null) //parsePaymentsTable(e.target.value ?? null))
+          onChange={(e) =>
+            setPaymentsTable(parsePaymentsTable(e.target.value ?? null))
           }
         ></textarea>
         {error != null && (
